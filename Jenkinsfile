@@ -2,7 +2,7 @@ pipeline {
    agent any 
    environment {
       GIT_REPO = '202120_S2_E2_SobreRuedas_Back'
-      GIT_CREDENTIAL_ID = '692cb316-0794-4522-9cf0-83c2618a09e5'
+      GIT_CREDENTIAL_ID = 'de5cd571-10da-4034-8ba8-af99beef4b14'
       ARCHID_TOKEN = credentials('041703df-dd96-47c3-97b1-b7fbf12069d5')
       SONARQUBE_URL = 'http://172.24.101.209:8082/sonar-isis2603'
    }

@@ -1,4 +1,4 @@
-package co.edu.uniandes.dse.ZZZ.config;
+package co.edu.uniandes.dse.arte7.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

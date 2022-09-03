@@ -21,7 +21,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class ActorEntity extends TrabajadorEntity {
 
-	@PodamExclude
-	@ManyToMany
-	private List<PeliculaEntity> peliculas = new ArrayList<>();
+    @PodamExclude
+    @ManyToMany
+    private List<PeliculaEntity> peliculas = new ArrayList<>();
 }

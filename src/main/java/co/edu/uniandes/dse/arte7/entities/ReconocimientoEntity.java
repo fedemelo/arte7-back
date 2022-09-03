@@ -18,8 +18,7 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class ReconocimientoEntity extends BaseEntity {
 
-	private String nombre;
-	private int anho;
-	private String categoria;
-
+    private String nombre;
+    private int anho;
+    private String categoria;
 }

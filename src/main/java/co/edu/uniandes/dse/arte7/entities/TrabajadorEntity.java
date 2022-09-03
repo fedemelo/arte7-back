@@ -20,10 +20,9 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class TrabajadorEntity extends BaseEntity {
 
-	private String nombre;
-	private BufferedImage fotografia;
-	private String nacionalidad;
+    private String nombre;
+    private BufferedImage fotografia;
+    private String nacionalidad;
     private LocalDateTime fechaNacimiento;
     private String biografia;
-
 }

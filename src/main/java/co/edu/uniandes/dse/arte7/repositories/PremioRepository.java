@@ -3,10 +3,9 @@ package co.edu.uniandes.dse.arte7.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
+import co.edu.uniandes.dse.arte7.entities.PremioEntity;
 
 @Repository
-public interface ResenhaRepository extends JpaRepository<ResenhaEntity, Long> {
-
+public interface PremioRepository  extends JpaRepository<PremioEntity, Long> {
+    
 }
-

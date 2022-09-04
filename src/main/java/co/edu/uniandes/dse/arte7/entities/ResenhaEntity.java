@@ -1,16 +1,16 @@
 package co.edu.uniandes.dse.arte7.entities;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import uk.co.jemos.podam.common.PodamExclude;
 
-
+@Getter
+@Setter
+@Entity
 public class ResenhaEntity extends BaseEntity{
     private int estrellas;
     private int numCaracteres;
@@ -18,7 +18,7 @@ public class ResenhaEntity extends BaseEntity{
 
     @PodamExclude
     @OneToMany(mappedBy = "critico", fetch = FetchType.EAGER)
-    private usuarioEntity user;
+    private UsuarioEntity user;
     
 
 }

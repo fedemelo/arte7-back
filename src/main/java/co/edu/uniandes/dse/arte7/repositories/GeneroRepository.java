@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 
 @Repository
-public class GeneroRepository extends JpaRepository<GeneroEntity, Long> {
+public interface GeneroRepository extends JpaRepository<GeneroEntity, Long> {
   
 }

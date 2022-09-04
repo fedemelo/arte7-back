@@ -1,5 +1,4 @@
 package co.edu.uniandes.dse.arte7.repositories;
-package co.edu.uniandes.dse.arte7.repositories;
 
 import java.util.List;
 

@@ -10,7 +10,6 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Getter
 @Setter
 @Entity
-
 public class UsuarioEntity extends BaseEntity {
 
     @PodamExclude

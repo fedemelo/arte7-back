@@ -23,7 +23,7 @@ public class PlataformaEntity extends BaseEntity{
     private String url;
 
     @PodamExclude
-    @ManyToMany(mappedBy = "peliculas", fetch = FetchType.LAZY)
-    private List<PlataformaEntity> plataformas = new ArrayList<>();
+    @ManyToMany
+    private List<PeliculaEntity> peliculas = new ArrayList<>();
  
 }   

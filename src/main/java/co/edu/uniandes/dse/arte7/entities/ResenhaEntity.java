@@ -18,7 +18,7 @@ public class ResenhaEntity extends BaseEntity{
 
     @PodamExclude
     @OneToMany(mappedBy = "critico", fetch = FetchType.EAGER)
-    private usuarioEntity user;
+    private UsuarioEntity user;
     
 
 }

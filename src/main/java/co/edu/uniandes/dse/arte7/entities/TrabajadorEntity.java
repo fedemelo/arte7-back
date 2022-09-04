@@ -10,7 +10,6 @@ import lombok.Setter;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 import java.awt.image.BufferedImage;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**

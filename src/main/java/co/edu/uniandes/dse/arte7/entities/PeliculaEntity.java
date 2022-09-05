@@ -13,6 +13,12 @@ import lombok.Getter;
 import lombok.Setter;
 import uk.co.jemos.podam.common.PodamExclude;
 
+/**
+ * Entidad que representa una pelicula en la persistencia
+ *
+ * @author Mariana Ruiz 
+ */
+
 @Getter
 @Setter
 @Entity

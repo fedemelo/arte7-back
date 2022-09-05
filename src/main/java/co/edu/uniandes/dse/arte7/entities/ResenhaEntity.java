@@ -19,6 +19,10 @@ public class ResenhaEntity extends BaseEntity{
     @PodamExclude
     @ManyToOne
     private UsuarioEntity critico;
+
+    @PodamExclude
+    @ManyToOne
+    private PeliculaEntity pelicula;
     
 
 }

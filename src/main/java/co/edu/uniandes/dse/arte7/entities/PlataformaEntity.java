@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.FetchType;
 
 
 import lombok.Getter;

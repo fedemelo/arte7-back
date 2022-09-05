@@ -1,8 +1,8 @@
 package co.edu.uniandes.dse.arte7.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +17,8 @@ public class ResenhaEntity extends BaseEntity{
     private String texto;
 
     @PodamExclude
-    @OneToMany(mappedBy = "critico", fetch = FetchType.EAGER)
-    private UsuarioEntity user;
+    @ManyToOne
+    private UsuarioEntity critico;
     
 
 }

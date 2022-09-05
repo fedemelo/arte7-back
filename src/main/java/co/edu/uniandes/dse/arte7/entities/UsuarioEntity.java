@@ -11,6 +11,10 @@ import lombok.Getter;
 import lombok.Setter;
 import uk.co.jemos.podam.common.PodamExclude;
 
+/**
+ * Entidad que representa un usuario en la persistencia 
+ */
+
 @Getter
 @Setter
 @Entity

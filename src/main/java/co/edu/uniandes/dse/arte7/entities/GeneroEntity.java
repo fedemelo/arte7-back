@@ -21,6 +21,6 @@ public class GeneroEntity extends BaseEntity{
 
     @PodamExclude
     @ManyToMany
-    private List<PeliculaEntity> genero = new ArrayList<>();
+    private List<PeliculaEntity> peliculas = new ArrayList<>();
  
 }

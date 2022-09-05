@@ -1,5 +1,8 @@
 package co.edu.uniandes.dse.arte7.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -14,6 +17,6 @@ public class UsuarioEntity extends BaseEntity {
 
     @PodamExclude
     @OneToMany
-    private ResenhaEntity resenha;
+    private List<ResenhaEntity> resenhas = new ArrayList<>();
 
 }

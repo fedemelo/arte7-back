@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
-import java.awt.image.BufferedImage;
 import java.util.Date;
 
 /**
@@ -25,7 +24,8 @@ import java.util.Date;
 public abstract class TrabajadorEntity extends BaseEntity {
 
     private String nombre;
-    private BufferedImage fotografia;
+
+    private String fotografia;
     private String nacionalidad;
 
     @Temporal(TemporalType.DATE)

@@ -43,8 +43,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 @MappedSuperclass
 public abstract class BaseEntity {
 
-	@PodamExclude
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @PodamExclude
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 }

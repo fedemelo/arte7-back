@@ -19,6 +19,6 @@ import lombok.Setter;
 public abstract class ReconocimientoEntity extends BaseEntity {
 
     private String nombre;
-    private int anho;
+    private Integer anho;
     private String categoria;
 }

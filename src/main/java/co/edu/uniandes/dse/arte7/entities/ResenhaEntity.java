@@ -12,8 +12,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Setter
 @Entity
 public class ResenhaEntity extends BaseEntity{
-    private int estrellas;
-    private int numCaracteres;
+    private Integer estrellas;
+    private Integer numCaracteres;
     private String texto;
 
     @PodamExclude

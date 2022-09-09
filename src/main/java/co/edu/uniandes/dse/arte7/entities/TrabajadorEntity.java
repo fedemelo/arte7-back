@@ -5,11 +5,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import co.edu.uniandes.dse.arte7.podam.DateStrategy;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
-import java.awt.image.BufferedImage;
 import java.util.Date;
 
 /**
@@ -22,10 +22,12 @@ import java.util.Date;
 @Getter
 @Setter
 @MappedSuperclass
+@EqualsAndHashCode(callSuper = true)
 public abstract class TrabajadorEntity extends BaseEntity {
 
     private String nombre;
-    private BufferedImage fotografia;
+
+    private String fotografia;
     private String nacionalidad;
 
     @Temporal(TemporalType.DATE)

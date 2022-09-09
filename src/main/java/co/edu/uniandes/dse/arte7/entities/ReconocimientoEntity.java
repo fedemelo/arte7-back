@@ -2,6 +2,7 @@ package co.edu.uniandes.dse.arte7.entities;
 
 import javax.persistence.MappedSuperclass;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +17,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
+@EqualsAndHashCode(callSuper = true)
 public abstract class ReconocimientoEntity extends BaseEntity {
 
     private String nombre;
-    private int anho;
+    private Integer anho;
     private String categoria;
 }

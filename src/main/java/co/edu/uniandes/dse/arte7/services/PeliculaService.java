@@ -1,6 +1,6 @@
 package co.edu.uniandes.dse.arte7.services;
 
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -65,22 +65,14 @@ public class PeliculaService {
         //Esta decision implica que en momento de la carga se debera instanciar primero actores y directores.
         List<ActorEntity> actores = peliculaEntity.getActores(); 
 
-        Iterator iteratorA = actores.iterator();
-        
-
-        while (iteratorA.hasNext()){
-            ActorEntity actor = (ActorEntity) iteratorA.next();
+        for (ActorEntity actor : actores ){
             if (actorRepository.findById(actor.getId()) == null){
                 throw new EntityNotFoundException("Actor no encontrado.");
             }
         }
-        List<DirectorEntity> directores = peliculaEntity.getDirectores(); 
+        List<DirectorEntity> directores = peliculaEntity.getDirectores();      
 
-        Iterator iteratorD = directores.iterator();
-        
-
-        while (iteratorD.hasNext()){
-            ActorEntity director = (ActorEntity) iteratorD.next();
+        for(DirectorEntity director : directores){
             if (directorRepository.findById(director.getId()) == null){
                 throw new EntityNotFoundException("Director no encontrado.");
             }

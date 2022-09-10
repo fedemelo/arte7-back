@@ -39,11 +39,13 @@ public class PlataformaService {
         return plataformaRepository.save(plataformaEntity);
     }
 
+    @Transactional
     public List<PlataformaEntity> getPlataformas(){
         log.info("Inicia proceso de consultar todos las plataformas.");
         return plataformaRepository.findAll();
     }
 
+    @Transactional
     public PlataformaEntity getPlataforma(long plataformaID) throws EntityNotFoundException{
         log.info("Inicia el proceso de buscar una plataforma por id={0}", plataformaID);
     
@@ -55,12 +57,25 @@ public class PlataformaService {
         return plataformaEntity.get();
     }
 
-    public void deleteplataforma(Long plataformaId)throws EntityNotFoundException, IllegalOperationException{
+    @Transactional
+    public PlataformaEntity updatePlataforma(Long plataformaId, PlataformaEntity plataforma) throws EntityNotFoundException {
+        log.info("Inicia proceso de actualizar una plataforma con id = {0}", plataformaId);
+        Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
+        if (plataformaEntity.isEmpty())
+                throw new EntityNotFoundException("Plataforma no encontrada.");
+
+        plataforma.setId(plataformaId);
+        log.info("Termina proceso de actualizar una plataforma con id = {0}", plataformaId);
+        return plataformaRepository.save(plataforma);
+    }
+
+    @Transactional
+    public void deletePlataforma(Long plataformaId)throws EntityNotFoundException, IllegalOperationException{
         log.info("Inicia proceso de borrado de la plataforma con id={0}", plataformaId);
         
         Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
         if (plataformaEntity.isEmpty()){
-            throw new EntityNotFoundException("Pelicula no encontrada.");
+            throw new EntityNotFoundException("plataforma no encontrada.");
         }
 
         log.info("Se borro la plataforma con id={0}", plataformaId);

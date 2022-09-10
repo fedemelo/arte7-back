@@ -100,6 +100,17 @@ public class PeliculaService {
         return peliculaE.get();
     }
 
+    @Transactional
+    public PeliculaEntity updatePelicula(Long peliculaId, PeliculaEntity pelicula) throws EntityNotFoundException {
+        log.info("Inicia proceso de actualizar una pelicula con id = {0}", peliculaId);
+        Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
+        if (peliculaEntity.isEmpty())
+                throw new EntityNotFoundException("Pelicula no encontrada.");
+
+        pelicula.setId(peliculaId);
+        log.info("Termina proceso de actualizar una pelicula con id = {0}", peliculaId);
+        return peliculaRepository.save(pelicula);
+    }
 
     public void deletepelicula(Long peliculaId)throws EntityNotFoundException, IllegalOperationException{
         log.info("Inicia proceso de borrado de la pelicula con id={0}", peliculaId);

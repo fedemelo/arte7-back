@@ -7,21 +7,17 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
-import org.modelmapper.spi.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
+import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.ActorRepository;
-import co.edu.uniandes.dse.arte7.repositories.GeneroRepository;
-import co.edu.uniandes.dse.arte7.repositories.NominacionRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
 import co.edu.uniandes.dse.arte7.repositories.PlataformaRepository;
-import co.edu.uniandes.dse.arte7.repositories.PremioRepository;
-import co.edu.uniandes.dse.arte7.repositories.ResenhaRepository;
 import co.edu.uniandes.dse.arte7.repositories.DirectorRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,25 +29,13 @@ public class PeliculaService {
     PeliculaRepository peliculaRepository;
 
     @Autowired
-    ResenhaRepository resehnaRepository;
-
-    @Autowired
-    PlataformaRepository platadormaRepository;
-
-    @Autowired
-    GeneroRepository generoRepository;
-
-    @Autowired
-    NominacionRepository nominacionRepository;
-
-    @Autowired
-    PremioRepository premioRepository;
-
-    @Autowired
     ActorRepository actorRepository;
 
     @Autowired
     DirectorRepository directorRepository;
+
+    @Autowired
+    PlataformaRepository plataformaRepository;
 
     @Transactional
     public PeliculaEntity createPelicula(PeliculaEntity peliculaEntity) throws EntityNotFoundException, IllegalOperationException {
@@ -97,7 +81,7 @@ public class PeliculaService {
 
         while (iteratorD.hasNext()){
             ActorEntity director = (ActorEntity) iteratorD.next();
-            if (actorRepository.findById(director.getId()) == null){
+            if (directorRepository.findById(director.getId()) == null){
                 throw new EntityNotFoundException("Director no encontrado.");
             }
         }
@@ -121,28 +105,41 @@ public class PeliculaService {
         return peliculaE.get();
     }
 
-    public PeliculaEntity updateEntity(Long peliculaId, PeliculaEntity pelicula ) throws EntityNotFoundException{
-
-        log.info("Inicia proceso de actualizar la pelicula con id={0}", peliculaId);
-        Optional<PeliculaEntity> peliculaE = peliculaRepository.findById(peliculaId);
-        if (peliculaE.isEmpty()){
-            throw new EntityNotFoundException("Pelicula no encontrada.");
-        }
+    @Transactional
+    public PeliculaEntity updatePelicula(Long peliculaId, PeliculaEntity pelicula) throws EntityNotFoundException {
+        log.info("Inicia proceso de actualizar una pelicula con id = {0}", peliculaId);
+        Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
+        if (peliculaEntity.isEmpty())
+                throw new EntityNotFoundException("Pelicula no encontrada.");
 
         pelicula.setId(peliculaId);
-
+        log.info("Termina proceso de actualizar una pelicula con id = {0}", peliculaId);
         return peliculaRepository.save(pelicula);
-
     }
 
-    public void deletepelicula(Long peliculaId)throws EntityNotFoundException, IllegalOperationException{
+    public void deletePelicula(Long peliculaId)throws EntityNotFoundException, IllegalOperationException{
         log.info("Inicia proceso de borrado de la pelicula con id={0}", peliculaId);
         
-        Optional<PeliculaEntity> peliculaE = peliculaRepository.findById(peliculaId);
-        if (peliculaE.isEmpty()){
+        Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
+        if (peliculaEntity.isEmpty()){
             throw new EntityNotFoundException("Pelicula no encontrada.");
         }
 
+        List<ActorEntity> actores = peliculaEntity.get().getActores();
+
+        if (!actores.isEmpty())
+                throw new IllegalOperationException("No se borro la pelicula porque aun tiene actores asociados.");
+
+        List<DirectorEntity> directores = peliculaEntity.get().getDirectores();
+
+        if (!directores.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene directores asociados.");
+        
+        List<PlataformaEntity> plataformas = peliculaEntity.get().getPlataformas();
+
+        if (!plataformas.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene plataformas asociadas.");
+        
         log.info("Se borro la pelicula con id={0}", peliculaId);
     }
 

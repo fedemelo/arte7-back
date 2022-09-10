@@ -3,14 +3,13 @@ package co.edu.uniandes.dse.arte7.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
+import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.PlataformaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class PlataformaService {
+
     @Autowired
     PlataformaRepository plataformaRepository;
 
@@ -35,7 +35,7 @@ public class PlataformaService {
             throw new IllegalOperationException("La Url no es valida.");
         }
 
-        log.info("Se termino de cargar el libro.");
+        log.info("Se termino de cargar la plataforma.");
         return plataformaRepository.save(plataformaEntity);
     }
 

@@ -16,7 +16,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
+import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
@@ -46,7 +48,9 @@ class DirectorPeliculaServiceTest {
 	private PodamFactory factory = new PodamFactoryImpl();
 
 	private DirectorEntity director = new DirectorEntity();
-	private EditorialEntity editorial = new EditorialEntity();
+
+	private List<ActorEntity> actorList = new ArrayList<>();
+    private List<GeneroEntity> generoList = new ArrayList<>();
 	private List<PeliculaEntity> peliculaList = new ArrayList<>();
 
 	/**
@@ -70,18 +74,22 @@ class DirectorPeliculaServiceTest {
 	 * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
 	 */
 	private void insertData() {
-		editorial = factory.manufacturePojo(EditorialEntity.class);
-		entityManager.persist(editorial);
 
+        // Creo director
 		director = factory.manufacturePojo(DirectorEntity.class);
 		entityManager.persist(director);
 
+
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-			entity.setEditorial(editorial);
-			entity.getDirectores().add(director);
+			
+            // Director
+            entity.getDirectores().add(director);
+
+            // Persisto la pelicula
 			entityManager.persist(entity);
 			peliculaList.add(entity);
+
 			director.getPeliculas().add(entity);
 		}
 	}
@@ -93,7 +101,7 @@ class DirectorPeliculaServiceTest {
 	@Test
 	void testAddPelicula() throws EntityNotFoundException, IllegalOperationException {
 		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-		newPelicula.setEditorial(editorial);
+
 		peliculaService.createPelicula(newPelicula);
 
 		PeliculaEntity peliculaEntity = directorPeliculaService.addPelicula(director.getId(), newPelicula.getId());
@@ -101,17 +109,25 @@ class DirectorPeliculaServiceTest {
 
 		assertEquals(peliculaEntity.getId(), newPelicula.getId());
 		assertEquals(peliculaEntity.getNombre(), newPelicula.getNombre());
-		assertEquals(peliculaEntity.getDescription(), newPelicula.getDescription());
-		assertEquals(peliculaEntity.getIsbn(), newPelicula.getIsbn());
-		assertEquals(peliculaEntity.getImage(), newPelicula.getImage());
+		assertEquals(peliculaEntity.getPoster(), newPelicula.getPoster());
+		assertEquals(peliculaEntity.getPais(), newPelicula.getPais());
+		assertEquals(peliculaEntity.getDuracionSec(), newPelicula.getDuracionSec());
+        assertEquals(peliculaEntity.getFechaEstreno(), newPelicula.getFechaEstreno());
+        assertEquals(peliculaEntity.getUrl(), newPelicula.getUrl());
+        assertEquals(peliculaEntity.getVisitas(), newPelicula.getVisitas());
+        assertEquals(peliculaEntity.getEstrellasPromedio(), newPelicula.getEstrellasPromedio());
 
 		PeliculaEntity lastPelicula = directorPeliculaService.getPelicula(director.getId(), newPelicula.getId());
 
 		assertEquals(lastPelicula.getId(), newPelicula.getId());
 		assertEquals(lastPelicula.getNombre(), newPelicula.getNombre());
-		assertEquals(lastPelicula.getDescription(), newPelicula.getDescription());
-		assertEquals(lastPelicula.getIsbn(), newPelicula.getIsbn());
-		assertEquals(lastPelicula.getImage(), newPelicula.getImage());
+		assertEquals(lastPelicula.getPoster(), newPelicula.getPoster());
+		assertEquals(lastPelicula.getPais(), newPelicula.getPais());
+		assertEquals(lastPelicula.getDuracionSec(), newPelicula.getDuracionSec());
+        assertEquals(lastPelicula.getFechaEstreno(), newPelicula.getFechaEstreno());
+        assertEquals(lastPelicula.getUrl(), newPelicula.getUrl());
+        assertEquals(lastPelicula.getVisitas(), newPelicula.getVisitas());
+        assertEquals(lastPelicula.getEstrellasPromedio(), newPelicula.getEstrellasPromedio());
 
 	}
 	
@@ -125,7 +141,8 @@ class DirectorPeliculaServiceTest {
 	void testAddPeliculaInvalidDirector() {
 		assertThrows(EntityNotFoundException.class, () -> {
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-			newPelicula.setEditorial(editorial);
+			newPelicula.setActores(actorList);
+            newPelicula.setGeneros(generoList);
 			peliculaService.createPelicula(newPelicula);
 			directorPeliculaService.addPelicula(0L, newPelicula.getId());
 		});
@@ -179,9 +196,13 @@ class DirectorPeliculaServiceTest {
 
 		assertEquals(peliculaEntity.getId(), pelicula.getId());
 		assertEquals(peliculaEntity.getNombre(), pelicula.getNombre());
-		assertEquals(peliculaEntity.getDescription(), pelicula.getDescription());
-		assertEquals(peliculaEntity.getIsbn(), pelicula.getIsbn());
-		assertEquals(peliculaEntity.getImage(), pelicula.getImage());
+		assertEquals(peliculaEntity.getPoster(), pelicula.getPoster());
+		assertEquals(peliculaEntity.getPais(), pelicula.getPais());
+		assertEquals(peliculaEntity.getDuracionSec(), pelicula.getDuracionSec());
+        assertEquals(peliculaEntity.getFechaEstreno(), pelicula.getFechaEstreno());
+        assertEquals(peliculaEntity.getUrl(), pelicula.getUrl());
+        assertEquals(peliculaEntity.getVisitas(), pelicula.getVisitas());
+        assertEquals(peliculaEntity.getEstrellasPromedio(), pelicula.getEstrellasPromedio());
 	}
 
 	/**
@@ -221,7 +242,6 @@ class DirectorPeliculaServiceTest {
 			entityManager.persist(directorEntity);
 
 			PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
-			peliculaEntity.setEditorial(editorial);
 			entityManager.persist(peliculaEntity);
 
 			directorPeliculaService.getPelicula(directorEntity.getId(), peliculaEntity.getId());
@@ -238,9 +258,8 @@ class DirectorPeliculaServiceTest {
 		List<PeliculaEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-			entity.getDirectores().add(director);
-			entity.setEditorial(editorial);
-			peliculaService.createPelicula(entity);
+			entityManager.persist(entity);
+            director.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
 		directorPeliculaService.addPeliculas(director.getId(), nuevaLista);
@@ -260,8 +279,8 @@ class DirectorPeliculaServiceTest {
 		List<PeliculaEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-			entity.setEditorial(editorial);
-			peliculaService.createPelicula(entity);
+			entityManager.persist(entity);
+            director.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
 		directorPeliculaService.addPeliculas(director.getId(), nuevaLista);
@@ -280,12 +299,12 @@ class DirectorPeliculaServiceTest {
 	void testReplacePeliculasInvalidDirector() {
 		assertThrows(EntityNotFoundException.class, () -> {
 			List<PeliculaEntity> nuevaLista = new ArrayList<>();
-			for (int i = 0; i < 3; i++) {
-				PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-				entity.setEditorial(editorial);
-				peliculaService.createPelicula(entity);
-				nuevaLista.add(entity);
-			}
+            for (int i = 0; i < 3; i++) {
+                PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
+                entityManager.persist(entity);
+                director.getPeliculas().add(entity);
+                nuevaLista.add(entity);
+            }
 			directorPeliculaService.addPeliculas(0L, nuevaLista);
 		});
 	}
@@ -300,7 +319,8 @@ class DirectorPeliculaServiceTest {
 		assertThrows(EntityNotFoundException.class, () -> {
 			List<PeliculaEntity> nuevaLista = new ArrayList<>();
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-			entity.setEditorial(editorial);
+			entity.getDirectores().add(director);
+			entity.setActores(actorList);
 			entity.setId(0L);
 			nuevaLista.add(entity);
 			directorPeliculaService.addPeliculas(director.getId(), nuevaLista);

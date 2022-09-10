@@ -107,7 +107,7 @@ public class PeliculaNominacionService {
 	 *                de Pelicula
 	 * @return Nueva colección de NominacionEntity asociada a la instancia de Pelicula
 	 */
-	public List<NominacionEntity> replaceNominacions(Long peliculaId, List<NominacionEntity> list) throws EntityNotFoundException {
+	public List<NominacionEntity> replaceNominaciones(Long peliculaId, List<NominacionEntity> list) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar las nominaciones de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())

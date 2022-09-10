@@ -16,6 +16,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
+import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
+import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -39,7 +43,6 @@ public class PeliculaDirectorServiceTest {
 	private PodamFactory factory = new PodamFactoryImpl();
 
 	private PeliculaEntity pelicula = new PeliculaEntity();
-	private EditorialEntity editorial = new EditorialEntity();
 	private List<DirectorEntity> directorList = new ArrayList<>();
 
 	
@@ -61,11 +64,8 @@ public class PeliculaDirectorServiceTest {
 	 * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
 	 */
 	private void insertData() {
-		editorial = factory.manufacturePojo(EditorialEntity.class);
-		entityManager.persist(editorial);
 
 		pelicula = factory.manufacturePojo(PeliculaEntity.class);
-		pelicula.setEditorial(editorial);
 		entityManager.persist(pelicula);
 
 		for (int i = 0; i < 3; i++) {
@@ -73,7 +73,7 @@ public class PeliculaDirectorServiceTest {
 			entityManager.persist(entity);
 			entity.getPeliculas().add(pelicula);
 			directorList.add(entity);
-			pelicula.getDirectors().add(entity);	
+			pelicula.getDirectores().add(entity);	
 		}
 	}
 
@@ -84,7 +84,6 @@ public class PeliculaDirectorServiceTest {
 	@Test
 	void testAddDirector() throws EntityNotFoundException, IllegalOperationException {
 		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-		newPelicula.setEditorial(editorial);
 		entityManager.persist(newPelicula);
 		
 		DirectorEntity director = factory.manufacturePojo(DirectorEntity.class);
@@ -94,10 +93,11 @@ public class PeliculaDirectorServiceTest {
 		
 		DirectorEntity lastDirector = peliculaDirectorService.getDirector(newPelicula.getId(), director.getId());
 		assertEquals(director.getId(), lastDirector.getId());
-		assertEquals(director.getBirthDate(), lastDirector.getBirthDate());
-		assertEquals(director.getDescription(), lastDirector.getDescription());
-		assertEquals(director.getImage(), lastDirector.getImage());
-		assertEquals(director.getName(), lastDirector.getName());
+		assertEquals(director.getNombre(), lastDirector.getNombre());
+		assertEquals(director.getFotografia(), lastDirector.getFotografia());
+		assertEquals(director.getNacionalidad(), lastDirector.getNacionalidad());
+		assertEquals(director.getFechaNacimiento(), lastDirector.getFechaNacimiento());
+        assertEquals(director.getBiografia(), lastDirector.getBiografia());
 	}
 	
 	/**
@@ -108,7 +108,6 @@ public class PeliculaDirectorServiceTest {
 	void testAddInvalidDirector() {
 		assertThrows(EntityNotFoundException.class, ()->{
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-			newPelicula.setEditorial(editorial);
 			entityManager.persist(newPelicula);
 			peliculaDirectorService.addDirector(newPelicula.getId(), 0L);
 		});
@@ -131,8 +130,8 @@ public class PeliculaDirectorServiceTest {
 	 * Prueba para consultar la lista de directores de una pelicula.
 	 */
 	@Test
-	void testGetDirectors() throws EntityNotFoundException {
-		List<DirectorEntity> directorEntities = peliculaDirectorService.getDirectors(pelicula.getId());
+	void testGetDirectores() throws EntityNotFoundException {
+		List<DirectorEntity> directorEntities = peliculaDirectorService.getDirectores(pelicula.getId());
 
 		assertEquals(directorList.size(), directorEntities.size());
 
@@ -145,9 +144,9 @@ public class PeliculaDirectorServiceTest {
 	 * Prueba para consultar la lista de directores de una pelicula que no existe.
 	 */
 	@Test
-	void testGetDirectorsInvalidPelicula(){
+	void testGetDirectoresInvalidPelicula(){
 		assertThrows(EntityNotFoundException.class, ()->{
-			peliculaDirectorService.getDirectors(0L);
+			peliculaDirectorService.getDirectores(0L);
 		});
 	}
 
@@ -163,10 +162,10 @@ public class PeliculaDirectorServiceTest {
 		assertNotNull(director);
 
 		assertEquals(directorEntity.getId(), director.getId());
-		assertEquals(directorEntity.getName(), director.getName());
-		assertEquals(directorEntity.getDescription(), director.getDescription());
-		assertEquals(directorEntity.getImage(), director.getImage());
-		assertEquals(directorEntity.getBirthDate(), director.getBirthDate());
+		assertEquals(directorEntity.getFechaNacimiento(), director.getFechaNacimiento());
+		assertEquals(directorEntity.getFotografia(), director.getFotografia());
+		assertEquals(directorEntity.getNacionalidad(), director.getNacionalidad());
+		assertEquals(directorEntity.getNombre(), director.getNombre());
 	}
 	
 	/**
@@ -202,7 +201,6 @@ public class PeliculaDirectorServiceTest {
 	void testGetNotAssociatedDirector() {
 		assertThrows(IllegalOperationException.class, ()->{
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-			newPelicula.setEditorial(editorial);
 			entityManager.persist(newPelicula);
 			DirectorEntity director = factory.manufacturePojo(DirectorEntity.class);
 			entityManager.persist(director);
@@ -216,17 +214,17 @@ public class PeliculaDirectorServiceTest {
 	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testReplaceDirectors() throws EntityNotFoundException {
+	void testReplaceDirectores() throws EntityNotFoundException {
 		List<DirectorEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			DirectorEntity entity = factory.manufacturePojo(DirectorEntity.class);
 			entityManager.persist(entity);
-			pelicula.getDirectors().add(entity);
+			pelicula.getDirectores().add(entity);
 			nuevaLista.add(entity);
 		}
-		peliculaDirectorService.replaceDirectors(pelicula.getId(), nuevaLista);
+		peliculaDirectorService.replaceDirectores(pelicula.getId(), nuevaLista);
 		
-		List<DirectorEntity> directorEntities = peliculaDirectorService.getDirectors(pelicula.getId());
+		List<DirectorEntity> directorEntities = peliculaDirectorService.getDirectores(pelicula.getId());
 		for (DirectorEntity aNuevaLista : nuevaLista) {
 			assertTrue(directorEntities.contains(aNuevaLista));
 		}
@@ -238,16 +236,16 @@ public class PeliculaDirectorServiceTest {
 	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testReplaceDirectors2() throws EntityNotFoundException {
+	void testReplaceDirectores2() throws EntityNotFoundException {
 		List<DirectorEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			DirectorEntity entity = factory.manufacturePojo(DirectorEntity.class);
 			entityManager.persist(entity);
 			nuevaLista.add(entity);
 		}
-		peliculaDirectorService.replaceDirectors(pelicula.getId(), nuevaLista);
+		peliculaDirectorService.replaceDirectores(pelicula.getId(), nuevaLista);
 		
-		List<DirectorEntity> directorEntities = peliculaDirectorService.getDirectors(pelicula.getId());
+		List<DirectorEntity> directorEntities = peliculaDirectorService.getDirectores(pelicula.getId());
 		for (DirectorEntity aNuevaLista : nuevaLista) {
 			assertTrue(directorEntities.contains(aNuevaLista));
 		}
@@ -260,7 +258,7 @@ public class PeliculaDirectorServiceTest {
 	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testReplaceDirectorsInvalidPelicula(){
+	void testReplaceDirectoresInvalidPelicula(){
 		assertThrows(EntityNotFoundException.class, ()->{
 			List<DirectorEntity> nuevaLista = new ArrayList<>();
 			for (int i = 0; i < 3; i++) {
@@ -269,7 +267,7 @@ public class PeliculaDirectorServiceTest {
 				entityManager.persist(entity);
 				nuevaLista.add(entity);
 			}
-			peliculaDirectorService.replaceDirectors(0L, nuevaLista);
+			peliculaDirectorService.replaceDirectores(0L, nuevaLista);
 		});
 	}
 	
@@ -279,13 +277,13 @@ public class PeliculaDirectorServiceTest {
 	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testReplaceInvalidDirectors() {
+	void testReplaceInvalidDirectores() {
 		assertThrows(EntityNotFoundException.class, ()->{
 			List<DirectorEntity> nuevaLista = new ArrayList<>();
 			DirectorEntity entity = factory.manufacturePojo(DirectorEntity.class);
 			entity.setId(0L);
 			nuevaLista.add(entity);
-			peliculaDirectorService.replaceDirectors(pelicula.getId(), nuevaLista);
+			peliculaDirectorService.replaceDirectores(pelicula.getId(), nuevaLista);
 		});
 	}
 	
@@ -295,7 +293,7 @@ public class PeliculaDirectorServiceTest {
 	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testReplaceDirectorsInvalidDirector(){
+	void testReplaceDirectoresInvalidDirector(){
 		assertThrows(EntityNotFoundException.class, ()->{
 			List<DirectorEntity> nuevaLista = new ArrayList<>();
 			for (int i = 0; i < 3; i++) {
@@ -304,7 +302,7 @@ public class PeliculaDirectorServiceTest {
 				entityManager.persist(entity);
 				nuevaLista.add(entity);
 			}
-			peliculaDirectorService.replaceDirectors(0L, nuevaLista);
+			peliculaDirectorService.replaceDirectores(0L, nuevaLista);
 		});
 	}
 
@@ -317,7 +315,7 @@ public class PeliculaDirectorServiceTest {
 		for (DirectorEntity director : directorList) {
 			peliculaDirectorService.removeDirector(pelicula.getId(), director.getId());
 		}
-		assertTrue(peliculaDirectorService.getDirectors(pelicula.getId()).isEmpty());
+		assertTrue(peliculaDirectorService.getDirectores(pelicula.getId()).isEmpty());
 	}
 	
 	/**

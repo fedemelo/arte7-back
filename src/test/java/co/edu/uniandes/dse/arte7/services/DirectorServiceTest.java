@@ -60,7 +60,6 @@ public class DirectorServiceTest {
 	 * Limpia las tablas que están implicadas en la prueba.
 	 */
 	private void clearData() {
-		entityManager.getEntityManager().createQuery("delete from PrizeEntity").executeUpdate();
 		entityManager.getEntityManager().createQuery("delete from PeliculaEntity").executeUpdate();
 		entityManager.getEntityManager().createQuery("delete from DirectorEntity").executeUpdate();
 	}
@@ -229,17 +228,6 @@ public class DirectorServiceTest {
 	void testDeleteDirectorWithPeliculas() {
 		assertThrows(IllegalOperationException.class, () -> {
 			directorService.deleteDirector(directorList.get(2).getId());
-		});
-	}
-
-	/**
-	 * Prueba para eliminar un Director asociado a un premio
-	 *
-	 */
-	@Test
-	void testDeleteDirectorWithPrize() {
-		assertThrows(IllegalOperationException.class, () -> {
-			directorService.deleteDirector(directorList.get(1).getId());
 		});
 	}
 

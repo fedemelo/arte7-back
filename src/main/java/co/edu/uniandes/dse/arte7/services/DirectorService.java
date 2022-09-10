@@ -55,7 +55,7 @@ public class DirectorService {
 	 * @return Colección de objetos de DirectorEntity.
 	 */
 	@Transactional
-	public List<DirectorEntity> getDirectors() {
+	public List<DirectorEntity> getDirectores() {
 		log.info("Inicia proceso de consultar todos los directores");
 		return directorRepository.findAll();
 	}

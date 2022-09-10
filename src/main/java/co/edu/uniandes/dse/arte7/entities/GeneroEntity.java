@@ -10,19 +10,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import uk.co.jemos.podam.common.PodamExclude;
 
 @Getter
 @Setter
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class PlataformaEntity extends BaseEntity{
+public class GeneroEntity extends BaseEntity{
 
     private String nombre;
-    private String url;
 
     @PodamExclude
     @ManyToMany
     private List<PeliculaEntity> peliculas = new ArrayList<>();
  
-}   
+}

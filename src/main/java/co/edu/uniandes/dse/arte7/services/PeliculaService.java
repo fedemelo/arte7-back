@@ -121,10 +121,29 @@ public class PeliculaService {
         return peliculaE.get();
     }
 
-    public PeliculaEntity updateEntity(Long peliculaId, PeliculaEntity pelicula ) throws EntityNotFoundException, IllegalOperationException{
+    public PeliculaEntity updateEntity(Long peliculaId, PeliculaEntity pelicula ) throws EntityNotFoundException{
 
-        log.info("Inicia proceso de actualizar el con id={0}", peliculaId);
+        log.info("Inicia proceso de actualizar la pelicula con id={0}", peliculaId);
+        Optional<PeliculaEntity> peliculaE = peliculaRepository.findById(peliculaId);
+        if (peliculaE.isEmpty()){
+            throw new EntityNotFoundException("Pelicula no encontrada.");
+        }
+
+        pelicula.setId(peliculaId);
+
+        return peliculaRepository.save(pelicula);
+
+    }
+
+    public void deletepelicula(Long peliculaId)throws EntityNotFoundException, IllegalOperationException{
+        log.info("Inicia proceso de borrado de la pelicula con id={0}", peliculaId);
         
+        Optional<PeliculaEntity> peliculaE = peliculaRepository.findById(peliculaId);
+        if (peliculaE.isEmpty()){
+            throw new EntityNotFoundException("Pelicula no encontrada.");
+        }
+
+        log.info("Se borro la pelicula con id={0}", peliculaId);
     }
 
 }

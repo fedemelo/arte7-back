@@ -1,5 +1,5 @@
 package co.edu.uniandes.dse.arte7.services;
 
-public class CascaraService {
-
+public class ActorService {
+    
 }

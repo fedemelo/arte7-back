@@ -22,7 +22,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
-import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -33,10 +32,10 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(PeliculaService.class)
-public class PlataformaService {
+public class PlataformaServiceTest {
 
 	@Autowired
-	private PlataformaService plataformaService;
+	private PlataformaServiceTest plataformaService;
 
     @Autowired
     private PlataformaPeliculaService plataformapeliculaService;
@@ -64,7 +63,7 @@ public class PlataformaService {
 	 */
 	private void clearData() {
 		entityManager.getEntityManager().createQuery("delete from PlataformaEntity").executeUpdate();
-		entityManager.getEntityManager().createQuery("delete from PlataformaEntity").executeUpdate();
+		entityManager.getEntityManager().createQuery("delete from PeliculaEntity").executeUpdate();
 	}
 
 	/**
@@ -74,15 +73,11 @@ public class PlataformaService {
 
 
 		for (int i = 0; i < 3; i++) {
-			PlataformaEntity PlataformaEntity = factory.manufacturePojo(PlataformaEntity.class);
-			entityManager.persist(PlataformaEntity);
-			plataformaList.add(PlataformaEntity);
+			PlataformaEntity plataformaEntity = factory.manufacturePojo(PlataformaEntity.class);
+			entityManager.persist(plataformaEntity);
+			plataformaList.add(plataformaEntity);
 		}
 
-		PlataformaEntity PlataformaEntity = plataformaList.get(2);
-		PlataformaEntity.getActores().add(actorEntity);
-        PlataformaEntity.getDirectores().add(directorEntity);
-		entityManager.persist(PlataformaEntity);
 
 	}
 

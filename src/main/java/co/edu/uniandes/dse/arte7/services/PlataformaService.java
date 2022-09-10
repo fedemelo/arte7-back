@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.PlataformaRepository;
@@ -77,6 +77,11 @@ public class PlataformaService {
         if (plataformaEntity.isEmpty()){
             throw new EntityNotFoundException("plataforma no encontrada.");
         }
+
+        List<PeliculaEntity> peliculas = plataformaEntity.get().getPeliculas();
+
+        if (!peliculas.isEmpty())
+            throw new IllegalOperationException("No se borro la plataforma porque aun tiene peliculas asociadas.");
 
         log.info("Se borro la plataforma con id={0}", plataformaId);
     }

@@ -57,6 +57,10 @@ public class PeliculaServiceTest {
 
 	private List<PeliculaEntity> peliculaList = new ArrayList<>();
 
+	private List<DirectorEntity> directorList = new ArrayList<>();
+
+	private List<ActorEntity> actorList = new ArrayList<>();
+
 
 	/**
 	 * Configuración inicial de la prueba.
@@ -81,8 +85,19 @@ public class PeliculaServiceTest {
 	 * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
 	 */
 	private void insertData() {
-        ActorEntity actorEntity = factory.manufacturePojo(ActorEntity.class);
-        DirectorEntity directorEntity = factory.manufacturePojo(DirectorEntity.class);
+    
+		for (int i = 0; i < 3; i++) {
+			ActorEntity actorEntity = factory.manufacturePojo(ActorEntity.class);
+			entityManager.persist(actorEntity);
+			
+			actorList.add(actorEntity);
+		}
+
+		for (int i = 0; i < 3; i++) {
+			DirectorEntity directorEntity = factory.manufacturePojo(DirectorEntity.class);
+			entityManager.persist(directorEntity);
+			directorList.add(directorEntity);
+		}
 
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
@@ -90,9 +105,9 @@ public class PeliculaServiceTest {
 			peliculaList.add(peliculaEntity);
 		}
 
-		PeliculaEntity peliculaEntity = peliculaList.get(2);
-		peliculaEntity.getActores().add(actorEntity);
-        peliculaEntity.getDirectores().add(directorEntity);
+		PeliculaEntity peliculaEntity = peliculaList.get(0);
+		peliculaEntity.setActores(actorList);
+        peliculaEntity.setDirectores(directorList);
 		entityManager.persist(peliculaEntity);
 
 	}

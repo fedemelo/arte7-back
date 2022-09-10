@@ -27,7 +27,7 @@ public class PeliculaPlataformaService {
     PeliculaRepository peliculaRepository;
 
     @Transactional
-	public PlataformaEntity addPlataforma(Long plataformaId, Long peliculaId) throws EntityNotFoundException {
+	public PlataformaEntity addPlataforma(Long peliculaId, Long plataformaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de asociarle una plataforma a la pelicula con id = {0}", peliculaId);
 		Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
 		if (plataformaEntity.isEmpty())

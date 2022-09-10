@@ -28,7 +28,7 @@ public class PlataformaPeliculaService {
     PeliculaRepository peliculaRepository;
 
     @Transactional
-	public PeliculaEntity addPlataforma(Long plataformaId, Long peliculaId) throws EntityNotFoundException {
+	public PeliculaEntity addPelicula(Long plataformaId, Long peliculaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de asociarle una pelicula la plataforma con id = {0}", plataformaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
@@ -72,7 +72,7 @@ public class PlataformaPeliculaService {
 	}
 
     @Transactional
-    public List<PeliculaEntity> replacepeliculas(Long plataformaId, List<PeliculaEntity> list) throws EntityNotFoundException {
+    public List<PeliculaEntity> replacePeliculas(Long plataformaId, List<PeliculaEntity> list) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar las peliculas de la plataforma con id = {0}", plataformaId);
 		Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
 		if (plataformaEntity.isEmpty())

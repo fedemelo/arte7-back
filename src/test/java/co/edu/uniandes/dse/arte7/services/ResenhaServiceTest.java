@@ -95,7 +95,7 @@ class ResenhaServiceTest {
 	}
 
 	/**
-	 * Prueba para crear un Resenha con un libro que no existe.
+	 * Prueba para crear un Resenha con un Pelicula que no existe.
 	 */
 	@Test
 	void testCreateResenhaInvalidPelicula() throws EntityNotFoundException {
@@ -124,7 +124,7 @@ class ResenhaServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar la lista de Resenhas de un libro que no existe.
+	 * Prueba para consultar la lista de Resenhas de un Pelicula que no existe.
 	 */
 	@Test
 	void testGetResenhasInvalidPelicula() {
@@ -148,7 +148,7 @@ class ResenhaServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar un Resenha de un libro que no existe.
+	 * Prueba para consultar un Resenha de un Pelicula que no existe.
 	 */
 	@Test
 	void testGetResenhaInvalidPelicula() {
@@ -159,7 +159,7 @@ class ResenhaServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar un Resenha que no existe de un libro.
+	 * Prueba para consultar un Resenha que no existe de un Pelicula.
 	 */
 	@Test
 	void testGetInvalidResenha() {
@@ -189,7 +189,7 @@ class ResenhaServiceTest {
 	}
 
 	/**
-	 * Prueba para actualizar un Resenha de un libro que no existe.
+	 * Prueba para actualizar un Resenha de un Pelicula que no existe.
 	 */
 	@Test
 	void testUpdateResenhaInvalidPelicula() throws EntityNotFoundException {
@@ -203,7 +203,7 @@ class ResenhaServiceTest {
 	}
 	
 	/**
-	 * Prueba para actualizar un Resenha que no existe de un libro.
+	 * Prueba para actualizar un Resenha que no existe de un Pelicula.
 	 */
 	@Test
 	void testUpdateInvalidResenha(){
@@ -225,7 +225,7 @@ class ResenhaServiceTest {
 	}
 	
 	/**
-     * Prueba para eliminar un Resenham de un libro que no existe.
+     * Prueba para eliminar un Resenham de un Pelicula que no existe.
      */
 	@Test
 	void testDeleteResenhaInvalidPelicula()  {

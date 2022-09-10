@@ -217,7 +217,7 @@ class ActorServiceTest {
 	}
 
 	/**
-	 * Prueba para eliminar un Actor asociado a un libro
+	 * Prueba para eliminar un Actor asociado a un pelicula
 	 *
 	 */
 	@Test

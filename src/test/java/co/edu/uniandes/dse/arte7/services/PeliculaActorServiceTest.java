@@ -75,7 +75,7 @@ class PeliculaActorServiceTest {
 	}
 
 	/**
-	 * Prueba para asociar un autor a un libro.
+	 * Prueba para asociar un actor a un pelicula.
 	 *
 	 */
 	@Test
@@ -98,7 +98,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para asociar un autor que no existe a un libro.
+	 * Prueba para asociar un actor que no existe a un pelicula.
 	 *
 	 */
 	@Test
@@ -111,7 +111,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para asociar un autor a un libro que no existe.
+	 * Prueba para asociar un actor a un pelicula que no existe.
 	 *
 	 */
 	@Test
@@ -124,7 +124,7 @@ class PeliculaActorServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar la lista de autores de un libro.
+	 * Prueba para consultar la lista de actores de un pelicula.
 	 */
 	@Test
 	void testGetActores() throws EntityNotFoundException {
@@ -138,7 +138,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para consultar la lista de autores de un libro que no existe.
+	 * Prueba para consultar la lista de actores de un pelicula que no existe.
 	 */
 	@Test
 	void testGetActoresInvalidPelicula(){
@@ -148,7 +148,7 @@ class PeliculaActorServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar un autor de un libro.
+	 * Prueba para consultar un actor de un pelicula.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -167,7 +167,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para consultar un autor que no existe de un libro.
+	 * Prueba para consultar un actor que no existe de un pelicula.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -179,7 +179,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para consultar un autor de un libro que no existe.
+	 * Prueba para consultar un actor de un pelicula que no existe.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -192,7 +192,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para obtener un autor no asociado a un libro.
+	 * Prueba para obtener un actor no asociado a un pelicula.
 	 *
 	 */
 	@Test
@@ -207,7 +207,7 @@ class PeliculaActorServiceTest {
 	}
 
 	/**
-	 * Prueba para actualizar los autores de un libro.
+	 * Prueba para actualizar los actores de un pelicula.
 	 *
 	 * @throws EntityNotFoundException
 	 */
@@ -229,7 +229,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para actualizar los autores de un libro.
+	 * Prueba para actualizar los actores de un pelicula.
 	 *
 	 * @throws EntityNotFoundException
 	 */
@@ -251,7 +251,7 @@ class PeliculaActorServiceTest {
 	
 	
 	/**
-	 * Prueba para actualizar los autores de un libro que no existe.
+	 * Prueba para actualizar los actores de un pelicula que no existe.
 	 *
 	 * @throws EntityNotFoundException
 	 */
@@ -270,7 +270,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para actualizar los autores que no existen de un libro.
+	 * Prueba para actualizar los actores que no existen de un pelicula.
 	 *
 	 * @throws EntityNotFoundException
 	 */
@@ -286,7 +286,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba para actualizar un autor de un libro que no existe.
+	 * Prueba para actualizar un actor de un pelicula que no existe.
 	 *
 	 * @throws EntityNotFoundException
 	 */
@@ -305,7 +305,7 @@ class PeliculaActorServiceTest {
 	}
 
 	/**
-	 * Prueba desasociar un autor con un libro.
+	 * Prueba desasociar un actor con un pelicula.
 	 *
 	 */
 	@Test
@@ -317,7 +317,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba desasociar un autor que no existe con un libro.
+	 * Prueba desasociar un actor que no existe con un pelicula.
 	 *
 	 */
 	@Test
@@ -328,7 +328,7 @@ class PeliculaActorServiceTest {
 	}
 	
 	/**
-	 * Prueba desasociar un autor con un libro que no existe.
+	 * Prueba desasociar un actor con un pelicula que no existe.
 	 *
 	 */
 	@Test

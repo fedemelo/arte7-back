@@ -250,6 +250,18 @@ public class PeliculaServiceTest {
 		PeliculaEntity deleted = entityManager.find(PeliculaEntity.class, peliculaEntity.getId());
 		assertNull(deleted);
 	}
+
+	/**
+	 * Prueba para eliminar una pelicula no existente
+	 *
+	 */
+	@Test
+	void testDeletePeliculaWithAssociations() {
+		assertThrows(IllegalOperationException.class, ()->{
+			PeliculaEntity peliculaEntity = peliculaList.get(0);
+			peliculaService.deletePelicula(peliculaEntity.getId());
+		});
+	}
 	
 	/**
 	 * Prueba para eliminar una pelicula no existente

@@ -25,8 +25,6 @@ import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
-import co.edu.uniandes.dse.arte7.exceptions.PeliculaDirectorService;
-import co.edu.uniandes.dse.arte7.exceptions.PeliculaActorService;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -39,12 +37,6 @@ public class PeliculaServiceTest {
 
 	@Autowired
 	private PeliculaService peliculaService;
-
-    @Autowired
-	private PeliculaDirectorService peliculadirectorService;
-
-    @Autowired
-	private PeliculaActorService peliculaactorService;
 
     @Autowired
     private PeliculaPlataformaService peliculaplataformaService;
@@ -245,20 +237,6 @@ public class PeliculaServiceTest {
         List <PlataformaEntity> plataformaList= peliculaEntity.getPlataformas();
         for (PlataformaEntity storedEntity : plataformaList) {
             peliculaplataformaService.removePlataforma(peliculaEntity.getId(), storedEntity.getId());
-            
-        }
-
-        //eliminar actores
-        List <ActorEntity> actorList= peliculaEntity.getActores();
-        for (ActorEntity storedEntity : actorList) {
-            peliculaactorService.removeActor(peliculaEntity.getId(), storedEntity.getId());
-            
-        }
-
-        //eliminar actores
-        List <DirectorEntity> directorList= peliculaEntity.getDirectores();
-        for (DirectorEntity storedEntity : directorList) {
-            peliculadirectorService.removedirector(peliculaEntity.getId(), storedEntity.getId());
             
         }
 

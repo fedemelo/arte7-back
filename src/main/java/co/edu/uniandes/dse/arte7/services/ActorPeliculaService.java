@@ -28,11 +28,11 @@ public class ActorPeliculaService {
     private PeliculaRepository peliculaRepository;
 
     /**
-	 * Asocia un Book existente a un Author
+	 * Asocia un Pelicula existente a un Actor
 	 *
-	 * @param actorId Identificador de la instancia de Author
-	 * @param peliculaId   Identificador de la instancia de Book
-	 * @return Instancia de BookEntity que fue asociada a Author
+	 * @param actorId Identificador de la instancia de Actor
+	 * @param peliculaId   Identificador de la instancia de Pelicula
+	 * @return Instancia de PeliculaEntity que fue asociada a Actor
 	 */
 
 
@@ -54,12 +54,12 @@ public class ActorPeliculaService {
     }
 
     /**
-	 * Obtiene una colección de instancias de BookEntity asociadas a una instancia
-	 * de Author
+	 * Obtiene una colección de instancias de PeliculaEntity asociadas a una instancia
+	 * de Actor
 	 *
-	 * @param actoresId Identificador de la instancia de Author
-	 * @return Colección de instancias de BookEntity asociadas a la instancia de
-	 *         Author
+	 * @param actoresId Identificador de la instancia de Actor
+	 * @return Colección de instancias de PeliculaEntity asociadas a la instancia de
+	 *         Actor
 	 */
 	@Transactional
 	public List<PeliculaEntity> getPeliculas(Long actorId) throws EntityNotFoundException {
@@ -82,11 +82,11 @@ public class ActorPeliculaService {
 
     
     /**
-	 * Obtiene una instancia de BookEntity asociada a una instancia de Author
+	 * Obtiene una instancia de PeliculaEntity asociada a una instancia de Actor
 	 *
-	 * @param actoresId Identificador de la instancia de Author
-	 * @param peliculasId   Identificador de la instancia de Book
-	 * @return La entidadd de Libro del autor
+	 * @param actoresId Identificador de la instancia de Actor
+	 * @param peliculasId   Identificador de la instancia de Pelicula
+	 * @return La entidad de Pelicula del actor
 	 */
 	@Transactional
 	public PeliculaEntity getPelicula(Long actorId, Long peliculaId) throws EntityNotFoundException, IllegalOperationException {
@@ -108,12 +108,12 @@ public class ActorPeliculaService {
 	}
 
     /**
-	 * Remplaza las instancias de Book asociadas a una instancia de Author
+	 * Remplaza las instancias de Pelicula asociadas a una instancia de Actor
 	 *
-	 * @param actorId Identificador de la instancia de Author
-	 * @param peliculas    Colección de instancias de BookEntity a asociar a instancia
-	 *                 de Author
-	 * @return Nueva colección de BookEntity asociada a la instancia de Author
+	 * @param actorId Identificador de la instancia de Actor
+	 * @param peliculas    Colección de instancias de PeliculaEntity a asociar a instancia
+	 *                 de Actor
+	 * @return Nueva colección de PeliculaEntity asociada a la instancia de Actor
 	 */
 	@Transactional
 	public List<PeliculaEntity> addPeliculas(Long actorId, List<PeliculaEntity> peliculas) throws EntityNotFoundException {
@@ -135,10 +135,10 @@ public class ActorPeliculaService {
     }
 
     /**
-	 * Desasocia un Book existente de un Author existente
+	 * Desasocia un Pelicula existente de un Actor existente
 	 *
-	 * @param actoresId Identificador de la instancia de Author
-	 * @param peliculasId   Identificador de la instancia de Book
+	 * @param actoresId Identificador de la instancia de Actor
+	 * @param peliculasId   Identificador de la instancia de Pelicula
 	 */
 	@Transactional
 	public void removePelicula(Long actorId, Long peliculaId) throws EntityNotFoundException {

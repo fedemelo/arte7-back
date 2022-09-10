@@ -29,11 +29,11 @@ public class PeliculaActorService {
 	private ActorRepository actorRepository;
 
     /**
-	 * Asocia un Author existente a un Book
+	 * Asocia un Actor existente a un Pelicula
 	 *
-	 * @param peliculaId   Identificador de la instancia de Book
-	 * @param actorId Identificador de la instancia de Author
-	 * @return Instancia de AuthorEntity que fue asociada a Book
+	 * @param peliculaId   Identificador de la instancia de Pelicula
+	 * @param actorId Identificador de la instancia de Actor
+	 * @return Instancia de ActorEntity que fue asociada a Pelicula
 	 */
 
     @Transactional
@@ -54,12 +54,12 @@ public class PeliculaActorService {
 
 
     /**
-	 * Obtiene una colección de instancias de AuthorEntity asociadas a una instancia
-	 * de Book
+	 * Obtiene una colección de instancias de ActorEntity asociadas a una instancia
+	 * de Pelicula
 	 *
-	 * @param peliculaId Identificador de la instancia de Book
-	 * @return Colección de instancias de AuthorEntity asociadas a la instancia de
-	 *         Book
+	 * @param peliculaId Identificador de la instancia de Pelicula
+	 * @return Colección de instancias de ActorEntity asociadas a la instancia de
+	 *         Pelicula
 	 */
 	@Transactional
 	public List<ActorEntity> getActores(Long peliculaId) throws EntityNotFoundException {
@@ -72,10 +72,10 @@ public class PeliculaActorService {
 	}
 
     /**
-	 * Obtiene una instancia de AuthorEntity asociada a una instancia de Book
+	 * Obtiene una instancia de ActorEntity asociada a una instancia de Pelicula
 	 *
-	 * @param peliculaId   Identificador de la instancia de Book
-	 * @param actorId Identificador de la instancia de Author
+	 * @param peliculaId   Identificador de la instancia de Pelicula
+	 * @param actorId Identificador de la instancia de Actor
 	 * @return La entidad del Autor asociada al libro
 	 */
 	@Transactional
@@ -99,14 +99,14 @@ public class PeliculaActorService {
 
     @Transactional
 	/**
-	 * Remplaza las instancias de Author asociadas a una instancia de Book
+	 * Remplaza las instancias de Actor asociadas a una instancia de Pelicula
 	 *
-	 * @param peliculaId Identificador de la instancia de Book
-	 * @param list    Colección de instancias de AuthorEntity a asociar a instancia
-	 *                de Book
-	 * @return Nueva colección de AuthorEntity asociada a la instancia de Book
+	 * @param peliculaId Identificador de la instancia de Pelicula
+	 * @param list    Colección de instancias de ActorEntity a asociar a instancia
+	 *                de Pelicula
+	 * @return Nueva colección de ActorEntity asociada a la instancia de Pelicula
 	 */
-	public List<ActorEntity> replaceAuthors(Long peliculaId, List<ActorEntity> list) throws EntityNotFoundException {
+	public List<ActorEntity> replaceActores(Long peliculaId, List<ActorEntity> list) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar los actores de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
@@ -126,10 +126,10 @@ public class PeliculaActorService {
 
     @Transactional
 	/**
-	 * Desasocia un Author existente de un Book existente
+	 * Desasocia un Actor existente de un Pelicula existente
 	 *
-	 * @param peliculaId   Identificador de la instancia de Book
-	 * @param actorId Identificador de la instancia de Author
+	 * @param peliculaId   Identificador de la instancia de Pelicula
+	 * @param actorId Identificador de la instancia de Actor
 	 */
 	public void removeActor(Long peliculaId, Long actorId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar un actor de la pelicula con id = {0}", peliculaId);

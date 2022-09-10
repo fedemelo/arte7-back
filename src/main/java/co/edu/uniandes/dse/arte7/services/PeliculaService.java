@@ -65,7 +65,7 @@ public class PeliculaService {
         //Esta decision implica que en momento de la carga se debera instanciar primero actores y directores.
         List<ActorEntity> actores = peliculaEntity.getActores(); 
 
-        Iterator iteratorA = actores.iterator();
+        Iterator<ActorEntity> iteratorA = actores.iterator();
         
 
         while (iteratorA.hasNext()){
@@ -76,11 +76,11 @@ public class PeliculaService {
         }
         List<DirectorEntity> directores = peliculaEntity.getDirectores(); 
 
-        Iterator iteratorD = directores.iterator();
+        Iterator<DirectorEntity> iteratorD = directores.iterator();
         
 
         while (iteratorD.hasNext()){
-            ActorEntity director = (ActorEntity) iteratorD.next();
+            DirectorEntity director = (DirectorEntity) iteratorD.next();
             if (directorRepository.findById(director.getId()) == null){
                 throw new EntityNotFoundException("Director no encontrado.");
             }

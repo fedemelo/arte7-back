@@ -23,7 +23,6 @@ public class NominacionService {
     @Autowired
     NominacionRepository nominacionRepository;
 
-    
     /** Obtención de todos los géneros */
     @Transactional
     public List<NominacionEntity> getNominacionas() {

@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.sql.DataSourceDefinition;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
-import co.edu.uniandes.dse.arte7.entities.NominacionEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;

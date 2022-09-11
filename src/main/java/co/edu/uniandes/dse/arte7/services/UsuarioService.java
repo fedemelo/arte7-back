@@ -3,9 +3,11 @@ package co.edu.uniandes.dse.arte7.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import lombok.extern.slf4j.Slf4j;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.entities.UsuarioEntity;

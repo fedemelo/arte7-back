@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.entities.UsuarioEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
@@ -47,6 +48,7 @@ public class ResenhaUsuarioServiceTest {
 
 	private List<UsuarioEntity> usuariosList = new ArrayList<>();
 	private List<ResenhaEntity> resenhasList = new ArrayList<>();
+    private List<PeliculaEntity> peliculasList = new ArrayList<>();
 
 	/**
 	 * Configuración inicial de la prueba.
@@ -70,10 +72,19 @@ public class ResenhaUsuarioServiceTest {
 	 * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
 	 */
 	private void insertData() {
+
 		for (int i = 0; i < 3; i++) {
-			ResenhaEntity resenhas = factory.manufacturePojo(ResenhaEntity.class);
-			entityManager.persist(resenhas);
-			resenhasList.add(resenhas);
+			ResenhaEntity resenha = factory.manufacturePojo(ResenhaEntity.class);
+			entityManager.persist(resenha);
+			resenhasList.add(resenha);
+		}
+        for (int i = 0; i < 3; i++) {
+			PeliculaEntity pelicula = factory.manufacturePojo(PeliculaEntity.class);
+			entityManager.persist(pelicula);
+			peliculasList.add(pelicula);
+            if (i == 0) {
+                resenhasList.get(i).setPelicula(pelicula);
+            }
 		}
 		for (int i = 0; i < 3; i++) {
 			UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
@@ -124,34 +135,5 @@ public class ResenhaUsuarioServiceTest {
 			ResenhaEntity entity = resenhasList.get(0);
 			resenhaUsuarioService.replaceUsuario(entity.getId(), 0L);
 		});
-	}
-
-	/**
-	 * Prueba para desasociar un Resenha existente de un Usuario existente
-	 * 
-	 * @throws EntityNotFoundException
-	 *
-	 * @throws co.edu.uniandes.csw.resenhastore.exceptions.BusinessLogicException
-	 */
-	@Test
-	void testRemoveUsuario() throws EntityNotFoundException {
-		resenhaUsuarioService.removeUsuario(resenhasList.get(0).getId());
-		ResenhaEntity response = resenhaService.getResenha(resenhasList.get(0).getPelicula().getId(), resenhasList.get(0).getId());
-		assertNull(response.getCritico());
-	}
-	
-	/**
-	 * Prueba para desasociar un Resenha que no existe de un Usuario
-	 * 
-	 * @throws EntityNotFoundException
-	 *
-	 * @throws co.edu.uniandes.csw.resenhastore.exceptions.BusinessLogicException
-	 */
-	@Test
-	void testRemoveUsuarioInvalidResenha() throws EntityNotFoundException {
-		assertThrows(EntityNotFoundException.class, ()->{
-			resenhaUsuarioService.removeUsuario(0L);
-		});
-	}
-    
+	} 
 }

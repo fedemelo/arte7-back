@@ -49,25 +49,5 @@ public class ResenhaUsuarioService {
 		return resenhaEntity.get();
 	}
 
-    /**
-	 * Borrar una resenha de un usuario. Este metodo se utiliza para borrar la
-	 * relacion de una resenha.
-	 *
-	 * @param resenhaId La resenha que se desea borrar el usuario.
-	 */
-	@Transactional
-	public void removeUsuario(Long resenhaId) throws EntityNotFoundException {
-		log.info("Inicia proceso de borrar el usuario de la resenha con id = {0}", resenhaId);
-		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
-		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("La resenha con el id dado no fue encontrada");
-
-		Optional<UsuarioEntity> usuarioEntity = usuarioRepository
-				.findById(resenhaEntity.get().getCritico().getId());
-		usuarioEntity.ifPresent(usuario -> usuario.getResenhas().remove(resenhaEntity.get()));
-
-		resenhaEntity.get().setCritico(null);
-		log.info("Termina proceso de borrar el usuario de la resenha con id = {0}", resenhaId);
-	}
     
 }

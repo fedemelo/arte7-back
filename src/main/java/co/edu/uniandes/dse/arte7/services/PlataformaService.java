@@ -84,6 +84,8 @@ public class PlataformaService {
             throw new IllegalOperationException("No se borro la plataforma porque aun tiene peliculas asociadas.");
 
         log.info("Se borro la plataforma con id={0}", plataformaId);
+
+        plataformaRepository.deleteById(plataformaId);
     }
     
 }

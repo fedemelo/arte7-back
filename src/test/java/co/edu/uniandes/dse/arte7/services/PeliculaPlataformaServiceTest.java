@@ -122,7 +122,7 @@ public class PeliculaPlataformaServiceTest {
 		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 		entityManager.persist(newPelicula);
 		
-		peliculaplataformaService.addPlataforma(newPlataforma.getId(), newPelicula.getId());
+		peliculaplataformaService.addPlataforma(newPelicula.getId(), newPlataforma.getId());
 		
 		PlataformaEntity result = peliculaplataformaService.getPlataforma(newPelicula.getId(), newPlataforma.getId());
 		
@@ -291,10 +291,11 @@ public class PeliculaPlataformaServiceTest {
 	@Test
 	void testRemoveplataforma() throws EntityNotFoundException {
         PeliculaEntity pelicula = peliculaList.get(0);
-        for (PlataformaEntity plataforma : plataformaList) {
-			peliculaplataformaService.removePlataforma(pelicula.getId(), plataforma.getId());
-		}
-		assertTrue(peliculaplataformaService.getPlataformas(pelicula.getId()).isEmpty());
+		PlataformaEntity plataforma = pelicula.getPlataformas().get(0);
+        
+		peliculaplataformaService.removePlataforma(pelicula.getId(), plataforma.getId());
+		
+		assertFalse(peliculaplataformaService.getPlataformas(pelicula.getId()).contains(plataforma));
 	}
 	
 	/**

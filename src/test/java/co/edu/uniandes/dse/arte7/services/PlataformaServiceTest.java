@@ -28,7 +28,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional
-@Import(PlataformaService.class)
+@Import({PlataformaService.class, PlataformaPeliculaService.class})
 public class PlataformaServiceTest {
 
 	@Autowired
@@ -44,6 +44,8 @@ public class PlataformaServiceTest {
 	private PodamFactory factory = new PodamFactoryImpl();
 
 	private List<PlataformaEntity> plataformaList = new ArrayList<>();
+
+	private List<PeliculaEntity> peliculaList = new ArrayList<>();
 
 
 	/**
@@ -74,6 +76,13 @@ public class PlataformaServiceTest {
 			entityManager.persist(plataformaEntity);
 			plataformaList.add(plataformaEntity);
 		}
+
+		for (int i = 0; i < 3; i++) {
+			PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
+			entityManager.persist(peliculaEntity);
+			peliculaList.add(peliculaEntity);
+		}
+
 
 
 	}
@@ -199,6 +208,8 @@ public class PlataformaServiceTest {
             
         }
 
+		plataformaService.deletePlataforma(plataformaEntity.getId());
+
 		PlataformaEntity deleted = entityManager.find(PlataformaEntity.class, plataformaEntity.getId());
 		assertNull(deleted);
 	}
@@ -209,8 +220,9 @@ public class PlataformaServiceTest {
 	 */
 	@Test
 	void testDeletePlataformaWithAsociations() {
-		assertThrows(EntityNotFoundException.class, ()->{
+		assertThrows(IllegalOperationException.class, ()->{
 			PlataformaEntity plataformaEntity = plataformaList.get(0);
+			plataformaEntity.setPeliculas(peliculaList);
 			plataformaService.deletePlataforma(plataformaEntity.getId());
 		});
 	}

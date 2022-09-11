@@ -30,6 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional
+//Cuando esten todas las clases importar aca 
 @Import(PeliculaService.class)
 public class PeliculaServiceTest {
 

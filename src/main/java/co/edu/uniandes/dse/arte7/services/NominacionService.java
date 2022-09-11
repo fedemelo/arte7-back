@@ -1,16 +1,16 @@
 package co.edu.uniandes.dse.arte7.services;
 
-import javax.transaction.Transactional;
-
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.uniandes.dse.arte7.entities.NominacionEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
-import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.NominacionRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +25,14 @@ public class NominacionService {
 
     /** Obtención de todos los géneros */
     @Transactional
-    public List<NominacionEntity> getNominacionas() {
+    public List<NominacionEntity> getNominaciones() {
         log.info("Estamos buscando todas los nominaciones de las películas ... ");
         return nominacionRepository.findAll();
     }
     
     /** Creación de un nuevo género */
     @Transactional
-    public NominacionEntity crearNominacion (NominacionEntity nominacion){
+    public NominacionEntity createNominacion (NominacionEntity nominacion){
         log.info("Se está creando una nueva nominación... ");
         return nominacionRepository.save(nominacion);
     }
@@ -62,7 +62,7 @@ public class NominacionService {
 
     /** Eliminación de un género */
     @Transactional
-    public void deletenominacion(Long nominacionId) throws IllegalOperationException, EntityNotFoundException {
+    public void deleteNominacion(Long nominacionId) throws IllegalOperationException, EntityNotFoundException {
         log.info("Inicia proceso de borrar la nominación con id = {0}", nominacionId);
         Optional < NominacionEntity > NominacionEntity = nominacionRepository.findById(nominacionId);
         if (NominacionEntity.isEmpty())

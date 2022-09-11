@@ -133,6 +133,8 @@ public class PeliculaService {
             throw new IllegalOperationException("No se borro la pelicula porque aun tiene plataformas asociadas.");
         
         log.info("Se borro la pelicula con id={0}", peliculaId);
+
+        peliculaRepository.deleteById(peliculaId);
     }
 
 }

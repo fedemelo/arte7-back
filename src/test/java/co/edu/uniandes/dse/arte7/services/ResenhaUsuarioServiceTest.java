@@ -63,6 +63,7 @@ public class ResenhaUsuarioServiceTest {
 	private void clearData() {
 		entityManager.getEntityManager().createQuery("delete from ResenhaEntity").executeUpdate();
 		entityManager.getEntityManager().createQuery("delete from UsuarioEntity").executeUpdate();
+        entityManager.getEntityManager().createQuery("delete from PeliculaEntity").executeUpdate();
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class ResenhaUsuarioServiceTest {
 	void testReplaceUsuario() throws EntityNotFoundException {
 		ResenhaEntity entity = resenhasList.get(0);
 		resenhaUsuarioService.replaceUsuario(entity.getId(), usuariosList.get(1).getId());
-		entity = resenhaService.getResenha(entity.getId());
+		entity = resenhaService.getResenha(entity.getPelicula().getId(), entity.getId());
 		assertEquals(entity.getCritico(), usuariosList.get(1));
 	}
 	
@@ -135,7 +136,7 @@ public class ResenhaUsuarioServiceTest {
 	@Test
 	void testRemoveUsuario() throws EntityNotFoundException {
 		resenhaUsuarioService.removeUsuario(resenhasList.get(0).getId());
-		ResenhaEntity response = resenhaService.getResenha(resenhasList.get(0).getId());
+		ResenhaEntity response = resenhaService.getResenha(resenhasList.get(0).getPelicula().getId(), resenhasList.get(0).getId());
 		assertNull(response.getCritico());
 	}
 	

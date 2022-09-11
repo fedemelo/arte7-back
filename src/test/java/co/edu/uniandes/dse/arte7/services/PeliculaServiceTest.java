@@ -11,11 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
@@ -105,9 +105,10 @@ public class PeliculaServiceTest {
 	/**
 	 * Prueba para crear una Pelicula.
 	 * @throws IllegalOperationException 
+	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testCreatePelicula() throws IllegalOperationException {
+	void testCreatePelicula() throws IllegalOperationException, EntityNotFoundException {
 		PeliculaEntity newEntity = factory.manufacturePojo(PeliculaEntity.class);
 		
 		

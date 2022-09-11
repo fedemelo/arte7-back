@@ -28,7 +28,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional
-@Import(PeliculaService.class)
+@Import(PeliculaPlataformaService.class)
 public class PeliculaPlataformaServiceTest {
 
     @Autowired

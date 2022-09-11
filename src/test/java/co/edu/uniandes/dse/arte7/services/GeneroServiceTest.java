@@ -1,4 +1,4 @@
-package co.edu.uniandes.dse.arte7;
+package co.edu.uniandes.dse.arte7.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -83,4 +83,6 @@ public class GeneroServiceTest {
                 generoService.crearGenero(newEntity);
         });
     }
+
+    
 }

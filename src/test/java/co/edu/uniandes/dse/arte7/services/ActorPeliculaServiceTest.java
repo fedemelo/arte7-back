@@ -17,12 +17,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
+
+import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
-// import co.edu.uniandes.dse.arte7.services.ActorPeliculaService;
-// import co.edu.uniandes.dse.arte7.services.PeliculaService;
-
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -31,12 +30,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import({ ActorPeliculaService.class, PeliculaService.class })
-public class ActorPeliculaServiceTest {
-    @Autowired
+class ActorPeliculaServiceTest {
+
+	@Autowired
 	private ActorPeliculaService actorPeliculaService;
 
 	@Autowired
-	private PeliculaService bookService;
+	private PeliculaService peliculaService;
 
 	@Autowired
 	private TestEntityManager entityManager;
@@ -44,7 +44,10 @@ public class ActorPeliculaServiceTest {
 	private PodamFactory factory = new PodamFactoryImpl();
 
 	private ActorEntity actor = new ActorEntity();
-	private List<PeliculaEntity> bookList = new ArrayList<>();
+
+	private List<ActorEntity> actorList = new ArrayList<>();
+    private List<GeneroEntity> generoList = new ArrayList<>();
+	private List<PeliculaEntity> peliculaList = new ArrayList<>();
 
 	/**
 	 * Configuración inicial de la prueba.
@@ -68,59 +71,65 @@ public class ActorPeliculaServiceTest {
 	 */
 	private void insertData() {
 
-
+        // Creo actor
 		actor = factory.manufacturePojo(ActorEntity.class);
 		entityManager.persist(actor);
 
+
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-			entity.getActores().add(actor);
+			
+            // Actor
+            entity.getActores().add(actor);
+
+            // Persisto la pelicula
 			entityManager.persist(entity);
-			bookList.add(entity);
+			peliculaList.add(entity);
+
 			actor.getPeliculas().add(entity);
 		}
 	}
 
 	/**
-	 * Prueba para asociar un Pelicula a un actor.
+	 * Prueba para asociar una pelicula a un actor.
 	 *
 	 */
 	@Test
 	void testAddPelicula() throws EntityNotFoundException, IllegalOperationException {
 		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-		bookService.createPelicula(newPelicula);
 
-		PeliculaEntity bookEntity = actorPeliculaService.addPelicula(actor.getId(), newPelicula.getId());
-		assertNotNull(bookEntity);
+		peliculaService.createPelicula(newPelicula);
 
-		assertEquals(bookEntity.getId(), newPelicula.getId());
-		assertEquals(bookEntity.getNombre(), newPelicula.getNombre());
-		assertEquals(bookEntity.getPoster(), newPelicula.getPoster());
-		assertEquals(bookEntity.getDuracionSec(), newPelicula.getDuracionSec());
-		assertEquals(bookEntity.getPais(), newPelicula.getPais());
-        assertEquals(bookEntity.getFechaEstreno(), newPelicula.getFechaEstreno());
-		assertEquals(bookEntity.getUrl(), newPelicula.getUrl());
-		assertEquals(bookEntity.getVisitas(), newPelicula.getVisitas());
-        assertEquals(bookEntity.getEstrellasPromedio(), newPelicula.getEstrellasPromedio());
+		PeliculaEntity peliculaEntity = actorPeliculaService.addPelicula(actor.getId(), newPelicula.getId());
+		assertNotNull(peliculaEntity);
 
+		assertEquals(peliculaEntity.getId(), newPelicula.getId());
+		assertEquals(peliculaEntity.getNombre(), newPelicula.getNombre());
+		assertEquals(peliculaEntity.getPoster(), newPelicula.getPoster());
+		assertEquals(peliculaEntity.getPais(), newPelicula.getPais());
+		assertEquals(peliculaEntity.getDuracionSec(), newPelicula.getDuracionSec());
+        assertEquals(peliculaEntity.getFechaEstreno(), newPelicula.getFechaEstreno());
+        assertEquals(peliculaEntity.getUrl(), newPelicula.getUrl());
+        assertEquals(peliculaEntity.getVisitas(), newPelicula.getVisitas());
+        assertEquals(peliculaEntity.getEstrellasPromedio(), newPelicula.getEstrellasPromedio());
 
 		PeliculaEntity lastPelicula = actorPeliculaService.getPelicula(actor.getId(), newPelicula.getId());
 
 		assertEquals(lastPelicula.getId(), newPelicula.getId());
 		assertEquals(lastPelicula.getNombre(), newPelicula.getNombre());
 		assertEquals(lastPelicula.getPoster(), newPelicula.getPoster());
-		assertEquals(lastPelicula.getDuracionSec(), newPelicula.getDuracionSec());
 		assertEquals(lastPelicula.getPais(), newPelicula.getPais());
+		assertEquals(lastPelicula.getDuracionSec(), newPelicula.getDuracionSec());
         assertEquals(lastPelicula.getFechaEstreno(), newPelicula.getFechaEstreno());
-		assertEquals(lastPelicula.getUrl(), newPelicula.getUrl());
-		assertEquals(lastPelicula.getVisitas(), newPelicula.getVisitas());
-		assertEquals(lastPelicula.getEstrellasPromedio(), newPelicula.getEstrellasPromedio());
+        assertEquals(lastPelicula.getUrl(), newPelicula.getUrl());
+        assertEquals(lastPelicula.getVisitas(), newPelicula.getVisitas());
+        assertEquals(lastPelicula.getEstrellasPromedio(), newPelicula.getEstrellasPromedio());
 
 	}
 	
 
 	/**
-	 * Prueba para asociar un Pelicula a un actor que no existe.
+	 * Prueba para asociar una pelicula a un actor que no existe.
 	 *
 	 */
 
@@ -128,13 +137,15 @@ public class ActorPeliculaServiceTest {
 	void testAddPeliculaInvalidActor() {
 		assertThrows(EntityNotFoundException.class, () -> {
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-			bookService.createPelicula(newPelicula);
+			newPelicula.setActores(actorList);
+            newPelicula.setGeneros(generoList);
+			peliculaService.createPelicula(newPelicula);
 			actorPeliculaService.addPelicula(0L, newPelicula.getId());
 		});
 	}
 
 	/**
-	 * Prueba para asociar un Pelicula que no existe a un actor.
+	 * Prueba para asociar una pelicula que no existe a un actor.
 	 *
 	 */
 	@Test
@@ -145,21 +156,21 @@ public class ActorPeliculaServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar la lista de Peliculas de un actor.
+	 * Prueba para consultar la lista de libros de un actor.
 	 */
 	@Test
 	void testGetPeliculas() throws EntityNotFoundException {
-		List<PeliculaEntity> bookEntities = actorPeliculaService.getPeliculas(actor.getId());
+		List<PeliculaEntity> peliculaEntities = actorPeliculaService.getPeliculas(actor.getId());
 
-		assertEquals(bookList.size(), bookEntities.size());
+		assertEquals(peliculaList.size(), peliculaEntities.size());
 
-		for (int i = 0; i < bookList.size(); i++) {
-			assertTrue(bookEntities.contains(bookList.get(0)));
+		for (int i = 0; i < peliculaList.size(); i++) {
+			assertTrue(peliculaEntities.contains(peliculaList.get(0)));
 		}
 	}
 
 	/**
-	 * Prueba para consultar la lista de Peliculas de un actor que no existe.
+	 * Prueba para consultar la lista de libros de un actor que no existe.
 	 */
 	@Test
 	void testGetPeliculasInvalidActor() {
@@ -169,42 +180,42 @@ public class ActorPeliculaServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar un Pelicula de un actor.
+	 * Prueba para consultar una pelicula de un actor.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
 	void testGetPelicula() throws EntityNotFoundException, IllegalOperationException {
-		PeliculaEntity bookEntity = bookList.get(0);
-		PeliculaEntity book = actorPeliculaService.getPelicula(actor.getId(), bookEntity.getId());
-		assertNotNull(book);
+		PeliculaEntity peliculaEntity = peliculaList.get(0);
+		PeliculaEntity pelicula = actorPeliculaService.getPelicula(actor.getId(), peliculaEntity.getId());
+		assertNotNull(pelicula);
 
-		assertEquals(bookEntity.getId(), book.getId());
-		assertEquals(bookEntity.getNombre(), book.getNombre());
-		assertEquals(bookEntity.getPoster(), book.getPoster());
-		assertEquals(bookEntity.getDuracionSec(), book.getDuracionSec());
-		assertEquals(bookEntity.getPais(), book.getPais());
-        assertEquals(bookEntity.getFechaEstreno(), book.getFechaEstreno());
-		assertEquals(bookEntity.getUrl(), book.getUrl());
-		assertEquals(bookEntity.getVisitas(), book.getVisitas());
-		assertEquals(bookEntity.getEstrellasPromedio(), book.getEstrellasPromedio());
+		assertEquals(peliculaEntity.getId(), pelicula.getId());
+		assertEquals(peliculaEntity.getNombre(), pelicula.getNombre());
+		assertEquals(peliculaEntity.getPoster(), pelicula.getPoster());
+		assertEquals(peliculaEntity.getPais(), pelicula.getPais());
+		assertEquals(peliculaEntity.getDuracionSec(), pelicula.getDuracionSec());
+        assertEquals(peliculaEntity.getFechaEstreno(), pelicula.getFechaEstreno());
+        assertEquals(peliculaEntity.getUrl(), pelicula.getUrl());
+        assertEquals(peliculaEntity.getVisitas(), pelicula.getVisitas());
+        assertEquals(peliculaEntity.getEstrellasPromedio(), pelicula.getEstrellasPromedio());
 	}
 
 	/**
-	 * Prueba para consultar un Pelicula de un actor que no existe.
+	 * Prueba para consultar una pelicula de un actor que no existe.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
 	void testGetPeliculaInvalidActor() {
 		assertThrows(EntityNotFoundException.class, () -> {
-			PeliculaEntity bookEntity = bookList.get(0);
-			actorPeliculaService.getPelicula(0L, bookEntity.getId());
+			PeliculaEntity peliculaEntity = peliculaList.get(0);
+			actorPeliculaService.getPelicula(0L, peliculaEntity.getId());
 		});
 	}
 
 	/**
-	 * Prueba para consultar un Pelicula que no existe de un actor.
+	 * Prueba para consultar una pelicula que no existe de un actor.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -216,7 +227,7 @@ public class ActorPeliculaServiceTest {
 	}
 
 	/**
-	 * Prueba para consultar un Pelicula que no está asociado a un actor.
+	 * Prueba para consultar una pelicula que no está asociado a un actor.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -226,15 +237,15 @@ public class ActorPeliculaServiceTest {
 			ActorEntity actorEntity = factory.manufacturePojo(ActorEntity.class);
 			entityManager.persist(actorEntity);
 
-			PeliculaEntity bookEntity = factory.manufacturePojo(PeliculaEntity.class);
-			entityManager.persist(bookEntity);
+			PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
+			entityManager.persist(peliculaEntity);
 
-			actorPeliculaService.getPelicula(actorEntity.getId(), bookEntity.getId());
+			actorPeliculaService.getPelicula(actorEntity.getId(), peliculaEntity.getId());
 		});
 	}
 
 	/**
-	 * Prueba para actualizar los Peliculas de un actor.
+	 * Prueba para actualizar las peliculas de un actor.
 	 *
 	 * @throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -243,19 +254,19 @@ public class ActorPeliculaServiceTest {
 		List<PeliculaEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-			entity.getActores().add(actor);
-			bookService.createPelicula(entity);
+			entityManager.persist(entity);
+            actor.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
 		actorPeliculaService.addPeliculas(actor.getId(), nuevaLista);
-		List<PeliculaEntity> bookEntities = actorPeliculaService.getPeliculas(actor.getId());
+		List<PeliculaEntity> peliculaEntities = actorPeliculaService.getPeliculas(actor.getId());
 		for (PeliculaEntity aNuevaLista : nuevaLista) {
-			assertTrue(bookEntities.contains(aNuevaLista));
+			assertTrue(peliculaEntities.contains(aNuevaLista));
 		}
 	}
 	
 	/**
-	 * Prueba para actualizar los Peliculas de un actor.
+	 * Prueba para actualizar las peliculas de un actor.
 	 *
 	 * @throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -264,18 +275,19 @@ public class ActorPeliculaServiceTest {
 		List<PeliculaEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-			bookService.createPelicula(entity);
+			entityManager.persist(entity);
+            actor.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
 		actorPeliculaService.addPeliculas(actor.getId(), nuevaLista);
-		List<PeliculaEntity> bookEntities = actorPeliculaService.getPeliculas(actor.getId());
+		List<PeliculaEntity> peliculaEntities = actorPeliculaService.getPeliculas(actor.getId());
 		for (PeliculaEntity aNuevaLista : nuevaLista) {
-			assertTrue(bookEntities.contains(aNuevaLista));
+			assertTrue(peliculaEntities.contains(aNuevaLista));
 		}
 	}
 
 	/**
-	 * Prueba para actualizar los Peliculas de un actor que no existe.
+	 * Prueba para actualizar las peliculas de un actor que no existe.
 	 *
 	 * @throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -283,17 +295,18 @@ public class ActorPeliculaServiceTest {
 	void testReplacePeliculasInvalidActor() {
 		assertThrows(EntityNotFoundException.class, () -> {
 			List<PeliculaEntity> nuevaLista = new ArrayList<>();
-			for (int i = 0; i < 3; i++) {
-				PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
-				bookService.createPelicula(entity);
-				nuevaLista.add(entity);
-			}
+            for (int i = 0; i < 3; i++) {
+                PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
+                entityManager.persist(entity);
+                actor.getPeliculas().add(entity);
+                nuevaLista.add(entity);
+            }
 			actorPeliculaService.addPeliculas(0L, nuevaLista);
 		});
 	}
 
 	/**
-	 * Prueba para actualizar los Peliculas que no existen de un actor.
+	 * Prueba para actualizar las peliculas que no existen de un actor.
 	 *
 	 * @throws EntityNotFoundException, IllegalOperationException
 	 */
@@ -302,6 +315,8 @@ public class ActorPeliculaServiceTest {
 		assertThrows(EntityNotFoundException.class, () -> {
 			List<PeliculaEntity> nuevaLista = new ArrayList<>();
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
+			entity.getActores().add(actor);
+			entity.setActores(actorList);
 			entity.setId(0L);
 			nuevaLista.add(entity);
 			actorPeliculaService.addPeliculas(actor.getId(), nuevaLista);
@@ -309,32 +324,32 @@ public class ActorPeliculaServiceTest {
 	}
 
 	/**
-	 * Prueba desasociar un Pelicula con un actor.
+	 * Prueba desasociar una pelicula con un actor.
 	 *
 	 */
 	@Test
 	void testRemovePelicula() throws EntityNotFoundException {
-		for (PeliculaEntity book : bookList) {
-			actorPeliculaService.removePelicula(actor.getId(), book.getId());
+		for (PeliculaEntity pelicula : peliculaList) {
+			actorPeliculaService.removePelicula(actor.getId(), pelicula.getId());
 		}
 		assertTrue(actorPeliculaService.getPeliculas(actor.getId()).isEmpty());
 	}
 
 	/**
-	 * Prueba desasociar un Pelicula con un actor que no existe.
+	 * Prueba desasociar una pelicula con un actor que no existe.
 	 *
 	 */
 	@Test
 	void testRemovePeliculaInvalidActor() {
 		assertThrows(EntityNotFoundException.class, () -> {
-			for (PeliculaEntity book : bookList) {
-				actorPeliculaService.removePelicula(0L, book.getId());
+			for (PeliculaEntity pelicula : peliculaList) {
+				actorPeliculaService.removePelicula(0L, pelicula.getId());
 			}
 		});
 	}
 
 	/**
-	 * Prueba desasociar un Pelicula que no existe con un actor.
+	 * Prueba desasociar una pelicula que no existe con un actor.
 	 *
 	 */
 	@Test

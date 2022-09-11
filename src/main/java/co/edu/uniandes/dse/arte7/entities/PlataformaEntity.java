@@ -5,17 +5,21 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+<<<<<<< HEAD
 
+=======
+>>>>>>> fede
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
 
 import uk.co.jemos.podam.common.PodamExclude;
 
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(callSuper = true)
 public class PlataformaEntity extends BaseEntity{
 
     private String nombre;

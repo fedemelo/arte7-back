@@ -4,15 +4,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+=======
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+>>>>>>> fede
 
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
+<<<<<<< HEAD
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+=======
+>>>>>>> fede
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.ActorRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -142,4 +153,8 @@ public class PeliculaService {
         log.info("Se borro la pelicula con id={0}", peliculaId);
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fede

@@ -1,19 +1,19 @@
 package co.edu.uniandes.dse.arte7.services;
 
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
+import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.ActorRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -65,22 +65,14 @@ public class PeliculaService {
         //Esta decision implica que en momento de la carga se debera instanciar primero actores y directores.
         List<ActorEntity> actores = peliculaEntity.getActores(); 
 
-        Iterator<ActorEntity> iteratorA = actores.iterator();
-        
-
-        while (iteratorA.hasNext()){
-            ActorEntity actor = (ActorEntity) iteratorA.next();
+        for (ActorEntity actor : actores ){
             if (actorRepository.findById(actor.getId()) == null){
                 throw new EntityNotFoundException("Actor no encontrado.");
             }
         }
-        List<DirectorEntity> directores = peliculaEntity.getDirectores(); 
+        List<DirectorEntity> directores = peliculaEntity.getDirectores();      
 
-        Iterator<DirectorEntity> iteratorD = directores.iterator();
-        
-
-        while (iteratorD.hasNext()){
-            DirectorEntity director = (DirectorEntity) iteratorD.next();
+        for(DirectorEntity director : directores){
             if (directorRepository.findById(director.getId()) == null){
                 throw new EntityNotFoundException("Director no encontrado.");
             }

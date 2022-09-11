@@ -30,7 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(PlataformaPeliculaService.class)
-class plataformapeliculaServiceTest {
+class PlataformaPeliculaServiceTest {
 	
 	@Autowired
     private PlataformaPeliculaService plataformapeliculaService;
@@ -142,18 +142,6 @@ class plataformapeliculaServiceTest {
 		});
 	}
 	
-	/**
-	 * Prueba para asociar un autor a un libro que no existe.
-	 *
-	 */
-	@Test
-	void testAddPeliculaInvalidPlataforma() throws EntityNotFoundException, IllegalOperationException {
-		assertThrows(EntityNotFoundException.class, ()->{
-			PeliculaEntity Pelicula = factory.manufacturePojo(PeliculaEntity.class);
-			entityManager.persist(Pelicula);
-			plataformapeliculaService.addPelicula(0L, Pelicula.getId());
-		});
-	}
 
 	/**
 	 * Prueba para consultar la lista de autores de un libro.
@@ -348,10 +336,10 @@ class plataformapeliculaServiceTest {
 	@Test
 	void testRemovePelicula() throws EntityNotFoundException {
         PlataformaEntity plataforma = plataformaList.get(0);
-		for (PeliculaEntity Pelicula : peliculaList) {
-			plataformapeliculaService.removePelicula(plataforma.getId(), Pelicula.getId());
-		}
-		assertTrue(plataformapeliculaService.getPeliculas(plataforma.getId()).isEmpty());
+		PeliculaEntity pelicula = plataforma.getPeliculas().get(0);
+		plataformapeliculaService.removePelicula(plataforma.getId(), pelicula.getId());
+		
+		assertFalse(plataformapeliculaService.getPeliculas(plataforma.getId()).contains(pelicula));
 	}
 	
 	/**

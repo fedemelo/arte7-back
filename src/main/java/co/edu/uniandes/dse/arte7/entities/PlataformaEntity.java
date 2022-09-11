@@ -5,10 +5,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-<<<<<<< HEAD
-
-=======
->>>>>>> fede
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

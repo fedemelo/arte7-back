@@ -85,15 +85,14 @@ class PremioPeliculaServiceTest {
 	 */
 	@Test
 	void testAddPelicula() throws EntityNotFoundException, IllegalOperationException {
-		PremioEntity premio = factory.manufacturePojo(PremioEntity.class);
-		entityManager.persist(premio);
+		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
+		
         
-        PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-		entityManager.persist(newPelicula);
-		
-		premioPeliculaService.addPelicula(newPelicula.getId(), premio.getId());
-		
-		PeliculaEntity lastPelicula = premioPeliculaService.getPelicula(premio.getId(), newPelicula.getId());
+		peliculaService.createPelicula(newPelicula);
+
+        PeliculaEntity lastPelicula = premioPeliculaService.addPelicula(premio.getId(), newPelicula.getId());
+		assertNotNull(lastPelicula);
+
 		assertEquals(newPelicula.getId(), lastPelicula.getId());
 		assertEquals(newPelicula.getDuracionSec(), lastPelicula.getDuracionSec());
 		assertEquals(newPelicula.getFechaEstreno(), lastPelicula.getFechaEstreno());

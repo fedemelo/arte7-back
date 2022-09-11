@@ -28,7 +28,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(PremioService.class)
-class AuthorServiceTest {
+class PremioServiceTest {
 
 	@Autowired
 	private PremioService premioService;
@@ -61,7 +61,7 @@ class AuthorServiceTest {
 			premioList.add(premioEntity);
 		}
 
-		PremioEntity premioEntity = premioList.get(1);
+		PremioEntity premioEntity = premioList.get(2);
 		PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
 		peliculaEntity.getPremios().add(premioEntity);
 		entityManager.persist(peliculaEntity);

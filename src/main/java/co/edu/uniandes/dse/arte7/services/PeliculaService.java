@@ -62,22 +62,9 @@ public class PeliculaService {
 
 
         //verficiacion actores y directores.
-        //Esta decision implica que en momento de la carga se debera instanciar primero actores y directores.
-        List<ActorEntity> actores = peliculaEntity.getActores(); 
+        //Esta decision implica que en momento de la carga se debera instanciar primero actores y directores. 
 
-        for (ActorEntity actor : actores ){
-            if (actorRepository.findById(actor.getId()) == null){
-                throw new EntityNotFoundException("Actor no encontrado.");
-            }
-        }
-        List<DirectorEntity> directores = peliculaEntity.getDirectores();      
-
-        for(DirectorEntity director : directores){
-            if (directorRepository.findById(director.getId()) == null){
-                throw new EntityNotFoundException("Director no encontrado.");
-            }
-        }
-        log.info("Se termino de cargar el libro.");
+        log.info("Se termino de cargar la pelicula.");
         return peliculaRepository.save(peliculaEntity);
     }
 

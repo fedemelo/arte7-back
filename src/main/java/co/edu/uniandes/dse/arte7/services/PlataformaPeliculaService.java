@@ -32,13 +32,15 @@ public class PlataformaPeliculaService {
 		log.info("Inicia proceso de asociarle una pelicula la plataforma con id = {0}", plataformaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro una plataforma con esa Id.");
+			throw new EntityNotFoundException("No se encontro una pleicula con esa Id.");
 
 		Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro la pelicula con esa Id.");
+		if (plataformaEntity.isEmpty())
+			throw new EntityNotFoundException("No se encontro la plataforma con esa Id.");
 
-		plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
+        if (plataformaEntity.isPresent())
+		    plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
+            
 		log.info("Termina proceso de asociarle una pelicula a la plataforma con id = {0}", plataformaId);
 		return peliculaEntity.get();
 	}

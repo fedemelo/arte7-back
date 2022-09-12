@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -205,14 +204,15 @@ public class GeneroPeliculaServiceTest {
 	 */
 	@Test
 	void testReplacePeliculas() throws EntityNotFoundException, IllegalOperationException {
-		List<PeliculaEntity> nuevaLista = new ArrayList<>();
+		ArrayList<PeliculaEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
 			entityManager.persist(entity);
             genero.getPeliculas().add(entity);
+            generoPeliculaService.addPelicula(genero.getId(), entity.getId());
 			nuevaLista.add(entity);
 		}
-		generoPeliculaService.addPelicula(genero.getId(), nuevaLista);
+		
 		List<PeliculaEntity> peliculaEntities = generoPeliculaService.getPeliculas(genero.getId());
 		for (PeliculaEntity aNuevaLista : nuevaLista) {
 			assertTrue(peliculaEntities.contains(aNuevaLista));

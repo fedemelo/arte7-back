@@ -3,7 +3,6 @@ package co.edu.uniandes.dse.arte7.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -211,14 +210,14 @@ public class PeliculaGeneroServiceTest {
 	@Test
 	void testReplaceplataformas() throws EntityNotFoundException {
         PeliculaEntity pelicula = peliculaList.get(1);
-		List<GeneroEntity> nuevaLista = new ArrayList<>();
+		ArrayList<GeneroEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			GeneroEntity entity = factory.manufacturePojo(GeneroEntity.class);
 			entityManager.persist(entity);
 			pelicula.getGeneros().add(entity);
 			nuevaLista.add(entity);
+            peliculaGeneroService.removeGenero(pelicula.getId(), entity.getId());
 		}
-		peliculaGeneroService.removeGenero(pelicula.getId(), nuevaLista);
 		
 		List<GeneroEntity> plataformaEntities = peliculaGeneroService.getGeneros(pelicula.getId());
 		for (GeneroEntity aNuevaLista : nuevaLista) {
@@ -242,8 +241,8 @@ public class PeliculaGeneroServiceTest {
 				GeneroEntity entity = factory.manufacturePojo(GeneroEntity.class);
 				entityManager.persist(entity);
 				nuevaLista.add(entity);
+                peliculaGeneroService.removeGenero(0L, entity.getId());
 			}
-			peliculaGeneroService.removeGenero(0L, nuevaLista);
 		});
 	}
 

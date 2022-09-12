@@ -74,19 +74,5 @@ public class PeliculaGeneroServiceTest {
 
     /**Test: Asociar un género a una película */
     @Test
-	void testAddGenero() throws EntityNotFoundException, IllegalOperationException {
-		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-		entityManager.persist(newPelicula);
-		
-		GeneroEntity genero = factory.manufacturePojo(GeneroEntity.class);
-		entityManager.persist(genero);
-		
-		peliculaGeneroService.addGenero(newPelicula.getId(), genero.getId());
-		
-		GeneroEntity lastPremio = peliculaGeneroService.getGenero(newPelicula.getId(), genero.getId());
-		assertEquals(genero.getId(), lastPremio.getId());
-		assertEquals(genero.getNombre(), lastPremio.getNombre());
-
-	}
 
 }

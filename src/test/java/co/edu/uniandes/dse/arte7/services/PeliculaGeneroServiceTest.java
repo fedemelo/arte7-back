@@ -30,7 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional
-@Import(GeneroService.class)
+@Import({GeneroService.class, PeliculaGeneroService.class})
 
 public class PeliculaGeneroServiceTest {
     

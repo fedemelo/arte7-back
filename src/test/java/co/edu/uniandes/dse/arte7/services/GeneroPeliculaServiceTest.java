@@ -43,7 +43,6 @@ public class GeneroPeliculaServiceTest {
     private PodamFactory factory = new PodamFactoryImpl();
 
     private GeneroEntity genero = new GeneroEntity();
-    private PeliculaEntity pelicula = new PeliculaEntity();
 
 	private List<GeneroEntity> generoList = new ArrayList<>();
 	private List<PeliculaEntity> peliculaList = new ArrayList<>();
@@ -79,14 +78,17 @@ public class GeneroPeliculaServiceTest {
 
     /**Test: Asociar una pelicula a un genero existente */
     @Test
-	void testAddPelicula() throws EntityNotFoundException {
-        GeneroEntity entity = generoList.get(0);
-		PeliculaEntity peliculaEntity = peliculaList.get(1);
-		PeliculaEntity response = generoPeliculaService.addPelicula(peliculaEntity.getId(), entity.getId());
-
+	void testAddPelicula() throws EntityNotFoundException,  IllegalOperationException {
+        GeneroEntity newGenero = factory.manufacturePojo(GeneroEntity.class);
+		entityManager.persist(newGenero);
+		
+		PeliculaEntity pelicula = factory.manufacturePojo(PeliculaEntity.class);
+		entityManager.persist(pelicula);
+		generoPeliculaService.addPelicula(newGenero.getId(), pelicula.getId());
+		PeliculaEntity response = generoPeliculaService.addPelicula(newGenero.getId(), pelicula.getId());
 		assertNotNull(response);
-		assertEquals(peliculaEntity.getId(), response.getId());
-		assertEquals(peliculaEntity.getNombre(), response.getNombre());
+		assertEquals(pelicula.getId(), response.getId());
+		assertEquals(pelicula.getNombre(), response.getNombre());
 	}
 
     /**Test: Asociar una pelicula que NO existe a un genero */
@@ -111,11 +113,12 @@ public class GeneroPeliculaServiceTest {
     /**Test: Obtener colección  de películas de un deerminado género */
     @Test
 	void testGetPeliculas() throws EntityNotFoundException {
-		List<PeliculaEntity> listado = generoPeliculaService.getPeliculas(pelicula.getId());
+		GeneroEntity genero = generoList.get(0);
+        List<PeliculaEntity> listado = generoPeliculaService.getPeliculas(genero.getId());
 		assertEquals(peliculaList.size(), listado.size());
 
-		for (int i = 0; i < peliculaList.size(); i++) {
-			assertTrue(listado.contains(peliculaList.get(0)));
+		for (PeliculaEntity pelicula : peliculaList) {
+			assertTrue(listado.contains(pelicula));
 		}
 	}
 	
@@ -143,7 +146,8 @@ public class GeneroPeliculaServiceTest {
 	 */
 	@Test
 	void testGetPelicula() throws EntityNotFoundException, IllegalOperationException {
-		PeliculaEntity peliculaEntity = peliculaList.get(0);
+		GeneroEntity genero = generoList.get(0);
+        PeliculaEntity peliculaEntity = peliculaList.get(0);
 		PeliculaEntity pelicula = generoPeliculaService.getPelicula(genero.getId(), peliculaEntity.getId());
         assertNotNull(pelicula);
 

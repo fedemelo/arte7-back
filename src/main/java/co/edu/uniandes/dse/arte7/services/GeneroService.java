@@ -62,7 +62,7 @@ public class GeneroService {
 
     /** Eliminación de un género */
     @Transactional
-    public void deleteGenero(Long generoId) throws IllegalOperationException, EntityNotFoundException {
+    public void deleteGenero(Long generoId) throws EntityNotFoundException, IllegalOperationException {
         log.info("Inicia proceso de borrar el género con id = {0}", generoId);
         Optional < GeneroEntity > generoEntity = generoRepository.findById(generoId);
         if (generoEntity.isEmpty())

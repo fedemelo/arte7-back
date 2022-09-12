@@ -155,7 +155,7 @@ public class PeliculaGeneroServiceTest {
 		GeneroEntity genero = generoList.get(0);
         PeliculaEntity peliculaEntity = peliculaList.get(0);
         peliculaGeneroService.addGenero(genero.getId(), peliculaEntity.getId()); 
-		GeneroEntity plataforma = peliculaGeneroService.getGenero(peliculaEntity.getId(), genero.getId());
+		GeneroEntity plataforma = peliculaGeneroService.getGenero(genero.getId(), peliculaEntity.getId());
 		assertNotNull(plataforma);
 
 		assertEquals(plataforma.getId(), genero.getId());
@@ -199,36 +199,9 @@ public class PeliculaGeneroServiceTest {
 			entityManager.persist(newPelicula);
 			GeneroEntity genero = factory.manufacturePojo(GeneroEntity.class);
 			entityManager.persist(genero);
-			peliculaGeneroService.getGenero(newPelicula.getId(), genero.getId());
+			peliculaGeneroService.getGenero(genero.getId(), newPelicula.getId());
 		});
 	}
-
-
-	/**
-	 * Prueba para actualizar los autores de un libro.
-	 *
-	 * @throws EntityNotFoundException
-	 */
-	@Test
-	void testReplaceplataformas() throws EntityNotFoundException {
-        PeliculaEntity pelicula = peliculaList.get(1);
-		ArrayList<GeneroEntity> nuevaLista = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			GeneroEntity entity = factory.manufacturePojo(GeneroEntity.class);
-			entityManager.persist(entity);
-			pelicula.getGeneros().add(entity);
-			nuevaLista.add(entity);
-            peliculaGeneroService.removeGenero(entity.getId(), pelicula.getId());
-		}
-		
-		List<GeneroEntity> plataformaEntities = peliculaGeneroService.getGeneros(pelicula.getId());
-		for (GeneroEntity aNuevaLista : nuevaLista) {
-			assertTrue(plataformaEntities.contains(aNuevaLista));
-		}
-	}
-	
-	
-
 	
 	/**
 	 * Prueba para actualizar un autor de un libro que no existe.
@@ -253,13 +226,14 @@ public class PeliculaGeneroServiceTest {
 	 *
 	 */
 	@Test
-	void testRemoveplataforma() throws EntityNotFoundException {
+	void testRemoveGenero() throws EntityNotFoundException {
         PeliculaEntity pelicula = peliculaList.get(0);
-		GeneroEntity plataforma = pelicula.getGeneros().get(0);
+        GeneroEntity genero = generoList.get(0);
+        peliculaGeneroService.addGenero(genero.getId(), pelicula.getId());
         
-		peliculaGeneroService.removeGenero(pelicula.getId(), plataforma.getId());
+		peliculaGeneroService.removeGenero(genero.getId(), pelicula.getId());
 		
-		assertFalse(peliculaGeneroService.getGeneros(pelicula.getId()).contains(plataforma));
+		assertFalse(peliculaGeneroService.getGeneros(pelicula.getId()).contains(genero));
 	}
 	
 	/**

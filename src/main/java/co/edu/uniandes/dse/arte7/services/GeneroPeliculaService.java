@@ -32,7 +32,7 @@ public class GeneroPeliculaService {
 
     /**Asociar una película a un género con sus ID */
     @Transactional
-    public PeliculaEntity addPelicula(Long generoId, Long peliculaId) throws EntityNotFoundException{
+    public PeliculaEntity addPelicula(Long generoId, Long peliculaId) throws EntityNotFoundException, IllegalOperationException{
         log.info("Se asociará una película al género con id={0}", generoId);
         Optional < GeneroEntity > generoEntity = generoRepository.findById(generoId);
         Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);

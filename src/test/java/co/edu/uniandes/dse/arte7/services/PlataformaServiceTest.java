@@ -24,7 +24,7 @@ import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
+//Finalizado
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional

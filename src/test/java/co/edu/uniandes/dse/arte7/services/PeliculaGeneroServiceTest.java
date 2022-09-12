@@ -84,9 +84,9 @@ public class PeliculaGeneroServiceTest {
 		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 		entityManager.persist(newPelicula);
 		
-		peliculaGeneroService.addGenero(newPelicula.getId(), newGenero.getId());
+		peliculaGeneroService.addGenero(newGenero.getId(), newPelicula.getId());
 		
-		GeneroEntity result = peliculaGeneroService.getGenero(newPelicula.getId(), newGenero.getId());
+		GeneroEntity result = peliculaGeneroService.getGenero(newGenero.getId(), newPelicula.getId());
 		
         assertEquals(newGenero.getId(), result.getId());
         assertEquals(newGenero.getNombre(), result.getNombre());
@@ -125,12 +125,13 @@ public class PeliculaGeneroServiceTest {
 	 */
 	@Test
 	void testGetGeneros() throws EntityNotFoundException {
-		List<GeneroEntity> plataformaEntities = peliculaGeneroService.getGeneros(peliculaList.get(0).getId());
+		
+        peliculaGeneroService.updateGeneros(peliculaList.get(0).getId(), generoList);
+        List<GeneroEntity> generoEntities = peliculaGeneroService.getGeneros(peliculaList.get(0).getId());
+		assertEquals(generoList.size(), generoEntities.size());
 
-		assertEquals(generoList.size(), plataformaEntities.size());
-
-		for (GeneroEntity plataforma : plataformaEntities) {
-			assertTrue(plataformaEntities.contains(plataforma));
+		for (GeneroEntity plataforma : generoEntities) {
+			assertTrue(generoEntities.contains(plataforma));
 		}
 	}
 	
@@ -151,14 +152,14 @@ public class PeliculaGeneroServiceTest {
 	 */
 	@Test
 	void testGetGenero() throws EntityNotFoundException, IllegalOperationException {
-		GeneroEntity plataformaEntity = generoList.get(0);
+		GeneroEntity genero = generoList.get(0);
         PeliculaEntity peliculaEntity = peliculaList.get(0);
-		GeneroEntity plataforma = peliculaGeneroService.getGenero(peliculaEntity.getId(), plataformaEntity.getId());
+        peliculaGeneroService.addGenero(genero.getId(), peliculaEntity.getId()); 
+		GeneroEntity plataforma = peliculaGeneroService.getGenero(peliculaEntity.getId(), genero.getId());
 		assertNotNull(plataforma);
 
-		assertEquals(plataforma.getId(), plataformaEntity.getId());
-		assertEquals(plataforma.getNombre(), plataformaEntity.getNombre());
-
+		assertEquals(plataforma.getId(), genero.getId());
+		assertEquals(plataforma.getNombre(), genero.getNombre());
 	}
 	
 	/**
@@ -196,11 +197,12 @@ public class PeliculaGeneroServiceTest {
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 
 			entityManager.persist(newPelicula);
-			GeneroEntity plataforma = factory.manufacturePojo(GeneroEntity.class);
-			entityManager.persist(plataforma);
-			peliculaGeneroService.getGenero(newPelicula.getId(), plataforma.getId());
+			GeneroEntity genero = factory.manufacturePojo(GeneroEntity.class);
+			entityManager.persist(genero);
+			peliculaGeneroService.getGenero(newPelicula.getId(), genero.getId());
 		});
 	}
+
 
 	/**
 	 * Prueba para actualizar los autores de un libro.
@@ -216,7 +218,7 @@ public class PeliculaGeneroServiceTest {
 			entityManager.persist(entity);
 			pelicula.getGeneros().add(entity);
 			nuevaLista.add(entity);
-            peliculaGeneroService.removeGenero(pelicula.getId(), entity.getId());
+            peliculaGeneroService.removeGenero(entity.getId(), pelicula.getId());
 		}
 		
 		List<GeneroEntity> plataformaEntities = peliculaGeneroService.getGeneros(pelicula.getId());

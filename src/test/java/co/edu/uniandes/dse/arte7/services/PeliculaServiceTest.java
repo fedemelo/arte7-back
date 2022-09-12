@@ -20,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
-import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -30,16 +29,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional
-@Import({PeliculaService.class, PeliculaPlataformaService.class})
+@Import({PeliculaService.class, PeliculaPlataformaService.class, PeliculaDirectorService.class, PeliculaActorService.class})
 public class PeliculaServiceTest {
 
 	@Autowired
 	private PeliculaService peliculaService;
 
     @Autowired
-    private PeliculaPlataformaService peliculaplataformaService;
-
-	@Autowired
 	private TestEntityManager entityManager;
 
 
@@ -50,6 +46,8 @@ public class PeliculaServiceTest {
 	private List<DirectorEntity> directorList = new ArrayList<>();
 
 	private List<ActorEntity> actorList = new ArrayList<>();
+
+	
 
 
 	/**
@@ -135,21 +133,6 @@ public class PeliculaServiceTest {
         });
     }
 
-    /**
-	 * Prueba para crear pelicula con actor no valido.
-	 * @throws EntityNotFoundException
-	 */
-	@Test
-    void testCreatePeliculaNoValidActor() {
-        assertThrows(EntityNotFoundException.class, () -> {
-                PeliculaEntity newEntity = factory.manufacturePojo(PeliculaEntity.class);
-                ActorEntity newActor= factory.manufacturePojo(ActorEntity.class);
-                List <ActorEntity> listActor = new ArrayList <>();
-                listActor.add(newActor); 
-                newEntity.setActores(listActor);
-                peliculaService.createPelicula(newEntity);
-        });
-    }
 
 	/**
 	 * Prueba para consultar la lista de Peliculas.
@@ -230,15 +213,11 @@ public class PeliculaServiceTest {
 	 */
 	@Test
 	void testDeletePelicula() throws EntityNotFoundException, IllegalOperationException {
-		PeliculaEntity peliculaEntity = peliculaList.get(0);
+		PeliculaEntity peliculaEntity = peliculaList.get(1);
 
-        //elminar plataformas
-        List <PlataformaEntity> plataformaList= peliculaEntity.getPlataformas();
-        for (PlataformaEntity storedEntity : plataformaList) {
-            peliculaplataformaService.removePlataforma(peliculaEntity.getId(), storedEntity.getId());
-            
-        }
-        peliculaService.deletePelicula(peliculaEntity.getId());
+
+		
+		peliculaService.deletePelicula(peliculaEntity.getId());
 		PeliculaEntity deleted = entityManager.find(PeliculaEntity.class, peliculaEntity.getId());
 		assertNull(deleted);
 	}

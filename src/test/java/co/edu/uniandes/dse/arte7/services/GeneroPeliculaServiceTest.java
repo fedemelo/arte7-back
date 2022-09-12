@@ -109,10 +109,11 @@ public class GeneroPeliculaServiceTest {
 		});
 	}
 
-    /**Test: Obtener colección  de películas de un deerminado género */
+    /**Test: Obtener colección de películas de un determinado género */
     @Test
 	void testGetPeliculas() throws EntityNotFoundException {
 		GeneroEntity genero = generoList.get(0);
+        generoPeliculaService.updatePeliculas(genero.getId(), peliculaList);
         List<PeliculaEntity> listado = generoPeliculaService.getPeliculas(genero.getId());
 		assertEquals(peliculaList.size(), listado.size());
 

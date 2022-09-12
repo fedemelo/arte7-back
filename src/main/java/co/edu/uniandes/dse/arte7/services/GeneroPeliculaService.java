@@ -57,7 +57,7 @@ public class GeneroPeliculaService {
             throw new EntityNotFoundException("No hay ningún género con esta ID");
 
         List < PeliculaEntity > peliculas = peliculaRepository.findAll();
-        List < PeliculaEntity > peliculaList = new ArrayList < > ();
+        List < PeliculaEntity > peliculaList = new ArrayList <PeliculaEntity> ();
 
         for (PeliculaEntity b: peliculas) {
             if (b.getGeneros().contains(generoEntity.get())) {

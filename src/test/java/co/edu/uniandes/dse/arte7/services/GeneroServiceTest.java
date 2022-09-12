@@ -151,7 +151,7 @@ public class GeneroServiceTest {
     /**Test:  Borrar género*/
     @Test
     void testDeleteGenero() throws EntityNotFoundException, IllegalOperationException {
-        GeneroEntity generoEntity = generoList.get(0);
+        GeneroEntity generoEntity = generoList.get(1);
         generoService.deleteGenero(generoEntity.getId());
         GeneroEntity deleted = entityManager.find(GeneroEntity.class, generoEntity.getId());
         assertNull(deleted);

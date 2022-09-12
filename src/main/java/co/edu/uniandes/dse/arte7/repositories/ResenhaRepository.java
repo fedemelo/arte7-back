@@ -7,6 +7,6 @@ import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 
 @Repository
 public interface ResenhaRepository extends JpaRepository<ResenhaEntity, Long> {
-
+    ResenhaEntity findByPeliculaIdAndId(Long peliculaId, Long id);
 }
 

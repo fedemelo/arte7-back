@@ -148,12 +148,11 @@ public class GeneroPeliculaServiceTest {
 	void testGetPelicula() throws EntityNotFoundException, IllegalOperationException {
 		GeneroEntity genero = generoList.get(0);
         PeliculaEntity peliculaEntity = peliculaList.get(0);
+        generoPeliculaService.addPelicula(genero.getId(), peliculaEntity.getId());
 		PeliculaEntity pelicula = generoPeliculaService.getPelicula(genero.getId(), peliculaEntity.getId());
         assertNotNull(pelicula);
-
 		assertEquals(peliculaEntity.getId(), pelicula.getId());
 		assertEquals(peliculaEntity.getNombre(), pelicula.getNombre());
-
 	}
 	
 	/**

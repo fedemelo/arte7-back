@@ -238,7 +238,7 @@ public class PeliculaServiceTest {
             peliculaplataformaService.removePlataforma(peliculaEntity.getId(), storedEntity.getId());
             
         }
-
+        peliculaService.deletePelicula(peliculaEntity.getId());
 		PeliculaEntity deleted = entityManager.find(PeliculaEntity.class, peliculaEntity.getId());
 		assertNull(deleted);
 	}

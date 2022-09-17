@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class UsuarioDetailDTO extends UsuarioDTO {
-    
-    private List<ResenhaDTO> resenhaDTOs = new ArrayList<>();
+public class PlataformaDetailDTO {
 
+    private List<PeliculaDTO> resenhaDTOs = new ArrayList<>();
+    
 }

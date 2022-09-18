@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class TrabajadorDTO {
     private String nombre;
-    private String fotografia;  //*Se puso String en este tipo para que por lo pornto las pruebas corran, toca preguntarle a José como seria poniendo una imange */
+    private String fotografia; 
     private String nacionalidad;
     private Date fechaNacimiento;
     private String biografia;

@@ -7,7 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TrabajadorDTO {
+public abstract class TrabajadorDTO {
+    private Long id;
     private String nombre;
     private String fotografia; 
     private String nacionalidad;

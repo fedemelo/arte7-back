@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ActorService {
 
+    private String NO_ENCUENTRA_ACTOR = "No se encuentra el actor con el id provisto.";
+
 	@Autowired
 	ActorRepository actorRepository;
 	
@@ -66,7 +68,7 @@ public class ActorService {
 		log.info("Inicia proceso de consultar el actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
 		if (actorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el actor.");
+			throw new EntityNotFoundException(NO_ENCUENTRA_ACTOR);
 		log.info("Termina proceso de consultar el actor con id = {0}", actorId);
 		return actorEntity.get();
 	}
@@ -83,7 +85,7 @@ public class ActorService {
 		log.info("Inicia proceso de actualizar el actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
 		if (actorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el actor.");
+			throw new EntityNotFoundException(NO_ENCUENTRA_ACTOR);
 		log.info("Termina proceso de actualizar el actor con id = {0}", actorId);
 		actor.setId(actorId);
 		return actorRepository.save(actor);
@@ -100,7 +102,7 @@ public class ActorService {
 		log.info("Inicia proceso de borrar el actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
 		if (actorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el actor.");
+			throw new EntityNotFoundException(NO_ENCUENTRA_ACTOR);
 
 		List<PeliculaEntity> peliculas = actorEntity.get().getPeliculas();
 		if (!peliculas.isEmpty())

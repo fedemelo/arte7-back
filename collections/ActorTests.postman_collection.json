@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "",
+		"_postman_id": "c9b607fc-42b6-4eaa-a6f1-b273ad374ded",
 		"name": "Actor Tests",
 		"description": "Colección de pruebas sobre el recurso Actor",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23039878"
 	},
 	"item": [
 		{
@@ -171,7 +172,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia obtener un actor con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The actor with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el actor con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -249,7 +250,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia actualizar un actor con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The actor with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el actor con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -366,7 +367,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia borrar un actor con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The actor with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el actor con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}

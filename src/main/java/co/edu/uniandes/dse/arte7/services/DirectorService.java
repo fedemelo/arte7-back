@@ -26,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class DirectorService {
 
+    private String NO_ENCUENTRA_DIR = "No se encuentra el director con el id provisto.";
+
 	@Autowired
 	DirectorRepository directorRepository;
 	
@@ -71,7 +73,7 @@ public class DirectorService {
 		log.info("Inicia proceso de consultar el director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(NO_ENCUENTRA_DIR);
 		log.info("Termina proceso de consultar el director con id = {0}", directorId);
 		return directorEntity.get();
 	}
@@ -88,7 +90,7 @@ public class DirectorService {
 		log.info("Inicia proceso de actualizar el director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(NO_ENCUENTRA_DIR);
 		log.info("Termina proceso de actualizar el director con id = {0}", directorId);
 		director.setId(directorId);
 		return directorRepository.save(director);
@@ -105,7 +107,7 @@ public class DirectorService {
 		log.info("Inicia proceso de borrar el director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(NO_ENCUENTRA_DIR);
 
 		List<PeliculaEntity> peliculas = directorEntity.get().getPeliculas();
 		if (!peliculas.isEmpty())

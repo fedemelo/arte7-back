@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "",
+		"_postman_id": "205ff244-df89-484c-a682-534b23facf3b",
 		"name": "Director Tests",
 		"description": "Colección de pruebas sobre el recurso Director",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23039878"
 	},
 	"item": [
 		{
@@ -32,7 +33,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Martin Scorsese\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Martin_Scorsese_Cannes_2010.jpg/255px-Martin_Scorsese_Cannes_2010.jpg\",\n        \"nacionalidad\": \"Estadounidense e italiana\",\n        \"fechaNacimiento\": \"1942-11-17T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense.1​ Con una trayectoria que abarca más de cincuenta años, las películas de Scorsese abordan temáticas relacionadas con el catolicismo, la identidad italoestadounidense o la criminalidad,2​ caracterizándose por su violencia, uso del lenguaje vulgar, estar ambientadas en la ciudad de Nueva York y la inclusión de canciones pop, rock y clásicas en la banda sonora.\"\n    }"
+					"raw": "    {\n        \"nombre\": \"Martin Scorsese\",\n        \"fotografia\": \"https://es.web.img3.acsta.net/pictures/15/10/19/09/54/276049.jpg\",\n        \"nacionalidad\": \"Estadounidense e italiana\",\n        \"fechaNacimiento\": \"1942-11-17T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense. Con una trayectoria que abarca más de cincuenta, las películas de Scorsese abordan temáticas relacionadas con el catolicismo, la identidad italoestadounidense o la criminalidad.\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/directores",
@@ -171,7 +172,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia obtener un director con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The director with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -249,7 +250,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia actualizar un director con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The director with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -366,7 +367,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia borrar un director con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The director with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}

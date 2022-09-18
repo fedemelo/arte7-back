@@ -52,8 +52,8 @@ public class PeliculaService {
             throw new IllegalOperationException("El genero no es valido.");
         }
 
-        if (peliculaEntity.getPoster() == null){
-            throw new IllegalOperationException("El poster no es valido.");
+        if (peliculaEntity.getNombre() == null){
+            throw new IllegalOperationException("El nombre no es valido.");
         }
 
         if (peliculaEntity.getDirectores() == null){

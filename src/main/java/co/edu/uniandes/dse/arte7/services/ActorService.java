@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ActorService {
 
-    private String NO_ENCUENTRA_ACTOR = "No se encuentra el actor con el id provisto.";
+    private static final String NO_ENCUENTRA_ACTOR = "No se encuentra el actor con el id provisto.";
 
 	@Autowired
 	ActorRepository actorRepository;

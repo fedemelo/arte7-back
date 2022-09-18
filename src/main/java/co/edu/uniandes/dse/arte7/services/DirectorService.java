@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class DirectorService {
 
-    private String NO_ENCUENTRA_DIR = "No se encuentra el director con el id provisto.";
+    private static final String NO_ENCUENTRA_DIR = "No se encuentra el director con el id provisto.";
 
 	@Autowired
 	DirectorRepository directorRepository;

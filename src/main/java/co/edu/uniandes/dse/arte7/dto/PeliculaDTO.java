@@ -16,8 +16,8 @@ public class PeliculaDTO {
     private Integer duracionSec;
     private String pais;
     private Date fechaEstreno;
-    private String urlTrailer;
-    private Integer vistas;
+    private String url;
+    private Integer visitas;
     private Double estrellasPromedio;
 
 }

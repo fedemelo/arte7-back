@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.ActorRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -144,11 +145,11 @@ public class ActorPeliculaService {
 		log.info("Inicia proceso de borrar una pelicula del actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
 		if (actorEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro el actor.");
+            throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
 
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro la pelicula.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		peliculaEntity.get().getActores().remove(actorEntity.get());
 		log.info("Finaliza proceso de borrar una pelicula del actor con id = {0}", actorId);

@@ -14,6 +14,7 @@ import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.ActorRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -47,7 +48,7 @@ public class PeliculaService {
         if (peliculaEntity.getActores() == null){
             throw new IllegalOperationException("Los actores no son validos.");
         }
-        
+
         if (peliculaEntity.getGeneros() == null){
             throw new IllegalOperationException("El genero no es valido.");
         }
@@ -78,7 +79,7 @@ public class PeliculaService {
     
         Optional <PeliculaEntity> peliculaE = peliculaRepository.findById(peliculaID);
         if (peliculaE.isEmpty()){
-            throw new EntityNotFoundException("Pelicula no encontrada.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
         }
         log.info("Termino el proceso de consultar la pelicula de id={0}", peliculaID);
         return peliculaE.get();
@@ -89,7 +90,7 @@ public class PeliculaService {
         log.info("Inicia proceso de actualizar una pelicula con id = {0}", peliculaId);
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
         if (peliculaEntity.isEmpty())
-                throw new EntityNotFoundException("Pelicula no encontrada.");
+                throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
         pelicula.setId(peliculaId);
         log.info("Termina proceso de actualizar una pelicula con id = {0}", peliculaId);
@@ -101,7 +102,7 @@ public class PeliculaService {
         
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
         if (peliculaEntity.isEmpty()){
-            throw new EntityNotFoundException("Pelicula no encontrada.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
         }
 
         List<ActorEntity> actores = peliculaEntity.get().getActores();

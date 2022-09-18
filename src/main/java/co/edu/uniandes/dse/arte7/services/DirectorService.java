@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.DirectorRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +72,7 @@ public class DirectorService {
 		log.info("Inicia proceso de consultar el director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 		log.info("Termina proceso de consultar el director con id = {0}", directorId);
 		return directorEntity.get();
 	}
@@ -88,7 +89,7 @@ public class DirectorService {
 		log.info("Inicia proceso de actualizar el director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 		log.info("Termina proceso de actualizar el director con id = {0}", directorId);
 		director.setId(directorId);
 		return directorRepository.save(director);
@@ -105,7 +106,7 @@ public class DirectorService {
 		log.info("Inicia proceso de borrar el director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
 		List<PeliculaEntity> peliculas = directorEntity.get().getPeliculas();
 		if (!peliculas.isEmpty())

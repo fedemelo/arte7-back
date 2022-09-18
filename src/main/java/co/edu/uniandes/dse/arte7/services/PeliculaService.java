@@ -40,10 +40,10 @@ public class PeliculaService {
     @Transactional
     public PeliculaEntity createPelicula(PeliculaEntity peliculaEntity) throws EntityNotFoundException, IllegalOperationException {
 
-        log.info("Creando pelicual.");
+        log.info("Creando pelicula.");
 
         //validaciones de las entradas.
-        //Se decido solo verificar estas cosas porque una pelicula puede que no tenga premios, nominacion, plataforma ni resenham.
+        //Se decido solo verificar estas cosas porque una pelicula puede que no tenga premios, nominacion, plataforma ni resenhas.
         if (peliculaEntity.getActores() == null){
             throw new IllegalOperationException("Los actores no son validos.");
         }

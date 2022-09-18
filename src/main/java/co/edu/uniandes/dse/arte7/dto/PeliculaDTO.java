@@ -10,6 +10,7 @@ import lombok.Setter;
 
 public class PeliculaDTO {
     
+    private Long id;
     private String nombre;
     private String poster;
     private Integer duracionSec;

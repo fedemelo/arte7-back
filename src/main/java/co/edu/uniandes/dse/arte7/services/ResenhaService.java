@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
 import co.edu.uniandes.dse.arte7.repositories.ResenhaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class ResenhaService {
 		log.info("Inicia proceso de crear resenha");
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro la pelicula.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		resenhaEntity.setPelicula(peliculaEntity.get());
 
@@ -107,11 +108,11 @@ public class ResenhaService {
 				resenhaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro la pelicula.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
 		if (resenhaEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro la resenha.");
+            throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
 		resenha.setId(resenhaId);
 		resenha.setPelicula(peliculaEntity.get());
@@ -134,11 +135,11 @@ public class ResenhaService {
 				resenhaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro la pelicula.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		ResenhaEntity resenha = getResenha(peliculaId, resenhaId);
 		if (resenha == null) {
-			throw new EntityNotFoundException("No se encontro la resenha.");
+			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 		}
 		resenhaRepository.deleteById(resenhaId);
 		log.info("Termina proceso de borrar el resenha con id = {0} del libro con id = " + peliculaId,

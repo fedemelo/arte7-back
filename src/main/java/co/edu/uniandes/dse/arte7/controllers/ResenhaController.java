@@ -77,4 +77,8 @@ public class ResenhaController {
 			throws EntityNotFoundException {
 		resenhaService.deleteResenha(peliculaId, resenhaId);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> develop

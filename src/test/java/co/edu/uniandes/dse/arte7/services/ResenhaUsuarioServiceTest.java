@@ -106,7 +106,7 @@ public class ResenhaUsuarioServiceTest {
 	void testReplaceUsuario() throws EntityNotFoundException {
 		ResenhaEntity entity = resenhasList.get(0);
 		resenhaUsuarioService.replaceUsuario(entity.getId(), usuariosList.get(1).getId());
-		entity = resenhaService.getResenha(entity.getPelicula().getId(), entity.getId());
+		entity = resenhaService.getResenha(entity.getId());
 		assertEquals(entity.getCritico(), usuariosList.get(1));
 	}
 	

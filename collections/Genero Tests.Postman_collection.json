@@ -1,14 +1,14 @@
 {
 	"info": {
 		"_postman_id": "8bf369a5-40f1-4381-badc-c3330e241f6a",
-		"name": "Resenha Tests",
-		"description": "Colección de pruebas sobre el recurso Resenha",
+		"name": "Genero Tests",
+		"description": "Colección de pruebas sobre el recurso Genero",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
-			"name": "Crear una resenha",
+			"name": "Crear un genero",
 			"event": [
 				{
 					"listen": "test",
@@ -33,10 +33,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"estrellas\": 4,\n        \"numCaracteres\": 41 ,\n        \"numCaracteres\":\"Esta película me pareció muy interesante.\"}"
+					"raw": "    {\n        \"nombre\": \"Comedia\" }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -47,12 +47,12 @@
 						"generos"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva resenha. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo genero. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Crear un resenha 2",
+			"name": "Crear un genero 2",
 			"event": [
 				{
 					"listen": "test",
@@ -77,10 +77,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\n        \"estrellas\": 1,\n        \"numCaracteres\": 38 ,\n        \"numCaracteres\":\"Esta película me pareció muy aburrida.\"}"
+					"raw": "   {\n        \"nombre\": \"Terror\"}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -88,15 +88,15 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas"
+						"generos"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva Resenha. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo Genero. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos los resenhas",
+			"name": "Obtener todos los generos",
 			"event": [
 				{
 					"listen": "test",
@@ -104,7 +104,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
-							"tests[\"Resenhas count\"] = data.length > 0;"
+							"tests[\"Generos count\"] = data.length > 0;"
 						],
 						"type": "text/javascript"
 					}
@@ -114,7 +114,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -122,15 +122,15 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas"
+						"generos"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta todas las Resenhas de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de Resenhas en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los Generos de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de Generos en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un resenha",
+			"name": "Obtener un genero",
 			"event": [
 				{
 					"listen": "test",
@@ -155,7 +155,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -163,23 +163,23 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas",
+						"generos",
 						"{{new_id_d}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta una resenha de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del director deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un genero de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del genero deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un resenha que no existe",
+			"name": "Obtener un genero que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia obtener un usuario con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la resenha con el id provisto.\");"
+							"tests[\"No se deberia obtener un ususario con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -189,7 +189,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -197,16 +197,16 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas",
+						"generos",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta una Resenha que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /Resenha/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un Genero que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /Genero/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar una resenha",
+			"name": "Editar un genero",
 			"event": [
 				{
 					"listen": "test",
@@ -230,10 +230,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "     {\n        \"estrellas\": 3    }"
+					"raw": "     {\n        \"nombre\": \"Tragedia\"    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -241,23 +241,23 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas",
+						"generos",
 						"{{new_id_d}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza una resenha existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nActualiza un genero existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar una resenha que no existe",
+			"name": "Editar un genero que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia actualizar una Resenha con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la resenha con el id provisto.\");"
+							"tests[\"No se deberia actualizar un Genero con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -273,10 +273,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "     {\n        \"estrellas\": 3    }"
+					"raw": "     {\n        \"nombre\": \"Tragedia\"    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -284,16 +284,16 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas",
+						"generos",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\nActualiza una Resenha que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /Resenha/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
+				"description": "**Release: Paso-5**\r\nActualiza un Genero que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /Genero/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un Resenha",
+			"name": "Borrar un Genero",
 			"event": [
 				{
 					"listen": "test",
@@ -313,7 +313,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -321,16 +321,16 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas",
+						"generos",
 						"{{new_id_d}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra una Resenha. Se envía el id del Resenha creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un Genero. Se envía el id del Genero creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar el Resenha 2",
+			"name": "Borrar el Genero 2",
 			"event": [
 				{
 					"listen": "test",
@@ -350,7 +350,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_d2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos/{{new_id_d2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -358,23 +358,23 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas",
+						"generos",
 						"{{new_id_d2}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra una Resenha. Se envía el id del Resenha creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un Genero. Se envía el id del Genero creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar una Resenha que no existe",
+			"name": "Borrar un Genero que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia borrar una Resenha con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la resenha con el id provisto.\");"
+							"tests[\"No se deberia borrar un Genero con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -388,7 +388,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/generos/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -396,11 +396,11 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"resenhas",
+						"generos",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nBorrar una Resenha que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /Resenhas/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nBorra un Genero que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /Generos/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		}

@@ -13,9 +13,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var data = JSON.parse(responseBody);\r",
+							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_a\",data.id);",
-							"tests[\"No genera error en el Post\"] = responseCode.code === 201;\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
 						"type": "text/javascript"

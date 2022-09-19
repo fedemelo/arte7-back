@@ -35,13 +35,6 @@ public class PremioController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public PremioDTO create(@RequestBody PremioDTO premioDTO) throws IllegalOperationException, EntityNotFoundException {
-        PremioEntity premioEntity = premioService.createPremio(modelMapper.map(premioDTO, PremioEntity.class));
-        return modelMapper.map(premioEntity, PremioDTO.class);
-     }
-
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<PremioDetailDTO> findAll() {
@@ -56,12 +49,21 @@ public class PremioController {
         return modelMapper.map(PremioEntity, PremioDetailDTO.class);
     }
 
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public PremioDTO create(@RequestBody PremioDTO premioDTO) throws IllegalOperationException {
+        PremioEntity premioEntity = premioService.createPremio(modelMapper.map(premioDTO, PremioEntity.class));
+        return modelMapper.map(premioEntity, PremioDTO.class);
+     }
+
     @PutMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public PremioDTO update(@PathVariable("id") Long id, @RequestBody PremioDTO PremioDTO) throws EntityNotFoundException, IllegalOperationException {
         PremioEntity PremioEntity = premioService.updatePremio(id, modelMapper.map(PremioDTO, PremioEntity.class));
         return modelMapper.map(PremioEntity, PremioDTO.class);
     }
+
+  
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)

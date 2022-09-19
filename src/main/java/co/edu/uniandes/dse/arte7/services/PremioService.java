@@ -31,12 +31,15 @@ public class PremioService {
 		return premioRepository.save(premio);
 	}
 
+    /** Obtención de todas los premios */
     @Transactional
 	public List<PremioEntity> getPremios() {
 		log.info("Inicia proceso de consultar todos los premios");
 		return premioRepository.findAll();
 	}
 
+
+    /** Obtención de un premio específico por ID */
     @Transactional
 	public PremioEntity getPremio(Long premioId) throws EntityNotFoundException {
 		log.info("Inicia proceso de consultar el premio con id = {0}", premioId);

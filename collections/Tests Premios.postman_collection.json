@@ -14,7 +14,7 @@
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);\r",
-							"postman.setGlobalVariable(\"new_id_a\",data.id);\r",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;\r",
 							"console.log(data.id);"
 						],
@@ -24,10 +24,13 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [{
+					"key": "Content-Type",
+					"value": "application/json"
+					}],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "\n        \"anho\": \"2010\",\n        \"categoria\": \"Mejor Director\",\n        \"nombre\": \"Premios de la Academia\" \n"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/premios",

@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 
 public class PlataformaDTO {
-
+    
+    private Long id;
     private String nombre;
     private String url;
     

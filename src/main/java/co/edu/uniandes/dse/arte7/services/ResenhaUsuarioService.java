@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.entities.UsuarioEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.repositories.ResenhaRepository;
 import co.edu.uniandes.dse.arte7.repositories.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -37,11 +38,11 @@ public class ResenhaUsuarioService {
 		log.info("Inicia proceso de actualizar resenha con id = {0}", resenhaId);
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
         if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("La resenha con el id dado no fue encontrada");
+			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
         Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
         if(usuarioEntity.isEmpty())
-            throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+            throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 
 		resenhaEntity.get().setCritico(usuarioEntity.get());
 		log.info("Termina proceso de actualizar resenha con id = {0}", resenhaId);

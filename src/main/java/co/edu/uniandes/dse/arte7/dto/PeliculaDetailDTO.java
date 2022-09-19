@@ -8,15 +8,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-public class PeliculaDetailDTO {
+public class PeliculaDetailDTO extends PeliculaDTO{
     
+    private List<PlataformaDTO> plataformas = new ArrayList<>();
     private List<GeneroDTO> generos = new ArrayList<>();
     private List<NominacionDTO> nominaciones = new ArrayList<>();
     private List<PremioDTO> premios = new ArrayList<>();
     private List<ActorDTO> actores = new ArrayList<>();
     private List<DirectorDTO> directores = new ArrayList<>();
     private List<ResenhaDTO> resenhas = new ArrayList<>();
-    private List<UsuarioDTO> usuarios = new ArrayList<>();
 
 }

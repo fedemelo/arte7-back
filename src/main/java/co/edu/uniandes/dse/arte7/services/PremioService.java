@@ -15,6 +15,7 @@ import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 
 @Slf4j
 @Service
@@ -41,7 +42,7 @@ public class PremioService {
 		log.info("Inicia proceso de consultar el premio con id = {0}", premioId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró el premio buscado");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 		log.info("Termina proceso de consultar el premio con id = {0}", premioId);
 		return premioEntity.get();
 	}
@@ -51,7 +52,7 @@ public class PremioService {
 		log.info("Inicia proceso de actualizar el premio con id = {0}", premioId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró el premio buscado");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 		log.info("Termina proceso de actualizar el premio con id = {0}", premioId);
 		premio.setId(premioId);
 		return premioRepository.save(premio); 
@@ -61,7 +62,7 @@ public class PremioService {
 		log.info("Inicia proceso de borrar el premio con id = {0}", premioId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró el premio buscado");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
 		List<PeliculaEntity> peliculas = premioEntity.get().getPeliculas();
 		if (!peliculas.isEmpty())

@@ -1,7 +1,7 @@
 package co.edu.uniandes.dse.arte7.services;
+
 import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,36 +10,27 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
 import co.edu.uniandes.dse.arte7.repositories.ResenhaRepository;
-import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Clase que implementa la logica de 
- * Resenha
- */
 
 @Slf4j
 @Service
 public class ResenhaService {
 
-    @Autowired
-    ResenhaRepository resenhaRepository;
+	@Autowired
+	ResenhaRepository resenhaRepository;
 
-
-    @Autowired
-    PeliculaRepository peliculaRepository;
-
-     /**
-	 * Crea una resenha en la persistencia.
-	 *
-	 * @param resenhaEntity La entidad que representa la resenha a persistir.
-	 * @return La entidad dla resenha luego de persistirla.
-	 * @throws IllegalOperationException Si la resenha a persistir ya existe.
-	 */
-    @Transactional
+	@Autowired
+	PeliculaRepository peliculaRepository;
+	
+	
+	/**
+	 * Creación de una reseña en la base de datos */
+	@Transactional
 	public ResenhaEntity createResenha(ResenhaEntity resenhaEntity) throws IllegalOperationException {
 		log.info("Inicia proceso de creación de un resenha");
         if (resenhaEntity.getPelicula() == null)
@@ -118,5 +109,4 @@ public class ResenhaService {
 		resenhaRepository.deleteById(resenhaId);
 		log.info("Termina proceso de borrar la resenha con id = {0}", resenhaId);
 	}
-    
 }

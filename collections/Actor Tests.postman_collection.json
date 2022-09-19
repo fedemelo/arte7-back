@@ -1,21 +1,21 @@
 {
 	"info": {
-		"_postman_id": "205ff244-df89-484c-a682-534b23facf3b",
-		"name": "Director Tests",
-		"description": "Colección de pruebas sobre el recurso Director",
+		"_postman_id": "a993d0b1-7d60-4d74-8cc1-52dc78c29129",
+		"name": "Actor Tests",
+		"description": "Colección de pruebas sobre el recurso Actor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23039878"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
-			"name": "Crear un director",
+			"name": "Crear un actor",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_d\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -33,10 +33,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Martin Scorsese\",\n        \"fotografia\": \"https://es.web.img3.acsta.net/pictures/15/10/19/09/54/276049.jpg\",\n        \"nacionalidad\": \"Estadounidense e italiana\",\n        \"fechaNacimiento\": \"1942-11-17T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense. Con una trayectoria que abarca más de cincuenta, las películas de Scorsese abordan temáticas relacionadas con el catolicismo, la identidad italoestadounidense o la criminalidad.\"\n    }"
+					"raw": "    {\n        \"nombre\": \"Johnny Depp\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/2/21/Johnny_Depp_2020.jpg\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1963-06-09T00:00:00-05:00\",\n        \"biografia\": \"es un actor, productor de cine y músico estadounidense. Ha sido nominado en tres ocasiones al Óscar y recibió un Globo de Oro,​ un premio del Sindicato de Actores y un César.\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -44,22 +44,22 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores"
+						"actores"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo director. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo actor. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Crear un director 2",
+			"name": "Crear un actor 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_d2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -77,10 +77,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Steven Spielberg\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/8/8f/Steven_Spielberg_1999.JPG\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1946-12-18T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense.1​ Se lo considera uno de los pioneros de la era del Nuevo Hollywood y es también uno de los directores más reconocidos y populares de la industria cinematográfica mundial.\"\n    }"
+					"raw": "    {\n        \"nombre\": \"Leonardo DiCaprio\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/f/f9/Leonardo_DiCaprio.jpeg\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1974-11-11T00:00:00-05:00\",\n        \"biografia\": \"es un actor, productor de cine y ambientalista estadounidense. Ha recibido numerosos premios entre los que destacan un Óscar al mejor actor.\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -88,15 +88,15 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores"
+						"actores"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo director. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo actor. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos los directores",
+			"name": "Obtener todos los actores",
 			"event": [
 				{
 					"listen": "test",
@@ -104,7 +104,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
-							"tests[\"directores count\"] = data.length > 0;"
+							"tests[\"actores count\"] = data.length > 0;"
 						],
 						"type": "text/javascript"
 					}
@@ -114,7 +114,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -122,15 +122,15 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores"
+						"actores"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los directores de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de directores en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los actores de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de actores en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un director",
+			"name": "Obtener un actor",
 			"event": [
 				{
 					"listen": "test",
@@ -148,7 +148,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -156,23 +156,23 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores",
-						"{{new_id_d}}"
+						"actores",
+						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un director de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del director deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un actor de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del actor deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un director que no existe",
+			"name": "Obtener un actor que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia obtener un director con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
+							"tests[\"No se deberia obtener un actor con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el actor con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -182,7 +182,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -190,16 +190,16 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores",
+						"actores",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un director que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /directores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un actor que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /actores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un director",
+			"name": "Editar un actor",
 			"event": [
 				{
 					"listen": "test",
@@ -226,7 +226,7 @@
 					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -234,23 +234,23 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores",
-						"{{new_id_d}}"
+						"actores",
+						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza un director existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nActualiza un actor existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un director que no existe",
+			"name": "Editar un actor que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia actualizar un director con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
+							"tests[\"No se deberia actualizar un actor con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el actor con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -269,7 +269,7 @@
 					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -277,16 +277,16 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores",
+						"actores",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\nActualiza un director que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /directores/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
+				"description": "**Release: Paso-5**\r\nActualiza un actor que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /actores/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un director",
+			"name": "Borrar un actor",
 			"event": [
 				{
 					"listen": "test",
@@ -306,7 +306,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -314,16 +314,16 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores",
-						"{{new_id_d}}"
+						"actores",
+						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un director. Se envía el id del director creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un actor. Se envía el id del actor creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar el director 2",
+			"name": "Borrar el actor 2",
 			"event": [
 				{
 					"listen": "test",
@@ -343,7 +343,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores/{{new_id_a2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -351,23 +351,23 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores",
-						"{{new_id_d2}}"
+						"actores",
+						"{{new_id_a2}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un director. Se envía el id del director creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un actor. Se envía el id del actor creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un director que no existe",
+			"name": "Borrar un actor que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia borrar un director con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
+							"tests[\"No se deberia borrar un actor con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el actor con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -381,7 +381,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/directores/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/actores/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -389,11 +389,11 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"directores",
+						"actores",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nBorra un director que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /directores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nBorra un actor que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /actores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		}

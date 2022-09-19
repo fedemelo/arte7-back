@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "205ff244-df89-484c-a682-534b23facf3b",
+		"_postman_id": "8bf369a5-40f1-4381-badc-c3330e241f6a",
 		"name": "Plataforma Tests",
 		"description": "Colección de pruebas sobre el recurso Director",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23039878"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -36,7 +36,7 @@
 					"raw": "    {\n        \"nombre\": \"Netflix\",\n        \"url\": \"https://www.netflix.com/co/\" }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -44,7 +44,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas"
+						"plataformas"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva plataforma. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -80,7 +80,7 @@
 					"raw": "   {\n        \"nombre\": \"Disney+\",\n        \"url\": \"https://www.disneyplus.com/es-419/login\"}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -88,7 +88,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas"
+						"plataformas"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva Plataforma. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -114,7 +114,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -122,7 +122,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas"
+						"plataformas"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta todas las Plataformas de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de Plataformas en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
@@ -144,11 +144,18 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -156,7 +163,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas",
+						"plataformas",
 						"{{new_id_d}}"
 					]
 				},
@@ -172,7 +179,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia obtener un ususario con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el Plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -182,7 +189,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -190,7 +197,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas",
+						"plataformas",
 						"0"
 					]
 				},
@@ -226,7 +233,7 @@
 					"raw": "     {\n        \"nombre\": \"Gonzalo Orquesta\"    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -234,7 +241,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas",
+						"plataformas",
 						"{{new_id_d}}"
 					]
 				},
@@ -250,7 +257,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia actualizar un Plataforma con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el Plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -269,7 +276,7 @@
 					"raw": "     {\n        \"nombre\": \"Gonzalo Orquesta\"    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -277,7 +284,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas",
+						"plataformas",
 						"0"
 					]
 				},
@@ -306,7 +313,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -314,7 +321,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas",
+						"plataformas",
 						"{{new_id_d}}"
 					]
 				},
@@ -343,7 +350,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas/{{new_id_d2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_d2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -351,7 +358,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas",
+						"plataformas",
 						"{{new_id_d2}}"
 					]
 				},
@@ -367,7 +374,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia borrar un Plataforma con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el Plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -381,7 +388,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Plataformas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -389,7 +396,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Plataformas",
+						"plataformas",
 						"0"
 					]
 				},

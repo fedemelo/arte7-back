@@ -42,19 +42,19 @@ public class NominacionService {
     @Transactional
     public NominacionEntity getNominacion(Long nominacionId) throws EntityNotFoundException{
         log.info("Estamos buscando la nominación con id = {0}", nominacionId);
-        Optional < NominacionEntity > NominacionEntity = nominacionRepository.findById(nominacionId);
-        if (NominacionEntity.isEmpty())
+        Optional < NominacionEntity > nominacionEntity = nominacionRepository.findById(nominacionId);
+        if (nominacionEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
         log.info("Finaliza la consulta de la nominación con id = {0}", nominacionId);
-        return NominacionEntity.get();
+        return nominacionEntity.get();
     }
 
     /** Actualización de una nominacion por ID */
     @Transactional
     public NominacionEntity updateNominacion(Long nominacionId, NominacionEntity nominacion) throws EntityNotFoundException {
         log.info("Se actualizará la nominación con la id = {0}", nominacionId);
-        Optional < NominacionEntity > NominacionEntity = nominacionRepository.findById(nominacionId);
-        if (NominacionEntity.isEmpty())
+        Optional < NominacionEntity > nominacionEntity = nominacionRepository.findById(nominacionId);
+        if (nominacionEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
         log.info("Finaliza la actualización de la nominación id = {0}", nominacionId);
         nominacion.setId(nominacionId);
@@ -65,11 +65,11 @@ public class NominacionService {
     @Transactional
     public void deleteNominacion(Long nominacionId) throws IllegalOperationException, EntityNotFoundException {
         log.info("Inicia proceso de borrar la nominación con id = {0}", nominacionId);
-        Optional < NominacionEntity > NominacionEntity = nominacionRepository.findById(nominacionId);
-        if (NominacionEntity.isEmpty())
+        Optional < NominacionEntity > nominacionEntity = nominacionRepository.findById(nominacionId);
+        if (nominacionEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
 
-        List<PeliculaEntity> peliculas = NominacionEntity.get().getPeliculas();
+        List<PeliculaEntity> peliculas = nominacionEntity.get().getPeliculas();
         if (!peliculas.isEmpty())
             throw new IllegalOperationException("No se puede eliminar esta nominación dado que tiene alguna pelicula asociada a este");
 

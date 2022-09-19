@@ -254,7 +254,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; \r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Pelicula no encontrada.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -294,7 +294,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404; \r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Pelicula no encontrada.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -451,7 +451,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No borra con id que no existe\"] = responseCode.code === 404; \r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Pelicula no encontrada.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}

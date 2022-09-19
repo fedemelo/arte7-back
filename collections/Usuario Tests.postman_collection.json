@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "205ff244-df89-484c-a682-534b23facf3b",
+		"_postman_id": "c4f187ec-6aa9-4198-af24-2f2916e88ea8",
 		"name": "Usuario Tests",
 		"description": "Colección de pruebas sobre el recurso Director",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23039878"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -15,7 +15,7 @@
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_d\",data.id);",
+							"postman.setGlobalVariable(\"new_id_u\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -33,10 +33,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Gonzalo Quezada\"  }"
+					"raw": "    {\n        \"username\": \"Gonzalo Quezada\"  }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -44,7 +44,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios"
+						"usuarios"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo Ususario. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -59,7 +59,7 @@
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_d2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_u2\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -77,10 +77,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Antonio Orquidea\"    }"
+					"raw": "    {\n        \"username\": \"Antonio Orquidea\"    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -88,7 +88,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios"
+						"usuarios"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo Usuario. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -114,7 +114,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -122,7 +122,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios"
+						"usuarios"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los usuarios de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de usuarios en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
@@ -148,7 +148,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -156,8 +156,8 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios",
-						"{{new_id_d}}"
+						"usuarios",
+						"{{new_id_u}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta un usuario de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del director deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -182,7 +182,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -190,7 +190,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios",
+						"usuarios",
 						"0"
 					]
 				},
@@ -226,7 +226,7 @@
 					"raw": "     {\n        \"nombre\": \"Gonzalo Orquesta\"    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -234,8 +234,8 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios",
-						"{{new_id_d}}"
+						"usuarios",
+						"{{new_id_u}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nActualiza un director existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -269,7 +269,7 @@
 					"raw": "     {\n        \"nombre\": \"Gonzalo Orquesta\"    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -277,7 +277,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios",
+						"usuarios",
 						"0"
 					]
 				},
@@ -306,7 +306,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios/{{new_id_d}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -314,8 +314,8 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios",
-						"{{new_id_d}}"
+						"usuarios",
+						"{{new_id_u}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra un usuario. Se envía el id del usuario creado anteriormente.\n\n**Código HTTP esperado: 204**"
@@ -343,7 +343,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios/{{new_id_d2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -351,8 +351,8 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios",
-						"{{new_id_d2}}"
+						"usuarios",
+						"{{new_id_u2}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra un Usuario. Se envía el id del Usuario creado anteriormente.\n\n**Código HTTP esperado: 204**"
@@ -381,7 +381,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/Usuarios/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -389,7 +389,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"Usuarios",
+						"usuarios",
 						"0"
 					]
 				},

@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.entities.UsuarioEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.UsuarioRepository;
 
@@ -68,7 +69,7 @@ public class UsuarioService {
 		log.info("Inicia proceso de consultar el usuario con id = {0}", usuarioId);
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(usuarioId);
 		if (usuario.isEmpty())
-			throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 		log.info("Termina proceso de consultar el usuario con id = {0}", usuarioId);
 		return usuario.get();
 	}
@@ -86,7 +87,7 @@ public class UsuarioService {
 		log.info("Inicia proceso de actualizar el usuario con id = {0}", usuarioId);
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if (usuarioEntity.isEmpty())
-			throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 
 		usuario.setId(usuarioId);
 		log.info("Termina proceso de actualizar el usuario con id = {0}", usuarioId);
@@ -104,7 +105,7 @@ public class UsuarioService {
 		log.info("Inicia proceso de borrar el usuario con id = {0}", usuarioId);
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if (usuarioEntity.isEmpty())
-			throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 
 		List<ResenhaEntity> resenhas = usuarioEntity.get().getResenhas();
 

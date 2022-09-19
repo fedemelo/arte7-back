@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class PlataformaDetailDTO {
+public class PlataformaDetailDTO extends PlataformaDTO{
 
     private List<PeliculaDTO> resenhaDTOs = new ArrayList<>();
     

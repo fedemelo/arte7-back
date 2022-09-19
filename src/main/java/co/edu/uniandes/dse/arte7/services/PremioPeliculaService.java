@@ -16,6 +16,7 @@ import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 
 @Slf4j
 @Service
@@ -32,11 +33,11 @@ public class PremioPeliculaService {
 		log.info("Inicia proceso de asociarle una película al premio con id = {0}", premioId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró la película a agregar");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró el premio");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
 		premioEntity.get().getPeliculas().add(peliculaEntity.get());
 		log.info("Termina proceso de asociarle una película al premio con id = {0}", premioId);
@@ -48,12 +49,12 @@ public class PremioPeliculaService {
 		log.info("Inicia proceso de reemplazar las peliculas asociadas al premio con id = {0}", premioId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el premio con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
 		for (PeliculaEntity pelicula : peliculas) {
 			Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(pelicula.getId());
 			if (peliculaEntity.isEmpty())
-				throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+				throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 			if (!peliculaEntity.get().getPremios().contains(premioEntity.get()))
 				peliculaEntity.get().getPremios().add(premioEntity.get());
@@ -68,7 +69,7 @@ public class PremioPeliculaService {
 		log.info("Inicia proceso de consultar todas las películas del premio con id = {0}", premioId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró el premio");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 		log.info("Finaliza proceso de consultar todas las películas del premio con id = {0}", premioId);
 		return premioEntity.get().getPeliculas();
 	}
@@ -81,10 +82,10 @@ public class PremioPeliculaService {
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró la película");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró el premio");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
 		log.info("Termina proceso de consultar una película del premio con id = {0}", premioId);
 		if (premioEntity.get().getPeliculas().contains(peliculaEntity.get()))
@@ -99,12 +100,12 @@ public class PremioPeliculaService {
 		log.info("Inicia proceso de reemplazar las peliculas del premio con id = {0}", premioId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("no se encontró el premio");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
 		for (PeliculaEntity pelicula : list) {
 			Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(pelicula.getId());
 			if (peliculaEntity.isEmpty())
-				throw new EntityNotFoundException("No se encontró la película");
+				throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 			if (!premioEntity.get().getPeliculas().contains(peliculaEntity.get()))
 				premioEntity.get().getPeliculas().add(peliculaEntity.get());
@@ -120,10 +121,10 @@ public class PremioPeliculaService {
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró la película");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontró el premio");
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
             premioEntity.get().getPeliculas().remove(peliculaEntity.get());
 

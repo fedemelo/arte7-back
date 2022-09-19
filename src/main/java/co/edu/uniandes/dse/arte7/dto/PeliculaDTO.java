@@ -10,13 +10,14 @@ import lombok.Setter;
 
 public class PeliculaDTO {
     
+    private Long id;
     private String nombre;
     private String poster;
     private Integer duracionSec;
     private String pais;
     private Date fechaEstreno;
-    private String urlTrailer;
-    private Integer vistas;
+    private String url;
+    private Integer visitas;
     private Double estrellasPromedio;
 
 }

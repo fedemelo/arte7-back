@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.DirectorRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -49,10 +50,10 @@ public class DirectorPeliculaService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		peliculaEntity.get().getDirectores().add(directorEntity.get());
 		log.info("Termina proceso de asociarle una pelicula al director con id = {0}", directorId);

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
 import co.edu.uniandes.dse.arte7.repositories.PlataformaRepository;
@@ -32,11 +33,11 @@ public class PlataformaPeliculaService {
 		log.info("Inicia proceso de asociarle una pelicula la plataforma con id = {0}", plataformaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro una pleicula con esa Id.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
 		if (plataformaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro la plataforma con esa Id.");
+			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
 
         if (plataformaEntity.isPresent())
 		    plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
@@ -49,8 +50,8 @@ public class PlataformaPeliculaService {
 		log.info("Inicia proceso de consultar todoas las peliculas de una plataforma con id = {0}", plataformaId);
 		Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
 		if (plataformaEntity.isEmpty())
-			throw new EntityNotFoundException("Plataforma no encontrada.");
-		log.info("Finaliza proceso consultar todoas las peliculas de una plataforma con id = {0}", plataformaId);
+			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
+		log.info("Finaliza proceso consultar todas las peliculas de una plataforma con id = {0}", plataformaId);
 		return plataformaEntity.get().getPeliculas();
 	}
 
@@ -61,10 +62,10 @@ public class PlataformaPeliculaService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
         if (plataformaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro la plataforma.");
+			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro la pelicula.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		log.info("Termina proceso de consultar una pelicula de la plataforma con id = {0}", peliculaId);
 		if (plataformaEntity.get().getPeliculas().contains(peliculaEntity.get()))
@@ -78,12 +79,12 @@ public class PlataformaPeliculaService {
 		log.info("Inicia proceso de reemplazar las peliculas de la plataforma con id = {0}", plataformaId);
 		Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
 		if (plataformaEntity.isEmpty())
-			throw new EntityNotFoundException("Plataforma no encontrada");
+			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
 
 		for (PeliculaEntity pelicula : list) {
 			Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(pelicula.getId());
 			if (peliculaEntity.isEmpty())
-				throw new EntityNotFoundException("Pelicula no encontrada.");
+				throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 			if (!plataformaEntity.get().getPeliculas().contains(peliculaEntity.get()))
 				plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
@@ -99,10 +100,10 @@ public class PlataformaPeliculaService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("plataforma no encontrada.");
+			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
 
 		if (plataformaEntity.isEmpty())
-			throw new EntityNotFoundException("pelicula no encontrada.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		plataformaEntity.get().getPeliculas().remove(peliculaEntity.get());
 

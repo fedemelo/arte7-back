@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
 import co.edu.uniandes.dse.arte7.repositories.ResenhaRepository;
@@ -30,11 +31,11 @@ public class PeliculaResenhaService {
 		log.info("Inicia proceso de asociarle una resenha a la pelicula con id = {0}", peliculaId);
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
 		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la resenha con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		peliculaEntity.get().getResenhas().add(resenhaEntity.get());
 		log.info("Termina proceso de asociarle una resenha a la pelicula con id = {0}", peliculaId);
@@ -46,7 +47,7 @@ public class PeliculaResenhaService {
 		log.info("Inicia proceso de consultar todos las resenhas de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		log.info("Finaliza proceso de consultar todos las resenhas de la pelicula con id = {0}", peliculaId);
 		return peliculaEntity.get().getResenhas();
 	}
@@ -59,10 +60,10 @@ public class PeliculaResenhaService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
 		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la resenha con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		log.info("Termina proceso de consultar una resenha de la pelicula con id = {0}", peliculaId);
 		if (peliculaEntity.get().getResenhas().contains(resenhaEntity.get()))
 			return resenhaEntity.get();
@@ -76,10 +77,10 @@ public class PeliculaResenhaService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
 		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la resenha con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		peliculaEntity.get().getResenhas().remove(resenhaEntity.get());
 

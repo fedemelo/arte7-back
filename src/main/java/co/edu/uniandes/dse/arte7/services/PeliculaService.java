@@ -14,6 +14,7 @@ import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.ActorRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -40,20 +41,20 @@ public class PeliculaService {
     @Transactional
     public PeliculaEntity createPelicula(PeliculaEntity peliculaEntity) throws EntityNotFoundException, IllegalOperationException {
 
-        log.info("Creando pelicual.");
+        log.info("Creando pelicula.");
 
         //validaciones de las entradas.
-        //Se decido solo verificar estas cosas porque una pelicula puede que no tenga premios, nominacion, plataforma ni resenham.
+        //Se decido solo verificar estas cosas porque una pelicula puede que no tenga premios, nominacion, plataforma ni resenhas.
         if (peliculaEntity.getActores() == null){
             throw new IllegalOperationException("Los actores no son validos.");
         }
-        
+
         if (peliculaEntity.getGeneros() == null){
             throw new IllegalOperationException("El genero no es valido.");
         }
 
-        if (peliculaEntity.getPoster() == null){
-            throw new IllegalOperationException("El poster no es valido.");
+        if (peliculaEntity.getNombre() == null){
+            throw new IllegalOperationException("El nombre no es valido.");
         }
 
         if (peliculaEntity.getDirectores() == null){
@@ -78,7 +79,7 @@ public class PeliculaService {
     
         Optional <PeliculaEntity> peliculaE = peliculaRepository.findById(peliculaID);
         if (peliculaE.isEmpty()){
-            throw new EntityNotFoundException("Pelicula no encontrada.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
         }
         log.info("Termino el proceso de consultar la pelicula de id={0}", peliculaID);
         return peliculaE.get();
@@ -89,7 +90,7 @@ public class PeliculaService {
         log.info("Inicia proceso de actualizar una pelicula con id = {0}", peliculaId);
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
         if (peliculaEntity.isEmpty())
-                throw new EntityNotFoundException("Pelicula no encontrada.");
+                throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
         pelicula.setId(peliculaId);
         log.info("Termina proceso de actualizar una pelicula con id = {0}", peliculaId);
@@ -101,7 +102,7 @@ public class PeliculaService {
         
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
         if (peliculaEntity.isEmpty()){
-            throw new EntityNotFoundException("Pelicula no encontrada.");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
         }
 
         List<ActorEntity> actores = peliculaEntity.get().getActores();

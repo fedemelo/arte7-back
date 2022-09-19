@@ -27,7 +27,7 @@ import co.edu.uniandes.dse.arte7.services.UsuarioService;
 
 
 @RestController
-@RequestMapping("/Usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired

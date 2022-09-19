@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.uniandes.dse.arte7.dto.ResenhaDTO;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.services.ResenhaService;
 
 @RestController
@@ -32,49 +33,47 @@ public class ResenhaController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping(value = "/{peliculaId}/resenhas")
+    @PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResenhaDTO createResenha(@PathVariable("peliculaId") Long peliculaId, @RequestBody ResenhaDTO resenha)
-			throws EntityNotFoundException {
-		ResenhaEntity resenhaEnity = modelMapper.map(resenha, ResenhaEntity.class);
-		ResenhaEntity newResenha = resenhaService.createResenha(peliculaId, resenhaEnity);
-		return modelMapper.map(newResenha, ResenhaDTO.class);
+	public ResenhaDTO create(@RequestBody ResenhaDTO resenhaDTO)
+			throws EntityNotFoundException, IllegalOperationException {
+				ResenhaEntity resenhaEntity = resenhaService.createResenha(modelMapper.map(resenhaDTO, ResenhaEntity.class));
+				return modelMapper.map(resenhaEntity, ResenhaDTO.class);
 	}
 
 	/**Busca y devuelve todas las reseñas que existen en la película */
 	
-    @GetMapping(value = "/{peliculaId}/resenhas")
+    @GetMapping
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ResenhaDTO> getResenhas(@PathVariable("peliculaId") Long peliculaId) throws EntityNotFoundException {
-		List<ResenhaEntity> resenhas = resenhaService.getResenhas(peliculaId);
+	public List<ResenhaDTO> findAll() {
+		List<ResenhaEntity> resenhas = resenhaService.getResenhas();
 		return modelMapper.map(resenhas, new TypeToken<List<ResenhaDTO>>() {
 		}.getType());
 	}
 
 	/** Busca y devuelve la reseña con el ID recibido en la URL, relativa a la película */
-	@GetMapping(value = "/{peliculaId}/resenhas/{resenhaId}")
+	@GetMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDTO getResenha(@PathVariable("peliculaId") Long peliculaId, @PathVariable("resenhaId") Long resenhaId)
+	public ResenhaDTO findOne(@PathVariable("id") Long id)
 			throws EntityNotFoundException {
-		ResenhaEntity entity = resenhaService.getResenha(peliculaId, resenhaId);
+		ResenhaEntity entity = resenhaService.getResenha(id);
 		return modelMapper.map(entity, ResenhaDTO.class);
 	}
 
 	/** Actualiza una reseña con la informacion que se recibe en el cuerpo de la petición y se regresa el objeto actualizado */
-	@PutMapping(value = "/{peliculaId}/resenhas/{resenhasId}")
+	@PutMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDTO updateResenha(@PathVariable("peliculaId") Long peliculaId, @PathVariable("resenhasId") Long resenhaId,
-			@RequestBody ResenhaDTO resenha) throws EntityNotFoundException {
-		ResenhaEntity resenhaEntity = modelMapper.map(resenha, ResenhaEntity.class);
-		ResenhaEntity newEntity = resenhaService.updateResenha(peliculaId, resenhaId, resenhaEntity);
+	public ResenhaDTO update(@PathVariable("id") Long id, @RequestBody ResenhaDTO resenhaDTO) throws EntityNotFoundException {
+		ResenhaEntity newEntity = resenhaService.updateResenha(id, modelMapper.map(resenhaDTO, ResenhaEntity.class));
 		return modelMapper.map(newEntity, ResenhaDTO.class);
 	}
 
-	/** Borra la reseña con el id asociado recibido en la URL */
-	@DeleteMapping(value = "/{peliculaId}/resenhas/{resenhaId}")
+	/** Borra la reseña con el id asociado recibido en la URL 
+	 * @throws IllegalOperationException*/
+	@DeleteMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void deleteResenha(@PathVariable("peliculaId") Long peliculaId, @PathVariable("resenhaId") Long resenhaId)
-			throws EntityNotFoundException {
-		resenhaService.deleteResenha(peliculaId, resenhaId);
+	public void delete(@PathVariable("id") Long id)
+			throws EntityNotFoundException, IllegalOperationException {
+		resenhaService.deleteResenha(id);
 	}
 }

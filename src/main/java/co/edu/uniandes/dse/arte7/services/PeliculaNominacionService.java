@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.NominacionEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.NominacionRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -43,11 +44,11 @@ public class PeliculaNominacionService {
 		log.info("Inicia proceso de asociarle una nominacion a la pelicula con id = {0}", peliculaId);
 		Optional<NominacionEntity> nominacionEntity = nominacionRepository.findById(nominacionId);
 		if (nominacionEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la nominacion con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
 
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		peliculaEntity.get().getNominaciones().add(nominacionEntity.get());
 		log.info("Termina proceso de asociarle una nominacion a la pelicula con id = {0}", peliculaId);
@@ -67,7 +68,7 @@ public class PeliculaNominacionService {
 		log.info("Inicia proceso de consultar todos las nominaciones de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		log.info("Finaliza proceso de consultar todos las nominaciones de la pelicula con id = {0}", peliculaId);
 		return peliculaEntity.get().getNominaciones();
 	}
@@ -87,10 +88,10 @@ public class PeliculaNominacionService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
 		if (nominacionEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la nominacion con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		log.info("Termina proceso de consultar una nominacion de la pelicula con id = {0}", peliculaId);
 		if (peliculaEntity.get().getNominaciones().contains(nominacionEntity.get()))
 			return nominacionEntity.get();
@@ -111,12 +112,12 @@ public class PeliculaNominacionService {
 		log.info("Inicia proceso de reemplazar las nominaciones de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		for (NominacionEntity nominacion : list) {
 			Optional<NominacionEntity> nominacionEntity = nominacionRepository.findById(nominacion.getId());
 			if (nominacionEntity.isEmpty())
-				throw new EntityNotFoundException("No se encuentra la nominacion con el id provisto.");
+				throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
 
 			if (!peliculaEntity.get().getNominaciones().contains(nominacionEntity.get()))
 				peliculaEntity.get().getNominaciones().add(nominacionEntity.get());
@@ -138,10 +139,10 @@ public class PeliculaNominacionService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
 		if (nominacionEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la nominacion con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		peliculaEntity.get().getNominaciones().remove(nominacionEntity.get());
 

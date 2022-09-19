@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.entities.UsuarioEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.ResenhaRepository;
 import co.edu.uniandes.dse.arte7.repositories.UsuarioRepository;
@@ -47,11 +48,11 @@ public class UsuarioResenhaService {
 		
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
 		if(resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("La resenha con el id dado no fue encontrada");
+			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 		
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if(usuarioEntity.isEmpty())
-			throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 		
 		resenhaEntity.get().setCritico(usuarioEntity.get());
 		log.info("Termina proceso de agregarle una resehna al usuario con id = {0}", usuarioId);
@@ -70,7 +71,7 @@ public class UsuarioResenhaService {
 		log.info("Inicia proceso de consultar las resenhas asociadas al usuario con id = {0}", usuarioId);
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if(usuarioEntity.isEmpty())
-			throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 		
 		return usuarioEntity.get().getResenhas();
 	}
@@ -90,11 +91,11 @@ public class UsuarioResenhaService {
 		
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if(usuarioEntity.isEmpty())
-			throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 		
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
 		if(resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("La resenha con el id dado no fue encontrada");
+			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 				
 		log.info("Termina proceso de consultar la resehna con id = {0} del usuario con id = " + resenhaId, usuarioId);
 		
@@ -117,12 +118,12 @@ public class UsuarioResenhaService {
 		log.info("Inicia proceso de actualizar las resenhas del usuario con id = {0}", usuarioId);
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if(usuarioEntity.isEmpty())
-			throw new EntityNotFoundException("El usuario con el id dado no fue encontrado");
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 		
 		for(ResenhaEntity resenha : resenhas) {
 			Optional<ResenhaEntity> r = resenhaRepository.findById(resenha.getId());
 			if(r.isEmpty())
-				throw new EntityNotFoundException("La resenha con el id dado no fue encontrada");
+				throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 			
 			r.get().setCritico(usuarioEntity.get());
 		}		

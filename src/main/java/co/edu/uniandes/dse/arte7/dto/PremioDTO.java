@@ -8,6 +8,7 @@ import lombok.Setter;
 
 public class PremioDTO {
     
+    private Long id;
     private String nombre;
     private Integer anho;
     private String categoria;    

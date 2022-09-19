@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.GeneroRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
@@ -38,10 +39,10 @@ public class GeneroPeliculaService {
         Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);
 
         if (generoEntity.isEmpty())
-            throw new EntityNotFoundException("Ningún género coincide con la ID digitada");
+            throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
 
         if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("Ninguna película coincide con la ID digitada");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
         peliculaEntity.get().getGeneros().add(generoEntity.get());
         log.info("Se le ha asociado una película al género con id = {0}", generoId);
@@ -54,7 +55,7 @@ public class GeneroPeliculaService {
         log.info("Se consultarán todos las películas del género con id = {0}", generoId);
         Optional < GeneroEntity > generoEntity = generoRepository.findById(generoId);
         if (generoEntity.isEmpty())
-            throw new EntityNotFoundException("No hay ningún género con esta ID");
+            throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
 
         List < PeliculaEntity > peliculas = peliculaRepository.findAll();
         List < PeliculaEntity > peliculaList = new ArrayList <PeliculaEntity> ();
@@ -76,10 +77,10 @@ public class GeneroPeliculaService {
         Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);
 
         if (generoEntity.isEmpty())
-            throw new EntityNotFoundException("No hay ningún género con el ID digitado");
+            throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
 
         if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("No hay ninguna pelicula con el ID digitado");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
         log.info("Se ha consultado una película con id = {0} del género con id = " + peliculaId, generoId);
         if (peliculaEntity.get().getGeneros().contains(generoEntity.get()))
@@ -94,12 +95,12 @@ public class GeneroPeliculaService {
         log.info("Se reemplazarán las películas asociados al género con id = {0}", generoId);
         Optional < GeneroEntity > generoEntity = generoRepository.findById(generoId);
         if (generoEntity.isEmpty())
-            throw new EntityNotFoundException("No hay ningún género con el ID digitado");
+            throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
 
         for (PeliculaEntity pelicula: peliculas) {
             Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(pelicula.getId());
             if (peliculaEntity.isEmpty())
-                throw new EntityNotFoundException("No hay ninguna película con el ID digitado");
+                throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
             if (!peliculaEntity.get().getGeneros().contains(generoEntity.get()))
                 peliculaEntity.get().getGeneros().add(generoEntity.get());
@@ -114,11 +115,11 @@ public class GeneroPeliculaService {
         log.info("Inicia proceso de borrar un libro del genero con id = {0}", generoId);
         Optional < GeneroEntity > generoEntity = generoRepository.findById(generoId);
         if (generoEntity.isEmpty())
-            throw new EntityNotFoundException("No hay ningún género con el ID digitado");
+            throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
 
         Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);
         if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("No hay ninguna película con el ID digitado");
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
         peliculaEntity.get().getGeneros().remove(generoEntity.get());
         log.info("Finaliza proceso de borrar una película del genero con id = {0}", generoId);

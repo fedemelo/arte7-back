@@ -11,6 +11,6 @@ import lombok.Setter;
 
 public class ResenhaDetailDTO extends ResenhaDTO {
 
-    private List<PeliculaDTO> pelicualas = new ArrayList<>();
+    private List<PeliculaDTO> peliculas = new ArrayList<>();
 
 }

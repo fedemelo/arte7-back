@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
+import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.PlataformaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,7 @@ public class PlataformaService {
     
         Optional <PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaID);
         if (plataformaEntity.isEmpty()){
-            throw new EntityNotFoundException("Plataforma no encontrada.");
+            throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
         }
         log.info("Termino el proceso de consultar la plataforma de id={0}", plataformaID);
         return plataformaEntity.get();
@@ -62,7 +63,7 @@ public class PlataformaService {
         log.info("Inicia proceso de actualizar una plataforma con id = {0}", plataformaId);
         Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
         if (plataformaEntity.isEmpty())
-                throw new EntityNotFoundException("Plataforma no encontrada.");
+                throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
 
         plataforma.setId(plataformaId);
         log.info("Termina proceso de actualizar una plataforma con id = {0}", plataformaId);
@@ -75,7 +76,7 @@ public class PlataformaService {
         
         Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
         if (plataformaEntity.isEmpty()){
-            throw new EntityNotFoundException("plataforma no encontrada.");
+            throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
         }
 
         List<PeliculaEntity> peliculas = plataformaEntity.get().getPeliculas();

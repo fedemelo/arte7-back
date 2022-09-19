@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
+import co.edu.uniandes.dse.arte7.entities.UsuarioEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -35,10 +36,13 @@ class ResenhaServiceTest {
 	@Autowired
 	private TestEntityManager entityManager;
 
+    private PeliculaEntity peliculaEntity;
+
+	private List<UsuarioEntity> usuarioList = new ArrayList<>();
+
 	private PodamFactory factory = new PodamFactoryImpl();
 
 	private List<ResenhaEntity> resenhaList = new ArrayList<>();
-	private List<PeliculaEntity> peliculaList = new ArrayList<>();
 
 	/**
 	 * Configuración inicial de la prueba.
@@ -62,16 +66,21 @@ class ResenhaServiceTest {
 	 */
 	private void insertData() {
 
-		for (int i = 0; i < 3; i++) {
-			PeliculaEntity entity = factory.manufacturePojo(PeliculaEntity.class);
+		peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
+		entityManager.persist(peliculaEntity);
+
+        for (int i = 0; i < 3; i++) {
+			UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+			usuarioList.add(entity);
 			entityManager.persist(entity);
-			peliculaList.add(entity);
 		}
 
 		for (int i = 0; i < 3; i++) {
 			ResenhaEntity entity = factory.manufacturePojo(ResenhaEntity.class);
-			entity.setPelicula(peliculaList.get(0));
-			peliculaList.get(0).getResenhas().add(entity);
+			entity.setPelicula(peliculaEntity);
+            entity.setCritico(usuarioList.get(i));
+			usuarioList.get(0).getResenhas().add(entity);
+            peliculaEntity.getResenhas().add(entity);
 			entityManager.persist(entity);
 			resenhaList.add(entity);
 		}
@@ -83,8 +92,8 @@ class ResenhaServiceTest {
 	@Test
 	void testCreateResenha() throws EntityNotFoundException {
 		ResenhaEntity newEntity = factory.manufacturePojo(ResenhaEntity.class);
-		newEntity.setPelicula(peliculaList.get(1));
-		ResenhaEntity result = resenhaService.createResenha(resenhaList.get(1).getId(), newEntity);
+		newEntity.setPelicula(peliculaEntity);
+		ResenhaEntity result = resenhaService.createResenha(resenhaList.get(0));
 		assertNotNull(result);
 		ResenhaEntity entity = entityManager.find(ResenhaEntity.class, result.getId());
 		assertEquals(newEntity.getId(), entity.getId());
@@ -94,22 +103,11 @@ class ResenhaServiceTest {
 	}
 
 	/**
-	 * Prueba para crear un Resenha con un Pelicula que no existe.
-	 */
-	@Test
-	void testCreateResenhaInvalidPelicula() throws EntityNotFoundException {
-		assertThrows(EntityNotFoundException.class, () -> {
-			ResenhaEntity newEntity = factory.manufacturePojo(ResenhaEntity.class);
-			resenhaService.createResenha(0L, newEntity);
-		});
-	}
-
-	/**
 	 * Prueba para consultar la lista de Resenhas.
 	 */
 	@Test
 	void testGetResenhas() throws EntityNotFoundException {
-		List<ResenhaEntity> list = resenhaService.getResenhas(peliculaList.get(0).getId());
+		List<ResenhaEntity> list = resenhaService.getResenhas();
 		assertEquals(resenhaList.size(), list.size());
 		for (ResenhaEntity entity : list) {
 			boolean found = false;
@@ -138,7 +136,7 @@ class ResenhaServiceTest {
 	@Test
 	void testGetResenha() throws EntityNotFoundException {
 		ResenhaEntity entity = resenhaList.get(0);
-		ResenhaEntity resultEntity = resenhaService.getResenha(peliculaList.get(0).getId(), entity.getId());
+		ResenhaEntity resultEntity = resenhaService.getResenha(peliculaEntity.getId(), entity.getId());
 		assertNotNull(resultEntity);
 		assertEquals(entity.getId(), resultEntity.getId());
 		assertEquals(entity.getEstrellas(), resultEntity.getEstrellas());
@@ -163,7 +161,7 @@ class ResenhaServiceTest {
 	@Test
 	void testGetInvalidResenha() {
 		assertThrows(EntityNotFoundException.class, () -> {
-			resenhaService.getResenha(peliculaList.get(0).getId(), 0L);
+			resenhaService.getResenha(peliculaEntity.getId(), 0L);
 		});
 	}
 
@@ -218,7 +216,7 @@ class ResenhaServiceTest {
 	@Test
 	void testDeleteResenha() throws EntityNotFoundException {
 		ResenhaEntity entity = resenhaList.get(0);
-		resenhaService.deleteResenha(peliculaList.get(0).getId(), entity.getId());
+		resenhaService.deleteResenha(peliculaEntity.getId(), entity.getId());
 		ResenhaEntity deleted = entityManager.find(ResenhaEntity.class, entity.getId());
 		assertNull(deleted);
 	}

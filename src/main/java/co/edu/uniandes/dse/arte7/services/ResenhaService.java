@@ -1,227 +1,169 @@
 package co.edu.uniandes.dse.arte7.services;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import javax.transaction.Transactional;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
-import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
-import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
-import co.edu.uniandes.dse.arte7.repositories.ResenhaRepository;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
-import lombok.extern.slf4j.Slf4j;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- * Clase que implementa la logica de 
- * Resenha
+ * Pruebas de logica de Resenha
+ *
+ * @author Mariana Ruiz
  */
 
-@Slf4j
-@Service
-public class ResenhaService {
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
+@Transactional
+@Import(ResenhaService.class)
+class ResenhaServiceTest {
 
-    @Autowired
-    ResenhaRepository resenhaRepository;
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 	@Autowired
-	PeliculaRepository peliculaRepository;
+	private ResenhaService resenhaService;
+
+	@Autowired
+	private TestEntityManager entityManager;
+
+	private PodamFactory factory = new PodamFactoryImpl();
+
+	private List<ResenhaEntity> resenhaList = new ArrayList<>();
+	private List<PeliculaEntity> peliculaList = new ArrayList<>();
 	
+	@BeforeEach
+	void setUp() {
+		clearData();
+		insertData();
+	}
+
 	
-	/**
-	 * Creación de una reseña en la base de datos */
-	@Transactional
-	public ResenhaEntity createResenha(Long peliculaId, ResenhaEntity resenhaEntity) throws EntityNotFoundException {
-		log.info("Inicia el proceso de crear una reseña");
-		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No hay ninguna película");
-
-		resenhaEntity.setPelicula(peliculaEntity.get());
-
-		log.info("Termina el proceso de creación de la reseña");
-		return resenhaRepository.save(resenhaEntity);
+	private void clearData() {
+		entityManager.getEntityManager().createQuery("delete from PeliculaEntity").executeUpdate();
+		entityManager.getEntityManager().createQuery("delete from ResenhaEntity").executeUpdate();
 	}
 
-	/** Obtiene la lista de reseñas que pertenecen a un pelicula */
-
-	@Transactional
-	public List<ResenhaEntity> getResenhas(Long peliculaId) throws EntityNotFoundException {
-		log.info("Inicia el proceso de consultar las reseñas que tiene la película con id = {0}", peliculaId);
-		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No hay ninguna película");
-
-		log.info("Termina proceso de consultar las reseñas asociadas al pelicula con id = {0}", peliculaId);
-		return peliculaEntity.get().getResenhas();
-	}
-
-	/** Obtiene una reseña a partir de su ID, siempre y cuando exista para una película*/
-
-	@Transactional
-	public ResenhaEntity getResenha(Long peliculaId, Long resenhaId) throws EntityNotFoundException {
-		log.info("Inicia el proceso de consultar la reseña con id = {0} de la película con id = " + peliculaId,
-				resenhaId);
-		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No hay ninguna película");
-
-		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
-		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("No hay ninguna reseña para esta película");
-
-		log.info("Termina el proceso de consultar la reseña con id = {0} de la película con id = " + peliculaId, resenhaId);
-		return resenhaRepository.findByPeliculaIdAndId(peliculaId, resenhaId);
-	}
-
-	/** Actualiza la información de una reseña */
 	
-	@Transactional
-	public ResenhaEntity updateResenha(Long peliculaId, Long resenhaId, ResenhaEntity resenha) throws EntityNotFoundException {
-		log.info("Inicia proceso de actualizar el resenha con id = {0} del libro con id = " + peliculaId,
-				resenhaId);
-		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No hay ninguna película");
-
-		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
-		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException("No hay ninguna reseña para esta película");
-
-		resenha.setId(resenhaId);
-		resenha.setPelicula(peliculaEntity.get());
-		log.info("Termina el proceso de actualizar la reseña con id = {0} de la película con id = " + peliculaId, resenhaId);
-		return resenhaRepository.save(resenha);
-	}
-
-	/** Elimina una reseña de la database*/
-	
-	@Transactional
-	public void deleteResenha(Long peliculaId, Long resenhaId) throws EntityNotFoundException {
-		log.info("Inicia el proceso de borrar la reseña con id = {0} de la películacon id = " + peliculaId,
-				resenhaId);
-		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No hay ninguna película");
-
-		ResenhaEntity resenha = getResenha(peliculaId, resenhaId);
-		if (resenha == null) {
-			throw new EntityNotFoundException("No hay ninguna reseña para esta película");
-=======
-=======
-
-    @Autowired
-    PeliculaRepository peliculaRepository;
-
->>>>>>> develop
-     /**
-	 * Crea una resenha en la persistencia.
-	 *
-	 * @param resenhaEntity La entidad que representa la resenha a persistir.
-	 * @return La entidad dla resenha luego de persistirla.
-	 * @throws IllegalOperationException Si la resenha a persistir ya existe.
-	 */
-    @Transactional
-	public ResenhaEntity createResenha(ResenhaEntity resenhaEntity) throws IllegalOperationException {
-		log.info("Inicia proceso de creación de un resenha");
-        if (resenhaEntity.getPelicula() == null)
-        throw new IllegalOperationException("Pelicula is not valid");
-
-        Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(resenhaEntity.getPelicula().getId());
-        if (peliculaEntity.isEmpty())
-            throw new IllegalOperationException("Pelicula is not valid");
-
-        log.info("Termina proceso de creación de premio");
-		return resenhaRepository.save(resenhaEntity);
-	}
-
-	/**
-	 *
-	 * Obtener todas los resenhas existentes en la base de datos.
-	 *
-	 * @return una lista de resenhas.
-	 */
-	@Transactional
-	public List<ResenhaEntity> getResenhas() {
-		log.info("Inicia proceso de consultar todas los resenhas");
-		return resenhaRepository.findAll();
-	}
-
-    /**
-	 *
-	 * Obtener un resenha por medio de su id.
-	 *
-	 * @param resenhaId: id de la resenha para ser buscada.
-	 * @return la resenha solicitado por medio de su id.
-	 */
-	@Transactional
-	public ResenhaEntity getResenha(Long resenhaId) throws EntityNotFoundException {
-		log.info("Inicia proceso de consultar la resenha con id = {0}", resenhaId);
-		Optional<ResenhaEntity> resenha = resenhaRepository.findById(resenhaId);
-		if (resenha.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
-		log.info("Termina proceso de consultar la resenha con id = {0}", resenhaId);
-		return resenha.get();
-	}
-
-    /**
-	 *
-	 * Actualizar un resenha.
-	 *
-	 * @param editorialId: id de la resenha para buscarlo en la base de datos.
-	 * @param resenha: resenha con los cambios para ser actualizado.
-	 * @return la resenha con los cambios actualizados en la base de datos.
-	 */
-	@Transactional
-	public ResenhaEntity updateResenha(Long resenhaId, ResenhaEntity resenha) throws EntityNotFoundException {
-		log.info("Inicia proceso de actualizar la resenha con id = {0}", resenhaId);
-		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
-		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
-
-		resenha.setId(resenhaId);
-		log.info("Termina proceso de actualizar la resenha con id = {0}", resenhaId);
-		return resenhaRepository.save(resenha);
-	}
-
-    /**
-	 * Borrar una resenha
-	 *
-	 * @param editorialId: id de la resenha a borrar
-	 * @throws BusinessLogicException Si la resenha a eliminar tiene resenhas.
-	 */
-	@Transactional
-	public void deleteResenha(Long resenhaId) throws EntityNotFoundException, IllegalOperationException {
-		log.info("Inicia proceso de borrar la resenha con id = {0}", resenhaId);
-		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
-		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
-
-<<<<<<< HEAD
-		List<ResenhaEntity> resenhas = resenhaEntity.get().getResenhas();
-
-		if (!resenhas.isEmpty()) {
-			throw new IllegalOperationException(
-					"Fue imposible eliminar el resenha con id = " + resenhaId + " porque tiene resenhas asociadas");
->>>>>>> develop
+	private void insertData() {
+		for (int i = 0; i < 3; i++) {
+			PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
+			entityManager.persist(peliculaEntity);
+			peliculaList.add(peliculaEntity);
 		}
-
-		resenhaRepository.deleteById(resenhaId);
-<<<<<<< HEAD
-		log.info("Termina proceso de borrar el resenha con id = {0} del libro con id = " + peliculaId, resenhaId);
-=======
-		log.info("Termina proceso de borrar el resenha con id = {0}", resenhaId);
->>>>>>> develop
-=======
-		resenhaRepository.deleteById(resenhaId);
-		log.info("Termina proceso de borrar la resenha con id = {0}", resenhaId);
->>>>>>> develop
+		for (int i = 0; i < 3; i++) {
+			ResenhaEntity resenhaEntity = factory.manufacturePojo(ResenhaEntity.class);
+			resenhaEntity.setPelicula(peliculaList.get(0));
+			entityManager.persist(resenhaEntity);
+			resenhaList.add(resenhaEntity);
+		}
 	}
-    
+
+	
+	@Test
+	void testCreateResenha() throws co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException{
+		ResenhaEntity newEntity = factory.manufacturePojo(ResenhaEntity.class);
+		newEntity.setPelicula(peliculaList.get(0));
+
+		ResenhaEntity result = resenhaService.createResenha(newEntity);
+		assertNotNull(result);
+
+		ResenhaEntity entity = entityManager.find(ResenhaEntity.class, result.getId());
+
+		assertEquals(newEntity.getId(), entity.getId());
+		assertEquals(newEntity.getEstrellas(), entity.getEstrellas());
+		assertEquals(newEntity.getNumCaracteres(), entity.getNumCaracteres());
+		assertEquals(newEntity.getTexto(), entity.getTexto());
+	}
+	
+	@Test
+	void testGetResenhas() {
+		List<ResenhaEntity> resenhasList = resenhaService.getResenhas();
+		assertEquals(resenhaList.size(), resenhasList.size());
+
+		for (ResenhaEntity resenhaEntity : resenhasList) {
+			boolean found = false;
+			for (ResenhaEntity storedEntity : resenhaList) {
+				if (resenhaEntity.getId().equals(storedEntity.getId())) {
+					found = true;
+				}
+			}
+			assertTrue(found);
+		}
+	}
+
+	@Test
+	void testGetResenha() throws EntityNotFoundException {
+		ResenhaEntity resenhaEntity = resenhaList.get(0);
+
+		ResenhaEntity resultEntity = resenhaService.getResenha(resenhaEntity.getId());
+		assertNotNull(resultEntity);
+
+		assertEquals(resenhaEntity.getId(), resultEntity.getId());
+		assertEquals(resenhaEntity.getEstrellas(), resultEntity.getEstrellas());
+		assertEquals(resenhaEntity.getNumCaracteres(), resultEntity.getNumCaracteres());
+		assertEquals(resenhaEntity.getTexto(), resultEntity.getTexto());
+	}
+
+	@Test
+	void testGetInvalidResenha() {
+		assertThrows(EntityNotFoundException.class, ()->{
+			resenhaService.getResenha(0L);
+		});
+	}
+
+	@Test
+	void testUpdateResenha() throws EntityNotFoundException {
+		ResenhaEntity entity = resenhaList.get(0);
+		ResenhaEntity newEntity = factory.manufacturePojo(ResenhaEntity.class);
+
+		newEntity.setId(entity.getId());
+
+		resenhaService.updateResenha(entity.getId(), newEntity);
+
+		ResenhaEntity response = entityManager.find(ResenhaEntity.class, entity.getId());
+
+		assertEquals(newEntity.getId(), response.getId());
+		assertEquals(newEntity.getEstrellas(), response.getEstrellas());
+		assertEquals(newEntity.getNumCaracteres(), response.getNumCaracteres());
+		assertEquals(newEntity.getTexto(), response.getTexto());
+	}
+	
+	@Test
+	void testUpdateInvalidResenha()  {
+		assertThrows(EntityNotFoundException.class, ()->{
+			ResenhaEntity pojoEntity = factory.manufacturePojo(ResenhaEntity.class);
+			resenhaService.updateResenha(0L, pojoEntity);	
+		});
+	}
+
+	@Test
+	void testDeleteResenha() throws EntityNotFoundException, IllegalOperationException {
+		ResenhaEntity resenhaEntity = resenhaList.get(0);
+		resenhaService.deleteResenha(resenhaEntity.getId());
+		ResenhaEntity deleted = entityManager.find(ResenhaEntity.class, resenhaEntity.getId());
+		assertNull(deleted);
+	}
+	
+	@Test
+	void testDeleteInvalidResenha() {
+		assertThrows(EntityNotFoundException.class, ()->{
+			resenhaService.deleteResenha(0L);
+		});
+	}
+
 }

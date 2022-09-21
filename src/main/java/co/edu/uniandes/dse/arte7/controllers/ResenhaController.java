@@ -36,7 +36,7 @@ public class ResenhaController {
     @PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ResenhaDTO createResenha(@RequestBody ResenhaDTO resenha)
-			throws EntityNotFoundException, IllegalOperationException {
+		throws IllegalOperationException {
 		ResenhaEntity resenhaEnity = modelMapper.map(resenha, ResenhaEntity.class);
 		ResenhaEntity newResenha = resenhaService.createResenha(resenhaEnity);
 		return modelMapper.map(newResenha, ResenhaDTO.class);

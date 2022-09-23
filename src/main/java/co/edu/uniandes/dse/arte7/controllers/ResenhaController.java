@@ -35,7 +35,7 @@ public class ResenhaController {
 
 	@GetMapping
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ResenhaDTO> findAll() throws EntityNotFoundException {
+	public List<ResenhaDTO> findAll() {
 		List<ResenhaEntity> resenhas = resenhaService.getResenhas();
 		return modelMapper.map(resenhas, new TypeToken<List<ResenhaDTO>>() {
 		}.getType());
@@ -44,17 +44,17 @@ public class ResenhaController {
 	/** Busca y devuelve la reseña con el ID recibido en la URL, relativa a la película */
 	@GetMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDTO findOne(@PathVariable("resenhaId") Long resenhaId)
+	public ResenhaDTO findOne(@PathVariable("id") Long id)
 			throws EntityNotFoundException {
-		ResenhaEntity entity = resenhaService.getResenha(resenhaId);
+		ResenhaEntity entity = resenhaService.getResenha(id);
 		return modelMapper.map(entity, ResenhaDTO.class);
 	}
 
     @PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResenhaDTO create(@RequestBody ResenhaDTO resenha)
-			throws EntityNotFoundException, IllegalOperationException {
-		ResenhaEntity resenhaEnity = modelMapper.map(resenha, ResenhaEntity.class);
+	public ResenhaDTO create(@RequestBody ResenhaDTO resenhaDTO)
+			throws IllegalOperationException {
+		ResenhaEntity resenhaEnity = modelMapper.map(resenhaDTO, ResenhaEntity.class);
 		return modelMapper.map(resenhaEnity, ResenhaDTO.class);
 	}
 
@@ -65,8 +65,8 @@ public class ResenhaController {
 	/** Actualiza una reseña con la informacion que se recibe en el cuerpo de la petición y se regresa el objeto actualizado */
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDTO update(@PathVariable("resenhasId") Long resenhaId, @RequestBody ResenhaDTO resenha) throws EntityNotFoundException {
-		ResenhaEntity resenhaEntity = modelMapper.map(resenha, ResenhaEntity.class);
+	public ResenhaDTO update(@PathVariable("id") Long id, @RequestBody ResenhaDTO resenhaDTO) throws EntityNotFoundException {
+		ResenhaEntity resenhaEntity = resenhaService.updateResenha(id, modelMapper.map(resenhaDTO, ResenhaEntity.class));
 		return modelMapper.map(resenhaEntity, ResenhaDTO.class);
 	}
 
@@ -74,7 +74,7 @@ public class ResenhaController {
 
 	@DeleteMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable("resenhaId") Long resenhaId) throws EntityNotFoundException, IllegalOperationException {
-	    resenhaService.deleteResenha(resenhaId);
+	public void delete(@PathVariable("id") Long id) throws EntityNotFoundException, IllegalOperationException {
+	    resenhaService.deleteResenha(id);
 	}
 }

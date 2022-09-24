@@ -10,6 +10,7 @@ public final class ErrorMessage {
     public static final String RESENHA_NOT_FOUND = "No se encontro la resenha.";
     public static final String USUARIO_NOT_FOUND = "No se encuentra el usuario con el id provisto.";
     public static final String PLATAFORMA_NOT_FOUND = "No se encuentra la plataforma con el id provisto.";
+	public static final String PELICULA_INCORRECT = "La pelicula pasada no es correcta";
 
 	private ErrorMessage() {
 		throw new IllegalStateException("Utility class");

@@ -34,11 +34,11 @@ public class ResenhaService {
 	public ResenhaEntity createResenha(ResenhaEntity resenhaEntity) throws IllegalOperationException {
 		log.info("Inicia proceso de creación de un resenha");
         if (resenhaEntity.getPelicula() == null)
-        throw new IllegalOperationException("Pelicula is not valid");
+        throw new IllegalOperationException(ErrorMessage.PELICULA_INCORRECT);
 
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(resenhaEntity.getPelicula().getId());
         if (peliculaEntity.isEmpty())
-            throw new IllegalOperationException("Pelicula is not valid");
+            throw new IllegalOperationException(ErrorMessage.PELICULA_NOT_FOUND);
 
         log.info("Termina proceso de creación de premio");
 		return resenhaRepository.save(resenhaEntity);

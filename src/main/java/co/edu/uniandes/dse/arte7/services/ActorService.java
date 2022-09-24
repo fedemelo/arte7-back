@@ -67,7 +67,7 @@ public class ActorService {
 		log.info("Inicia proceso de consultar el actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
 		if (actorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el actor.");
+			throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
 		log.info("Termina proceso de consultar el actor con id = {0}", actorId);
 		return actorEntity.get();
 	}
@@ -84,7 +84,7 @@ public class ActorService {
 		log.info("Inicia proceso de actualizar el actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
 		if (actorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el actor.");
+			throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
 		log.info("Termina proceso de actualizar el actor con id = {0}", actorId);
 		actor.setId(actorId);
 		return actorRepository.save(actor);

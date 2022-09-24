@@ -11,6 +11,6 @@ import lombok.Setter;
 
 public class UsuarioDetailDTO extends UsuarioDTO {
     
-    private List<PeliculaDTO> peliculas = new ArrayList<>();
+    private List<ResenhaDTO> resenhaDTOs = new ArrayList<>();
 
 }

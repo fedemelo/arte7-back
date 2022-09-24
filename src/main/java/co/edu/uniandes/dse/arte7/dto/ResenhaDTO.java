@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 
 public class ResenhaDTO {
-
+    
+    private Long id;
     private Integer estrellas;
     private Integer numCaracteres;
     private String texto;

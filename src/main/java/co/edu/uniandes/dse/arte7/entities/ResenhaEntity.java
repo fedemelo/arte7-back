@@ -24,6 +24,5 @@ public class ResenhaEntity extends BaseEntity{
     @PodamExclude
     @ManyToOne
     private PeliculaEntity pelicula;
-    
 
 }

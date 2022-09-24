@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "8bf369a5-40f1-4381-badc-c3330e241f6a",
+		"_postman_id": "afa65caa-3a9b-408e-9c40-cb20d30611d6",
 		"name": "Genero Tests",
 		"description": "Colección de pruebas sobre el recurso Genero",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23040038"
+		"_exporter_id": "23039878"
 	},
 	"item": [
 		{
@@ -178,8 +178,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia obtener un genero con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la genero con el id provisto.\");"
+							"tests[\"No se deberia obtener un usuario con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -257,7 +257,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia actualizar un Genero con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la genero con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -374,7 +374,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia borrar un Genero con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la genero con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}

@@ -9,9 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +17,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
+import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;

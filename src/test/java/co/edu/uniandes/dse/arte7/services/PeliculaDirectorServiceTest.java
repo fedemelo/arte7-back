@@ -162,10 +162,11 @@ public class PeliculaDirectorServiceTest {
 		assertNotNull(director);
 
 		assertEquals(directorEntity.getId(), director.getId());
-		assertEquals(directorEntity.getFechaNacimiento(), director.getFechaNacimiento());
-		assertEquals(directorEntity.getFotografia(), director.getFotografia());
-		assertEquals(directorEntity.getNacionalidad(), director.getNacionalidad());
 		assertEquals(directorEntity.getNombre(), director.getNombre());
+		assertEquals(directorEntity.getBiografia(), director.getBiografia());
+		assertEquals(directorEntity.getFotografia(), director.getFotografia());
+		assertEquals(directorEntity.getFechaNacimiento(), director.getFechaNacimiento());
+        assertEquals(directorEntity.getNacionalidad(), director.getNacionalidad());
 	}
 	
 	/**
@@ -202,8 +203,10 @@ public class PeliculaDirectorServiceTest {
 		assertThrows(IllegalOperationException.class, ()->{
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 			entityManager.persist(newPelicula);
+
 			DirectorEntity director = factory.manufacturePojo(DirectorEntity.class);
 			entityManager.persist(director);
+			
 			peliculaDirectorService.getDirector(newPelicula.getId(), director.getId());
 		});
 	}

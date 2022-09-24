@@ -25,7 +25,7 @@ import co.edu.uniandes.dse.arte7.services.PeliculaDirectorService;
 
 
 /**
- * Clase que implementa el recurso "peliculas/{id}/directors".
+ * Clase que implementa el recurso "peliculas/{id}/directores".
  *
  * @director ISIS2603
  */
@@ -40,11 +40,11 @@ public class PeliculaDirectorController {
 	private ModelMapper modelMapper;
 
 	/**
-	 * Asocia un autor existente con un libro existente
+	 * Asocia un director existente con una pelicula existente
 	 *
-	 * @param directorId El ID del autor que se va a asociar
-	 * @param peliculaId   El ID del libro al cual se le va a asociar el autor
-	 * @return JSON {@link DirectorDetailDTO} - El autor asociado.
+	 * @param directorId El ID del director que se va a asociar
+	 * @param peliculaId   El ID de la pelicula al cual se le va a asociar el director
+	 * @return JSON {@link DirectorDetailDTO} - El director asociado.
 	 */
 	@PostMapping(value = "/{peliculaId}/directores/{directorId}")
 	@ResponseStatus(code = HttpStatus.OK)
@@ -55,11 +55,11 @@ public class PeliculaDirectorController {
 	}
 
 	/**
-	 * Busca y devuelve el autor con el ID recibido en la URL, relativo a un libro.
+	 * Busca y devuelve el director con el ID recibido en la URL, relativo a una pelicula.
 	 *
-	 * @param directorId El ID del autor que se busca
-	 * @param peliculaId   El ID del libro del cual se busca el autor
-	 * @return {@link DirectorDetailDTO} - El autor encontrado en el libro.
+	 * @param directorId El ID del director que se busca
+	 * @param peliculaId   El ID de la pelicula del cual se busca el director
+	 * @return {@link DirectorDetailDTO} - El director encontrado en la pelicula.
 	 */
 	@GetMapping(value = "/{peliculaId}/directores/{directorId}")
 	@ResponseStatus(code = HttpStatus.OK)
@@ -70,11 +70,11 @@ public class PeliculaDirectorController {
 	}
 
 	/**
-	 * Actualiza la lista de autores de un libro con la lista que se recibe en el
+	 * Actualiza la lista de directores de una pelicula con la lista que se recibe en el
 	 * cuerpo.
 	 *
-	 * @param peliculaId  El ID del libro al cual se le va a asociar la lista de autores
-	 * @param directors JSONArray {@link DirectorDTO} - La lista de autores que se desea
+	 * @param peliculaId  El ID de la pelicula al cual se le va a asociar la lista de directores
+	 * @param directors JSONArray {@link DirectorDTO} - La lista de directores que se desea
 	 *                guardar.
 	 * @return JSONArray {@link DirectorDetailDTO} - La lista actualizada.
 	 */
@@ -90,11 +90,11 @@ public class PeliculaDirectorController {
 	}
 
 	/**
-	 * Busca y devuelve todos los autores que existen en un libro.
+	 * Busca y devuelve todos los directores que existen en una pelicula.
 	 *
-	 * @param peliculasd El ID del libro del cual se buscan los autores
-	 * @return JSONArray {@link DirectorDetailDTO} - Los autores encontrados en el
-	 *         libro. Si no hay ninguno retorna una lista vacía.
+	 * @param peliculasd El ID de la pelicula del cual se buscan los directores
+	 * @return JSONArray {@link DirectorDetailDTO} - Los directores encontrados en la
+	 *         pelicula. Si no hay ninguno retorna una lista vacía.
 	 */
 	@GetMapping(value = "/{peliculaId}/directores")
 	@ResponseStatus(code = HttpStatus.OK)
@@ -105,10 +105,10 @@ public class PeliculaDirectorController {
 	}
 
 	/**
-	 * Elimina la conexión entre el autor y el libro recibidos en la URL.
+	 * Elimina la conexión entre el director y la pelicula recibidos en la URL.
 	 *
-	 * @param peliculaId   El ID del libro al cual se le va a desasociar el autor
-	 * @param directorId El ID del autor que se desasocia
+	 * @param peliculaId   El ID de la pelicula al cual se le va a desasociar el director
+	 * @param directorId El ID del director que se desasocia
 	 */
 	@DeleteMapping(value = "/{peliculaId}/directores/{directorId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)

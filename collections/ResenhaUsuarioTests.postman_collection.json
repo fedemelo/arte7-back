@@ -162,7 +162,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"estrellas\": \"4\",\n   \"numCaracteres\":\"5\",\n  \"texto\":\"aaaaa\" ,\n  \"pelicula\": {\"id\": {{new_id_p}} } \n}"
+					"raw": "{\n   \"estrellas\": 4,\n   \"numCaracteres\":5,\n  \"texto\":\"aaaaa\" ,\n  \"pelicula\": { \"id\": {{new_id_p}} }\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",

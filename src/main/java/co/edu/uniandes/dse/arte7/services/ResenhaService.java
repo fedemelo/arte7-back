@@ -34,7 +34,7 @@ public class ResenhaService {
 	public ResenhaEntity createResenha(ResenhaEntity resenhaEntity) throws IllegalOperationException {
 		log.info("Inicia proceso de creación de un resenha");
         if (resenhaEntity.getPelicula() == null)
-        throw new IllegalOperationException(ErrorMessage.PELICULA_INCORRECT);
+        	throw new IllegalOperationException(ErrorMessage.PELICULA_INCORRECT);
 
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(resenhaEntity.getPelicula().getId());
         if (peliculaEntity.isEmpty())

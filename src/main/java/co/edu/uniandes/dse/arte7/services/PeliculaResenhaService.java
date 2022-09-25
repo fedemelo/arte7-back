@@ -64,9 +64,11 @@ public class PeliculaResenhaService {
 			if (resenhaEntity.isEmpty())
 				throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
-			if (!peliculaEntity.get().getResenhas().contains(resenhaEntity.get()))
-				peliculaEntity.get().getResenhas().add(resenhaEntity.get());
 		}
+
+		peliculaEntity.get().setResenhas(list);
+
+		
 		log.info("Termina proceso de reemplazar los directores de la pelicula con id = {0}", peliculaId);
 		return getResenhas(peliculaId);
 	}

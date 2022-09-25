@@ -16,68 +16,68 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import co.edu.uniandes.dse.arte7.dto.PeliculaDTO;
 import co.edu.uniandes.dse.arte7.dto.PeliculaDetailDTO;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
-import co.edu.uniandes.dse.arte7.services.GeneroPeliculaService;
+import co.edu.uniandes.dse.arte7.services.PlataformaPeliculaService;
 
 
 @RestController
-@RequestMapping("/generos")
-public class GeneroPeliculaController {
+@RequestMapping("/plataformas")
+public class PlataformaPeliculaController {
 
 	@Autowired
-	private GeneroPeliculaService generoPeliculaService;
+	private PlataformaPeliculaService plataformaPeliculaService;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
-	//Asocia un genero existente a un a película
-	@PostMapping(value = "/{generoId}/peliculas/{peliculaId}")
+	//Asocia un plataforma existente a un a película
+	@PostMapping(value = "/{plataformaId}/peliculas/{peliculaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public PeliculaDetailDTO addPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("generoId") Long generoId)
+	public PeliculaDetailDTO addPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("plataformaId") Long plataformaId)
 			throws EntityNotFoundException {
-		PeliculaEntity peliculaEntity = generoPeliculaService.addPelicula(generoId, peliculaId);
+		PeliculaEntity peliculaEntity = plataformaPeliculaService.addPelicula(plataformaId, peliculaId);
 		return modelMapper.map(peliculaEntity, PeliculaDetailDTO.class);
 	}
 
 	// Obtiene el generp de una pelicula con ID especifica
-	@GetMapping(value = "/{generoId}/peliculas/{peliculaId}")
+	@GetMapping(value = "/{plataformaId}/peliculas/{peliculaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public PeliculaDetailDTO getPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("generoId") Long generoId)
+	public PeliculaDetailDTO getPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("plataformaId") Long plataformaId)
 			throws EntityNotFoundException, IllegalOperationException {
-		PeliculaEntity peliculaEntity = generoPeliculaService.getPelicula(generoId, peliculaId);
+		PeliculaEntity peliculaEntity = plataformaPeliculaService.getPelicula(plataformaId, peliculaId);
 		return modelMapper.map(peliculaEntity, PeliculaDetailDTO.class);
 	}
 
 	// Actualiza el género de una pelicula
-	@PutMapping(value = "/{generoId}/peliculas")
+	@PutMapping(value = "/{plataformaId}/peliculas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<PeliculaDetailDTO> addPeliculas(@PathVariable("generoId") Long generoId, @RequestBody List<PeliculaDTO> peliculas)
+	public List<PeliculaDetailDTO> addPeliculas(@PathVariable("plataformaId") Long plataformaId, @RequestBody List<PeliculaDTO> peliculas)
 			throws EntityNotFoundException {
 		List<PeliculaEntity> entities = modelMapper.map(peliculas, new TypeToken<List<PeliculaEntity>>() {
 		}.getType());
-		List<PeliculaEntity> peliculasList = generoPeliculaService.replacePeliculas(generoId, entities);
+		List<PeliculaEntity> peliculasList = plataformaPeliculaService.replacePeliculas(plataformaId, entities);
 		return modelMapper.map(peliculasList, new TypeToken<List<PeliculaDetailDTO>>() {
 		}.getType());
 	}
 
-	// Obtiene todas las peliculas de un genero
-	@GetMapping(value = "/{generoId}/peliculas")
+	// Obtiene todas las peliculas de un plataforma
+	@GetMapping(value = "/{plataformaId}/peliculas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<PeliculaDetailDTO> getPeliculas(@PathVariable("generoId") Long generoId) throws EntityNotFoundException {
-		List<PeliculaEntity> peliculaEntity = generoPeliculaService.getPeliculas(generoId);
+	public List<PeliculaDetailDTO> getPeliculas(@PathVariable("plataformaId") Long plataformaId) throws EntityNotFoundException {
+		List<PeliculaEntity> peliculaEntity = plataformaPeliculaService.getPeliculas(plataformaId);
 		return modelMapper.map(peliculaEntity, new TypeToken<List<PeliculaDetailDTO>>() {
 		}.getType());
 	}
 
-	//*Elimina la conexion entre un genero y una pelicula
-	@DeleteMapping(value = "/{generoId}/peliculas/{peliculaId}")
+	//*Elimina la conexion entre un plataforma y una pelicula
+	@DeleteMapping(value = "/{plataformaId}/peliculas/{peliculaId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void removePelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("generoId") Long generoId)
+	public void removePelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("plataformaId") Long plataformaId)
 			throws EntityNotFoundException {
-		generoPeliculaService.removePelicula(generoId, peliculaId);
+		plataformaPeliculaService.removePelicula(plataformaId, peliculaId);
 	}
 }

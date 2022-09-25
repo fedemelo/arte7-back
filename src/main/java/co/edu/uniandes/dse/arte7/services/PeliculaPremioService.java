@@ -38,7 +38,7 @@ public class PeliculaPremioService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getPremios().add(premioEntity.get());
+		premioEntity.get().getPeliculas().add(peliculaEntity.get());
 		log.info("Termina proceso de asociarle una premio a la pelicula con id = {0}", peliculaId);
 		return premioEntity.get();
 	}
@@ -85,7 +85,7 @@ public class PeliculaPremioService {
 				throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
 			if (!peliculaEntity.get().getPremios().contains(premioEntity.get()))
-				peliculaEntity.get().getPremios().add(premioEntity.get());
+				premioEntity.get().getPeliculas().add(peliculaEntity.get());
 		}
 		log.info("Termina proceso de reemplazar las premio de la pelicula con id = {0}", peliculaId);
 		return getPremios(peliculaId);

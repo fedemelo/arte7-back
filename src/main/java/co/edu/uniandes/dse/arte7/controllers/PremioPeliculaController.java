@@ -58,7 +58,7 @@ public class PremioPeliculaController {
 			throws EntityNotFoundException {
                 List<PeliculaEntity> entities = modelMapper.map(peliculas, new TypeToken<List<PeliculaEntity>>() {
 		}.getType());
-		List<PeliculaEntity> peliculasList = premioPeliculaService.replacePeliculas(premioId, entities);
+		List<PeliculaEntity> peliculasList = premioPeliculaService.addPeliculas(premioId, entities);
 		return modelMapper.map(peliculasList, new TypeToken<List<PeliculaDetailDTO>>() {
 		}.getType());
 	}

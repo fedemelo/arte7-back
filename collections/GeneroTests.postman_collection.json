@@ -178,7 +178,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberia obtener un ususario con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"No se deberia obtener un usuario con un id que no existe\"] = responseCode.code === 404;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");"
 						],
 						"type": "text/javascript"

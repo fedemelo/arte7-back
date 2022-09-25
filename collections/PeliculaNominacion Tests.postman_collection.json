@@ -1,0 +1,711 @@
+{
+	"info": {
+		"_postman_id": "5ac02bba-e700-4aaa-a169-c09a1de5a824",
+		"name": "PeliculaNominacion Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23160553"
+	},
+	"item": [
+		{
+			"name": "Crear un nominacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_nom\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"anho\": 2010,\n        \"categoria\": \"Mejor película\",\n        \"nombre\": \"Nominaciones de la Academia\"\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/nominaciones",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"nominaciones"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo nominacion. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un nominacion 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_nom2\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"anho\": 2021,\n        \"categoria\": \"Mejor fotografia\",\n        \"nombre\": \"Nominaciones Oscar\"\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/nominaciones",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"nominaciones"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo nominacion. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_id_pel\",data.id);\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\":\"Matrix\",\r\n    \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\r\n    \"duracionSec\": 12393,\r\n    \"pais\":\"Estados Unidos\",\r\n    \"fechaEstreno\": \"1999-03-12\",\r\n    \"url\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\r\n    \"visitas\": 3,\r\n    \"estrellasPromedio\": 4.3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar  Nominacion a Pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/{{new_id_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"{{new_id_nom}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar  Nominacion inexistente a Pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No deberia asociar el nominacion ya que el nominacion no existe.\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la nominación con el id provisto.\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una  nominacion de  pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/{{new_id_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"{{new_id_nom}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un nominacion de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del nominacion deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una  nominacion inexistente de  pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No deberia encontrar la pelicula ya que la pelicula no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la nominación con el id provisto.\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un nominacion de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del nominacion deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una  nominacion no asociado de  pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(responseBody);",
+							"tests[\"No se puede obtener una pelicula que no esta asociada\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La nominacion no se encuentra asociada a la pelicula.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/{{new_id_nom2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"{{new_id_nom2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un nominacion de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del nominacion deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar nominaciones a pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n        {\r\n        \"anho\": 2010,\r\n        \"categoria\": \"Mejor película\",\r\n        \"nombre\": \"Nominaciones de la Academia\",\r\n        \"id\": {{new_id_nom}}\r\n    },\r\n        {\r\n        \"anho\": 2021,\r\n        \"categoria\": \"Mejor fotografia\",\r\n        \"nombre\": \"Nominaciones Oscar\",\r\n        \"id\": {{new_id_nom2}}\r\n    }\r\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las nominaciones de un pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"no genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"nominaciones count - pelicula\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta los autores de un libro en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del libro y el del autor a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar  nominaciones a pelicula  inexistentes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No se pueden asociar los peliculas ya que estos no existen\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n        {\r\n        \"anho\": 2010,\r\n        \"categoria\": \"Mejor película\",\r\n        \"nombre\": \"Nominaciones de la Academia\",\r\n        \"id\": {{new_id_nom}}\r\n    },\r\n        {\r\n        \"anho\": 2021,\r\n        \"categoria\": \"Mejor fotografia\",\r\n        \"nombre\": \"Nominaciones Oscar\",\r\n        \"id\": {{new_id_nom2}}\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/0/nominaciones",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"0",
+						"nominaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un nominacion  a una pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/{{new_id_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"{{new_id_nom}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un libro y un autor. Se envían los ids del autor y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un nominacion 2  a una pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/{{new_id_nom2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"{{new_id_nom2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un libro y un autor. Se envían los ids del autor y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrale un nominacion   a una pelicula que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No so deberia eliminar la peli ya que el nominacion no existe..\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");",
+							"console.log(JSON.parse(responseBody))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/0/nominaciones/{{new_id_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"0",
+						"nominaciones",
+						"{{new_id_nom}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre un libro que no existe y un autor en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrale un nominacion  que no existe a una pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No so deberia eliminar la peli ya que el nominacion no existe...\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la nominación con el id provisto.\");",
+							"console.log(JSON.parse(responseBody))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}/nominaciones/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}",
+						"nominaciones",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre un libro que no existe y un autor en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un nominacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/nominaciones/{{new_id_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"nominaciones",
+						"{{new_id_nom}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un nominacion. Se envía el id del nominacion creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una nominacion 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/nominaciones/{{new_id_nom2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"nominaciones",
+						"{{new_id_nom2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_pel}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_pel}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

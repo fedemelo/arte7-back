@@ -83,7 +83,7 @@ public class PeliculaPremioService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		
-		if (peliculaEntity.get().getPremios().contains(premioEntity.get()))
+		if (premioEntity.get().getPeliculas().contains(peliculaEntity.get()))
 			return premioEntity.get();
 log.info("Termina proceso de consultar una premio de la pelicula con id = {0}", peliculaId);
 		throw new IllegalOperationException("La premio no se encuentra asociada a la pelicula.");

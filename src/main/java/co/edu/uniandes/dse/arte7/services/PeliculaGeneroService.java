@@ -111,7 +111,7 @@ public class PeliculaGeneroService {
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
         
-        if (peliculaEntity.get().getGeneros().contains(generoEntity.get()))
+        if (generoEntity.get().getPeliculas().contains(peliculaEntity.get()))
             return generoEntity.get();
 log.info("Se ha consultado del género con id = {0} una película con id = " + generoId, peliculaId);
         throw new IllegalOperationException("Este género no esta asociado a la película");

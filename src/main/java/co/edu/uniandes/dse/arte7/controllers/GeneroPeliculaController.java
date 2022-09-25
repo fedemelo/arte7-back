@@ -37,23 +37,15 @@ public class GeneroPeliculaController {
 
         @PostMapping(value = "/{generoId}/peliculas/{peliculaId}")
         @ResponseStatus(code = HttpStatus.OK)
-        public PeliculaDTO addPelicula(@PathVariable("peliculaId") Long generoId, @PathVariable("peliculaId") Long peliculalId) 
-            throws EntityNotFoundException, IllegalOperationException {
-                PeliculaEntity peliculaEntity = generoPeliculaService.addPelicula(peliculalId, generoId);
-                return modelMapper.map(peliculaEntity, PeliculaDTO.class);
+        public PeliculaDetailDTO addPelicula(@PathVariable("peliculaId") Long generoId, @PathVariable("generoId") Long peliculalId) 
+            throws EntityNotFoundException {
+                PeliculaEntity peliculaEntity = generoPeliculaService.addPelicula(generoId,peliculalId );
+                return modelMapper.map(peliculaEntity, PeliculaDetailDTO.class);
         }
         
-        @GetMapping(value = "/{generoId}/peliculas")
-        @ResponseStatus(code = HttpStatus.OK)
-        public List<PeliculaDetailDTO> getPeliculas(@PathVariable("generoId") Long generoId) throws EntityNotFoundException {
-            List<PeliculaEntity> peliculaList = generoPeliculaService.getPeliculas(generoId);
-            return modelMapper.map(peliculaList, new TypeToken<List<PeliculaDetailDTO>>() {
-            }.getType());
-        }
-
         @GetMapping(value = "/{generoId}/peliculas/{peliculaId}")
         @ResponseStatus(code = HttpStatus.OK)
-        public PeliculaDetailDTO getPelicula(@PathVariable("generoId") Long generoId, @PathVariable("peliculaId") Long peliculaId)
+        public PeliculaDetailDTO getPelicula(@PathVariable("generoId") Long generoId, @PathVariable("generoId") Long peliculaId)
                 throws IllegalOperationException, EntityNotFoundException {
             PeliculaEntity peliculaEntity = generoPeliculaService.getPelicula(generoId, peliculaId);
             return modelMapper.map(peliculaEntity, PeliculaDetailDTO.class);
@@ -69,6 +61,18 @@ public class GeneroPeliculaController {
             return modelMapper.map(result, new TypeToken<List<PeliculaDetailDTO>>() {
             }.getType());
         }
+
+        @GetMapping(value = "/{generoId}/peliculas")
+        @ResponseStatus(code = HttpStatus.OK)
+        public List<PeliculaDetailDTO> getPeliculas(@PathVariable("generoId") Long generoId) throws EntityNotFoundException {
+            List<PeliculaEntity> peliculaList = generoPeliculaService.getPeliculas(generoId);
+            return modelMapper.map(peliculaList, new TypeToken<List<PeliculaDetailDTO>>() {
+            }.getType());
+        }
+
+        
+
+        
     }
 
 }

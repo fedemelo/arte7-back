@@ -2,6 +2,7 @@ package co.edu.uniandes.dse.arte7.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.uniandes.dse.arte7.repositories.PremioRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
-import lombok.extern.slf4j.Slf4j;
+
 
 import co.edu.uniandes.dse.arte7.entities.PremioEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
-
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -46,34 +47,36 @@ public class PremioPeliculaService {
 
 	@Transactional
 	public List<PeliculaEntity> addPeliculas(Long premioId, List<PeliculaEntity> peliculas) throws EntityNotFoundException {
-		log.info("Inicia proceso de reemplazar las peliculas asociadas al premio con id = {0}", premioId);
-		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
-		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
-
-		for (PeliculaEntity pelicula : peliculas) {
-			Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(pelicula.getId());
-			if (peliculaEntity.isEmpty())
-				throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-
-			if (!peliculaEntity.get().getPremios().contains(premioEntity.get()))
-				premioEntity.get().getPeliculas().add(peliculaEntity.get());
-		}
-		log.info("Finaliza proceso de reemplazar las peliculas asociados al premio con id = {0}", premioId);
+		log.info("Inicia proceso de reemplazar las peliculas asociadas al actor con id = {0}", premioId);
+        for (PeliculaEntity pelicula: peliculas) {
+            addPelicula(premioId, pelicula.getId());
+        }
+		log.info("Finaliza proceso de reemplazar las peliculas asociadas al actor con id = {0}", premioId);
 		return peliculas;
-	}
+    }
 
 
 
     @Transactional
 	public List<PeliculaEntity> getPeliculas(Long premioId) throws EntityNotFoundException {
-		log.info("Inicia proceso de consultar todas las películas del premio con id = {0}", premioId);
+		log.info("Inicia proceso de consultar todas las peliculas del actor con id = {0}", premioId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
-		if (premioEntity.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
-		log.info("Finaliza proceso de consultar todas las películas del premio con id = {0}", premioId);
-		return premioEntity.get().getPeliculas();
+		if (premioEntity.isEmpty()) {
+            throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);   
+        }
+            
+		List<PeliculaEntity> peliculas = peliculaRepository.findAll();
+		List<PeliculaEntity> peliculaList = new ArrayList<>();
+
+		for (PeliculaEntity b : peliculas) {
+			if (premioEntity.get().getPeliculas().contains(b)) {
+				peliculaList.add(b);
+			}
+		}
+		log.info("Termina proceso de consultar todas las peliculas del actor con id = {0}", premioId);
+		return peliculaList;
 	}
+
 
     @Transactional
 	public PeliculaEntity getPelicula(Long premioId, Long peliculaId)

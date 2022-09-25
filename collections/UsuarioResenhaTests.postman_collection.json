@@ -8,6 +8,48 @@
 	},
 	"item": [
 		{
+			"name": "Crear una peliucla",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_id_p\",data.id);\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\":\"Matrix\",\r\n    \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\r\n    \"duracionSec\": 12393,\r\n    \"pais\":\"Estados Unidos\",\r\n    \"fechaEstreno\": \"1999-03-12\",\r\n    \"url\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\r\n    \"visitas\": 3,\r\n    \"estrellasPromedio\": 4.3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Crear una usuario",
 			"event": [
 				{
@@ -96,48 +138,6 @@
 			"response": []
 		},
 		{
-			"name": "Crear una peliucla",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var data = JSON.parse(responseBody);\r",
-							"postman.setGlobalVariable(\"new_id_p\",data.id);\r",
-							"tests[\"No genera error en el Post\"] = responseCode.code === 201;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\":\"Matrix\",\r\n    \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\r\n    \"duracionSec\": 12393,\r\n    \"pais\":\"Estados Unidos\",\r\n    \"fechaEstreno\": \"1999-03-12\",\r\n    \"url\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\r\n    \"visitas\": 3,\r\n    \"estrellasPromedio\": 4.3\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"api",
-						"peliculas"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Crear un resenha",
 			"event": [
 				{
@@ -162,7 +162,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"estrellas\": 4,\n   \"numCaracteres\":5,\n  \"texto\":\"aaaaa\" ,\n  \"pelicula\":  {{new_id_p}}  \n}"
+					"raw": "{\n   \"estrellas\": 4,\n   \"numCaracteres\":5,\n  \"texto\":\"aaaaa\" ,\n  \"pelicula\":  {\"id\":{{new_id_p}} },\n  \"critico\" : {\"id\" : {{new_id_u}} }\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",
@@ -205,7 +205,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"estrellas\": 3,\n   \"numCaracteres\": 8,\n  \"texto\":\"bbbbbbbb\" ,\n  \"pelicula\":{{new_id_p}} \n    \n}"
+					"raw": "{\n    \"estrellas\": 3,\n   \"numCaracteres\": 8,\n  \"texto\":\"bbbbbbbb\" ,\n  \"pelicula\": {\"id\":{{new_id_p}}}, \n    \"critico\" : {\"id\": {{new_id_u}}}\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",
@@ -272,7 +272,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No agrega un book con un id de un author que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The book with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Not Found\");"
 						],
 						"type": "text/javascript"
 					}
@@ -386,7 +386,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se puede obtener un book que no esta asociado\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The book is not associated to the editorial\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La resenha no se encuentra asociada al usuario\");"
 						],
 						"type": "text/javascript"
 					}
@@ -396,7 +396,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/editorials/{{new_id_e}}/books/{{new_id_r}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u}}/resenhas/{{new_id_r}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -404,9 +404,9 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"editorials",
-						"{{new_id_e}}",
-						"books",
+						"usuarios",
+						"{{new_id_u}}",
+						"resenhas",
 						"{{new_id_r}}"
 					]
 				},
@@ -446,95 +446,6 @@
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta un libro que no existe de una editorial en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
-			},
-			"response": []
-		},
-		{
-			"name": "Asociar resenhas a un usuario",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "[\n    {\n   \"estrellas\": \"4\",\n   \"numCaracteres\":\"5\",\n  \"texto\":\"aaaaa\" ,\n  \"pelicula\": {\"id\": {{new_id_p}} } \n    }\n]"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/usuarioss/{{new_id_u2}}/resenhas",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"api",
-						"usuarioss",
-						"{{new_id_u2}}",
-						"resenhas"
-					]
-				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de libros una editorial existente.\r\n\r\nSe envía el Id ne la URL de la petición.\r\n\r\n**Código http esperado: 200**"
-			},
-			"response": []
-		},
-		{
-			"name": "Asociar resenhas que no existen a un usuario",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"tests[\"No se pueden asociar los books ya que estos no existen\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The book with the given id was not found\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "[\n    {\n        \"id\": 0,\n   \"estrellas\": \"4\",\n   \"numCaracteres\":\"5\",\n  \"texto\":\"aaaaa\" ,\n  \"pelicula\": {\"id\": {{new_id_p}} } \n    }\n]"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/usuarioss/{{new_id_e2}}/resenhas",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"api",
-						"usuarioss",
-						"{{new_id_e2}}",
-						"resenhas"
-					]
-				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de una editorial existente con libros que no existen. \r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /books/0 no existe.\".\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
@@ -629,7 +540,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/editorials/{{new_id_u}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -637,7 +548,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"editorials",
+						"usuarios",
 						"{{new_id_u}}"
 					]
 				},
@@ -662,7 +573,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/editorials/{{new_id_u2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -670,7 +581,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"editorials",
+						"usuarios",
 						"{{new_id_u2}}"
 					]
 				},

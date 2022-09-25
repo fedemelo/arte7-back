@@ -96,6 +96,92 @@
 			"response": []
 		},
 		{
+			"name": "Crear una usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_u\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"username\":\"Hernesto perez\" \r\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"usuarios"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva editorial. El recurso solo tiene de atributo \"name\" que debe ser único. El Id es inicializado por la BD y se debe ver en la respuesta. \r\n\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una usuario 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_u2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"username\":\"Camilo antonio\" \r\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"usuarios"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva editorial. El recurso solo tiene de atributo \"name\" que debe ser único. El Id es inicializado por la BD y se debe ver en la respuesta. \r\n\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
 			"name": "Crear una resenha",
 			"event": [
 				{
@@ -120,7 +206,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"estrellas\": 4,\n   \"numCaracteres\":5,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n  \"texto\":\"aaaaa\" \n}"
+					"raw": "{\n   \"estrellas\": 4,\n   \"numCaracteres\":5,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n   \"critico\" : {\"id\": {{new_id_u}}},\n  \"texto\":\"aaaaa\" \n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",
@@ -163,7 +249,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"estrellas\": 3,\n   \"numCaracteres\":8,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n  \"texto\":\"bbbbbbbb\" \n}"
+					"raw": "{\n   \"estrellas\": 3,\n   \"numCaracteres\":8,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n   \"critico\" : {\"id\": {{new_id_u}}},\n  \"texto\":\"bbbbbbbb\" \n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/resenhas",
@@ -230,7 +316,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No agrega un book con un id de un author que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The book with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la resenha con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -348,7 +434,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se puede obtener un book que no esta asociado\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The book is not associated to the editorial\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La resenha no se encuentra asociada a la pelicula.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -358,7 +444,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u}}/resenhas/{{new_id_r}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/resenhas/{{new_id_r}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -366,8 +452,8 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"usuarios",
-						"{{new_id_u}}",
+						"peliculas",
+						"{{new_id_p}}",
 						"resenhas",
 						"{{new_id_r}}"
 					]
@@ -393,7 +479,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_u}}/resenhas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/resenhas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -402,7 +488,7 @@
 					"path": [
 						"api",
 						"peliculas",
-						"{{new_id_u}}",
+						"{{new_id_p}}",
 						"resenhas",
 						"0"
 					]
@@ -436,10 +522,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n    {\n   \"estrellas\": 4,\n   \"numCaracteres\":5,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n  \"texto\":\"aaaaa\" \n    },\n    {\n   \"estrellas\": 3,\n   \"numCaracteres\":8,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n  \"texto\":\"bbbbbbbb\" \n    }\n]"
+					"raw": "[\n    {\n   \"estrellas\": 2,\n   \"numCaracteres\":7,\n   \"pelicula\": { \"id\": {{new_id_p2}} },\n   \"critico\" : {\"id\": {{new_id_u2}}},\n  \"texto\":\"aaaaaaa\" \n    },\n    {\n   \"estrellas\": 3,\n   \"numCaracteres\":9,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n   \"critico\" : {\"id\": {{new_id_u2}}},\n  \"texto\":\"bbbbbbbba\" \n    }\n]"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/usuarios/{{new_id_u2}}/resenhas",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/resenhas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -447,8 +533,8 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"usuarios",
-						"{{new_id_u2}}",
+						"peliculas",
+						"{{new_id_p}}",
 						"resenhas"
 					]
 				},
@@ -464,7 +550,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se pueden asociar los books ya que estos no existen\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The book with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Not Found\");"
 						],
 						"type": "text/javascript"
 					}
@@ -480,7 +566,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n    {\n   \"estrellas\": 4,\n   \"id\": 0,\n   \"numCaracteres\":5,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n  \"texto\":\"aaaaa\" \n    }\n]"
+					"raw": "[\n    {\n    \"id\":0,\n   \"estrellas\": 3,\n   \"numCaracteres\":8,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n   \"critico\" : {\"id\": {{new_id_u}}},\n  \"texto\":\"bbbbbbbb\" \n    }\n]"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/peliculass/{{new_id_e2}}/resenhas",

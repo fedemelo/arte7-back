@@ -45,8 +45,8 @@ public class PremioController {
     @GetMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public PremioDetailDTO findOne(@PathVariable("id") Long id) throws EntityNotFoundException {
-        PremioEntity PremioEntity = premioService.getPremio(id);
-        return modelMapper.map(PremioEntity, PremioDetailDTO.class);
+        PremioEntity premioEntity = premioService.getPremio(id);
+        return modelMapper.map(premioEntity, PremioDetailDTO.class);
     }
 
     @PostMapping

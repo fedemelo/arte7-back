@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0d127a41-2263-41f3-aa6e-eef1bfb477dc",
+		"_postman_id": "43da034c-73bc-4b31-a512-71a06b907ad9",
 		"name": "PeliculaNominacion Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23040038"
+		"_exporter_id": "23160553"
 	},
 	"item": [
 		{
@@ -288,7 +288,7 @@
 					"script": {
 						"exec": [
 							"console.log(responseBody);",
-							"tests[\"No se puede obtener una pelicula que no esta asociado\"] = responseCode.code === 412;",
+							"tests[\"No se puede obtener una pelicula que no esta asociada\"] = responseCode.code === 412;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la nominación con el id provisto.\");"
 						],
 						"type": "text/javascript"

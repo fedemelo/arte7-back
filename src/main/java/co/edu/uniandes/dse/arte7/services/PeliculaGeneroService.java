@@ -17,10 +17,9 @@ import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import co.edu.uniandes.dse.arte7.repositories.GeneroRepository;
 import co.edu.uniandes.dse.arte7.repositories.PeliculaRepository;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@Data
+
 @Service
 @Slf4j
 
@@ -46,7 +45,9 @@ public class PeliculaGeneroService {
         if (peliculaEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-        generoEntity.get().getPeliculas().add(peliculaEntity.get());
+            if (!generoEntity.get().getPeliculas().contains(peliculaEntity.get())){
+                 generoEntity.get().getPeliculas().add(peliculaEntity.get());
+                }
         log.info("Se le ha asociado un género a la película con id = {0}", peliculaId);
         return generoEntity.get();
     }
@@ -55,17 +56,8 @@ public class PeliculaGeneroService {
      @Transactional
      public List < GeneroEntity > updateGeneros(Long peliculaId, List < GeneroEntity > generos) throws EntityNotFoundException {
          log.info("Se reemplazarán los géneros asociados con la película con id = {0}", peliculaId);
-         Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);
-         if (peliculaEntity.isEmpty())
-             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
- 
          for (GeneroEntity genero: generos) {
-             Optional < GeneroEntity > generoEntity = generoRepository.findById(genero.getId());
-             if (generoEntity.isEmpty())
-                 throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
- 
-             if (!generoEntity.get().getPeliculas().contains(peliculaEntity.get()))
-                 generoEntity.get().getPeliculas().add(peliculaEntity.get());
+                addGenero(genero.getId(),peliculaId);
          }
          log.info("Finaliza proceso de reemplazar los géneros asociadas a la película con id = {0}", peliculaId);
          return generos;
@@ -76,8 +68,9 @@ public class PeliculaGeneroService {
     public List < GeneroEntity > getGeneros(Long peliculaId) throws EntityNotFoundException {
         log.info("Se consultarán todos los géneros de la película con id = {0}", peliculaId);
         Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);
-        if (peliculaEntity.isEmpty())
+        if (peliculaEntity.isEmpty()){
             throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
+            }
 
         List < GeneroEntity > generos = generoRepository.findAll();
         List < GeneroEntity > generoList = new ArrayList < > ();

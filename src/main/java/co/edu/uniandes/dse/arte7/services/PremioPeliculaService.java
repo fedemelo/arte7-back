@@ -40,7 +40,11 @@ public class PremioPeliculaService {
 		if (premioEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
-		premioEntity.get().getPeliculas().add(peliculaEntity.get());
+		if(!premioEntity.get().getPeliculas().contains(peliculaEntity.get())){
+			premioEntity.get().getPeliculas().add(peliculaEntity.get());
+		}
+		
+
 		log.info("Termina proceso de asociarle una película al premio con id = {0}", premioId);
 		return peliculaEntity.get();
 	}
@@ -49,7 +53,8 @@ public class PremioPeliculaService {
 	public List<PeliculaEntity> addPeliculas(Long premioId, List<PeliculaEntity> peliculas) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar las peliculas asociadas al actor con id = {0}", premioId);
         for (PeliculaEntity pelicula: peliculas) {
-            addPelicula(premioId, pelicula.getId());
+            
+			addPelicula(premioId, pelicula.getId());
         }
 		log.info("Finaliza proceso de reemplazar las peliculas asociadas al actor con id = {0}", premioId);
 		return peliculas;

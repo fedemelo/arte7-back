@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6ffd6868-412f-4543-8345-1db7c9ff6a2b",
+		"_postman_id": "1d3b48d0-5d23-4bdc-b81b-87bbaaf7f681",
 		"name": "PremioPelicula Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23040038"
+		"_exporter_id": "23133499"
 	},
 	"item": [
 		{
@@ -320,42 +320,6 @@
 			"response": []
 		},
 		{
-			"name": "Obtener las peliculas de un premio",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var data= JSON.parse(responseBody);",
-							"tests[\"no genera error en el Get all\"] = responseCode.code === 200;",
-							"tests[\"authors count - book\"] = data.length >= 1;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/premios/{{new_id_pr}}/peliculas",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"api",
-						"premios",
-						"{{new_id_pr}}",
-						"peliculas"
-					]
-				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta los autores de un libro en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del libro y el del autor a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
-			},
-			"response": []
-		},
-		{
 			"name": "Asociar peliculas a premio inexistente",
 			"event": [
 				{
@@ -395,6 +359,42 @@
 						"peliculas"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las peliculas de un premio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"no genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"authors count - book\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/premios/{{new_id_pr}}/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"premios",
+						"{{new_id_pr}}",
+						"peliculas"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta los autores de un libro en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del libro y el del autor a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},

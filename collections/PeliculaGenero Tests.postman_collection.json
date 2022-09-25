@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6fc148e7-c418-4dff-9759-339d4c919527",
+		"_postman_id": "0e4c8d39-1893-4301-b07c-942daa79499c",
 		"name": "PeliculaGenero Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23040038"
+		"_exporter_id": "23133499"
 	},
 	"item": [
 		{
@@ -76,7 +76,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Comedia\"\n    }"
+					"raw": "    {\n       \n        \"nombre\": \"comedia\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/generos",
@@ -152,6 +152,10 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/generos/{{new_id_gen}}",
 					"protocol": "http",
@@ -178,7 +182,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No deberia asociar el premio ya que el premio no existe.\"] = responseCode.code === 404;\r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encontró el premio buscado\");\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");\r",
 							""
 						],
 						"type": "text/javascript"
@@ -251,7 +255,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No deberia encontrar la pelicula ya que la pelicula no existe.\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encontró el premio buscado\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");",
 							""
 						],
 						"type": "text/javascript"
@@ -281,43 +285,6 @@
 			"response": []
 		},
 		{
-			"name": "Obtener una  Genero no asociado de  pelicula",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"console.log(responseBody);",
-							"tests[\"No se puede obtener un book que no esta asociado\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La premio no se encuentra asociada a la pelicula.\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/generos/{{new_id_gen2}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"api",
-						"peliculas",
-						"{{new_id_p}}",
-						"generos",
-						"{{new_id_gen2}}"
-					]
-				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un premio de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del premio deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
-			},
-			"response": []
-		},
-		{
 			"name": "Asociar Genero a pelicula",
 			"event": [
 				{
@@ -338,6 +305,10 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\":{{new_id_gen}},\r\n        \"nombre\": \"terror\"\r\n    },\r\n    {\r\n        \"id\":{{new_id_gen2}},\r\n    \"nombre\": \"comedia\"}\r\n    ]"
+				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/generos",
 					"protocol": "http",
@@ -349,6 +320,49 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
+						"generos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar  Genero a pelicula  inexistentes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No se pueden asociar los peliculas ya que estos no existen\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\":{{new_id_gen}},\r\n        \"nombre\": \"terror\"\r\n    },\r\n    {\r\n        \"id\":{{new_id_gen2}},\r\n    \"nombre\": \"comedia\"}\r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/0/generos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"0",
 						"generos"
 					]
 				}
@@ -388,40 +402,6 @@
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta los autores de un libro en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del libro y el del autor a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
-			},
-			"response": []
-		},
-		{
-			"name": "Asociar  Genero a pelicula  inexistentes",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"tests[\"No se pueden asociar los peliculas ya que estos no existen\"] = responseCode.code === 404;\r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The peliculas with the given id was not found\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/0/generos",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"api",
-						"peliculas",
-						"0",
-						"generos"
-					]
-				}
 			},
 			"response": []
 		},
@@ -511,7 +491,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No so deberia eliminar la peli ya que el premio no existe..\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");",
 							"console.log(JSON.parse(responseBody))"
 						],
 						"type": "text/javascript"
@@ -552,7 +532,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No so deberia eliminar la peli ya que el premio no existe...\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encontró el premio buscado\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");",
 							"console.log(JSON.parse(responseBody))"
 						],
 						"type": "text/javascript"

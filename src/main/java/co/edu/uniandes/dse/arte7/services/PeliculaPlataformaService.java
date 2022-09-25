@@ -90,6 +90,18 @@ public class PeliculaPlataformaService {
 		return getPlataformas(peliculaId);
 	}
 
+
+
+	
+
+
+
+
+
+
+
+
+	
     @Transactional
     public void removePlataforma(Long peliculaId, Long plataformaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar una plataforma de una pelicula con id = {0}", peliculaId);

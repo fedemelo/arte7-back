@@ -226,7 +226,7 @@ public class UsuarioResenhaServiceTest {
 
 		for (ResenhaEntity resenha : list) {
 			ResenhaEntity r = entityManager.find(ResenhaEntity.class, resenha.getId());
-			assertTrue(r.getCritico().equals(entity));
+			assertEquals(r.getCritico(), entity);
 		}
 	}
 	

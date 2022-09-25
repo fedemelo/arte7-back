@@ -38,7 +38,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public UsuarioDTO create(@RequestBody UsuarioDTO usuarioDTO) throws IllegalOperationException, EntityNotFoundException {
+    public UsuarioDTO create(@RequestBody UsuarioDTO usuarioDTO) throws IllegalOperationException {
         UsuarioEntity usuarioEntity = usuarioService.createUsuario(modelMapper.map(usuarioDTO, UsuarioEntity.class));
         return modelMapper.map(usuarioEntity, UsuarioDTO.class);
      }
@@ -53,15 +53,15 @@ public class UsuarioController {
     @GetMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public UsuarioDetailDTO findOne(@PathVariable("id") Long id) throws EntityNotFoundException {
-        UsuarioEntity UsuarioEntity = usuarioService.getUsuario(id);
-        return modelMapper.map(UsuarioEntity, UsuarioDetailDTO.class);
+        UsuarioEntity usuarioEntity = usuarioService.getUsuario(id);
+        return modelMapper.map(usuarioEntity, UsuarioDetailDTO.class);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public UsuarioDTO update(@PathVariable("id") Long id, @RequestBody UsuarioDTO UsuarioDTO) throws EntityNotFoundException, IllegalOperationException {
-        UsuarioEntity UsuarioEntity = usuarioService.updateUsuario(id, modelMapper.map(UsuarioDTO, UsuarioEntity.class));
-        return modelMapper.map(UsuarioEntity, UsuarioDTO.class);
+    public UsuarioDTO update(@PathVariable("id") Long id, @RequestBody UsuarioDTO usuarioDTO) throws EntityNotFoundException {
+        UsuarioEntity usuarioEntity = usuarioService.updateUsuario(id, modelMapper.map(usuarioDTO, UsuarioEntity.class));
+        return modelMapper.map(usuarioEntity, UsuarioDTO.class);
     }
 
     @DeleteMapping(value = "/{id}")

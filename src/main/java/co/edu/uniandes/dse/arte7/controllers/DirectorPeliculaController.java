@@ -21,98 +21,98 @@ import co.edu.uniandes.dse.arte7.dto.PeliculaDetailDTO;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
-import co.edu.uniandes.dse.arte7.services.ActorPeliculaService;
+import co.edu.uniandes.dse.arte7.services.DirectorPeliculaService;
 
 /**
- * Clase que implementa el recurso "actores/{id}/peliculas".
+ * Clase que implementa el recurso "directores/{id}/peliculas".
  *
  * @author Federico Melo Barrero
  */
 @RestController
-@RequestMapping("/actores")
-public class ActorPeliculaController {
+@RequestMapping("/directores")
+public class DirectorPeliculaController {
 
 	@Autowired
-	private ActorPeliculaService actorPeliculaService;
+	private DirectorPeliculaService directorPeliculaService;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
 	/**
-	 * Asocia un autor existente con un actor existente
+	 * Asocia un autor existente con un director existente
 	 *
 	 * @param peliculaId El ID del autor que se va a asociar
-	 * @param actorId   El ID del actor al cual se le va a asociar el autor
+	 * @param directorId   El ID del director al cual se le va a asociar el autor
 	 * @return JSON {@link PeliculaDetailDTO} - El autor asociado.
 	 */
-	@PostMapping(value = "/{actorId}/peliculas/{peliculaId}")
+	@PostMapping(value = "/{directorId}/peliculas/{peliculaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public PeliculaDetailDTO addPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("actorId") Long actorId)
+	public PeliculaDetailDTO addPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("directorId") Long directorId)
 			throws EntityNotFoundException {
-		PeliculaEntity peliculaEntity = actorPeliculaService.addPelicula(actorId, peliculaId);
+		PeliculaEntity peliculaEntity = directorPeliculaService.addPelicula(directorId, peliculaId);
 		return modelMapper.map(peliculaEntity, PeliculaDetailDTO.class);
 	}
 
 	/**
-	 * Busca y devuelve el autor con el ID recibido en la URL, relativo a un actor.
+	 * Busca y devuelve el autor con el ID recibido en la URL, relativo a un director.
 	 *
 	 * @param peliculaId El ID del autor que se busca
-	 * @param actorId   El ID del actor del cual se busca el autor
-	 * @return {@link PeliculaDetailDTO} - El autor encontrado en el actor.
+	 * @param directorId   El ID del director del cual se busca el autor
+	 * @return {@link PeliculaDetailDTO} - El autor encontrado en el director.
 	 */
-	@GetMapping(value = "/{actorId}/peliculas/{peliculaId}")
+	@GetMapping(value = "/{directorId}/peliculas/{peliculaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public PeliculaDetailDTO getPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("actorId") Long actorId)
+	public PeliculaDetailDTO getPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("directorId") Long directorId)
 			throws EntityNotFoundException, IllegalOperationException {
-		PeliculaEntity peliculaEntity = actorPeliculaService.getPelicula(actorId, peliculaId);
+		PeliculaEntity peliculaEntity = directorPeliculaService.getPelicula(directorId, peliculaId);
 		return modelMapper.map(peliculaEntity, PeliculaDetailDTO.class);
 	}
 
 	/**
-	 * Actualiza la lista de peliculas de un actor con la lista que se recibe en el
+	 * Actualiza la lista de peliculas de un director con la lista que se recibe en el
 	 * cuerpo.
 	 *
-	 * @param actorId  El ID del actor al cual se le va a asociar la lista de peliculas
+	 * @param directorId  El ID del director al cual se le va a asociar la lista de peliculas
 	 * @param peliculas JSONArray {@link PeliculaDTO} - La lista de peliculas que se desea
 	 *                guardar.
 	 * @return JSONArray {@link PeliculaDetailDTO} - La lista actualizada.
 	 */
-	@PutMapping(value = "/{actorId}/peliculas")
+	@PutMapping(value = "/{directorId}/peliculas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<PeliculaDetailDTO> addPeliculas(@PathVariable("actorId") Long actorId, @RequestBody List<PeliculaDTO> peliculas)
+	public List<PeliculaDetailDTO> addPeliculas(@PathVariable("directorId") Long directorId, @RequestBody List<PeliculaDTO> peliculas)
 			throws EntityNotFoundException {
 		List<PeliculaEntity> entities = modelMapper.map(peliculas, new TypeToken<List<PeliculaEntity>>() {
 		}.getType());
-		List<PeliculaEntity> peliculasList = actorPeliculaService.replacePeliculas(actorId, entities);
+		List<PeliculaEntity> peliculasList = directorPeliculaService.replacePeliculas(directorId, entities);
 		return modelMapper.map(peliculasList, new TypeToken<List<PeliculaDetailDTO>>() {
 		}.getType());
 	}
 
 	/**
-	 * Busca y devuelve todos los peliculas que existen en un actor.
+	 * Busca y devuelve todos los peliculas que existen en un director.
 	 *
-	 * @param actoresd El ID del actor del cual se buscan los peliculas
+	 * @param directoresd El ID del director del cual se buscan los peliculas
 	 * @return JSONArray {@link PeliculaDetailDTO} - Los peliculas encontrados en el
-	 *         actor. Si no hay ninguno retorna una lista vacía.
+	 *         director. Si no hay ninguno retorna una lista vacía.
 	 */
-	@GetMapping(value = "/{actorId}/peliculas")
+	@GetMapping(value = "/{directorId}/peliculas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<PeliculaDetailDTO> getPeliculas(@PathVariable("actorId") Long actorId) throws EntityNotFoundException {
-		List<PeliculaEntity> peliculaEntity = actorPeliculaService.getPeliculas(actorId);
+	public List<PeliculaDetailDTO> getPeliculas(@PathVariable("directorId") Long directorId) throws EntityNotFoundException {
+		List<PeliculaEntity> peliculaEntity = directorPeliculaService.getPeliculas(directorId);
 		return modelMapper.map(peliculaEntity, new TypeToken<List<PeliculaDetailDTO>>() {
 		}.getType());
 	}
 
 	/**
-	 * Elimina la conexión entre el autor y el actor recibidos en la URL.
+	 * Elimina la conexión entre el autor y el director recibidos en la URL.
 	 *
-	 * @param actorId   El ID del actor al cual se le va a desasociar el autor
+	 * @param directorId   El ID del director al cual se le va a desasociar el autor
 	 * @param peliculaId El ID del autor que se desasocia
 	 */
-	@DeleteMapping(value = "/{actorId}/peliculas/{peliculaId}")
+	@DeleteMapping(value = "/{directorId}/peliculas/{peliculaId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void removePelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("actorId") Long actorId)
+	public void removePelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("directorId") Long directorId)
 			throws EntityNotFoundException {
-		actorPeliculaService.removePelicula(actorId, peliculaId);
+		directorPeliculaService.removePelicula(directorId, peliculaId);
 	}
 }

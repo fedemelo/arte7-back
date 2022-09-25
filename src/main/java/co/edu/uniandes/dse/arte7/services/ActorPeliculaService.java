@@ -75,7 +75,7 @@ public class ActorPeliculaService {
 		List<PeliculaEntity> peliculaList = new ArrayList<>();
 
 		for (PeliculaEntity b : peliculas) {
-			if (b.getActores().contains(actorEntity.get())) {
+			if (actorEntity.get().getPeliculas().contains(b)) {
 				peliculaList.add(b);
 			}
 		}
@@ -124,23 +124,9 @@ public class ActorPeliculaService {
 	@Transactional
 	public List<PeliculaEntity> replacePeliculas(Long actorId, List<PeliculaEntity> peliculas) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar las peliculas asociadas al actor con id = {0}", actorId);
-		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
-		if (actorEntity.isEmpty()) {
-            throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
+        for (PeliculaEntity pelicula: peliculas) {
+            addPelicula(actorId, pelicula.getId());
         }
-            
-
-		for (PeliculaEntity pelicula : peliculas) {
-			Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(pelicula.getId());
-			if (peliculaEntity.isEmpty()) {
-                throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-            }
-
-			if (!actorEntity.get().getPeliculas().contains(peliculaEntity.get())) {
-                actorEntity.get().getPeliculas().add(peliculaEntity.get());
-            }
-				
-		}
 		log.info("Finaliza proceso de reemplazar las peliculas asociadas al actor con id = {0}", actorId);
 		return peliculas;
     }
@@ -164,8 +150,8 @@ public class ActorPeliculaService {
 		if (peliculaEntity.isEmpty()) {
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
         }
-            
-		peliculaEntity.get().getActores().remove(actorEntity.get());
+        
+		actorEntity.get().getPeliculas().remove(peliculaEntity.get());
 		log.info("Finaliza proceso de borrar una pelicula del actor con id = {0}", actorId);
 	}
 }

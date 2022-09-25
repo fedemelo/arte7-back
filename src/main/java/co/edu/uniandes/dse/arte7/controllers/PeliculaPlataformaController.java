@@ -58,7 +58,7 @@ public class PeliculaPlataformaController {
 			throws EntityNotFoundException {
                 List<PlataformaEntity> entities = modelMapper.map(plataformas, new TypeToken<List<PlataformaEntity>>() {
 		}.getType());
-		List<PlataformaEntity> plataformasList = peliculaPlataformaService.updatePlataformas(peliculaId, entities);
+		List<PlataformaEntity> plataformasList = peliculaPlataformaService.replacePlataformas(peliculaId, entities);
 		return modelMapper.map(plataformasList, new TypeToken<List<PlataformaDetailDTO>>() {
 		}.getType());
 	}

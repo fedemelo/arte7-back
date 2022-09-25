@@ -37,11 +37,11 @@ public class PlataformaPeliculaService {
         if (plataformaEntity.isEmpty()) {
 			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
         }
-        
+    
         if (peliculaEntity.isEmpty()) {   
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
         }
-
+		
 		plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
 		log.info("Termina proceso de asociarle una pelicula a la plataforma con id = {0}", plataformaId);
 		return peliculaEntity.get();

@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "66c97c67-ef28-4e2b-b752-a68f3355e8a0",
+		"_postman_id": "3aa7c008-b55f-49ca-b46a-f2d177c2d4cb",
 		"name": "Premio Tests",
 		"description": "Colección de pruebas sobre el recurso Premio",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23133499"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -172,7 +172,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia obtener un premios con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encontró el premio buscado\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el premio con el id provisto.\");",
 							"console.log(responseBody);"
 						],
 						"type": "text/javascript"
@@ -251,7 +251,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia actualizar un premios con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encontró el premio buscado\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el premio con el id provisto.\");",
 							"console.log(responseBody);"
 						],
 						"type": "text/javascript"
@@ -369,7 +369,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberia borrar un premios con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encontró el premio buscado\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el premio con el id provisto.\");",
 							"console.log(responseBody);",
 							""
 						],

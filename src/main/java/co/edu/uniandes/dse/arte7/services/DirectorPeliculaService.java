@@ -74,7 +74,7 @@ public class DirectorPeliculaService {
 		log.info("Inicia proceso de consultar todos las peliculas del director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
 		List<PeliculaEntity> peliculas = peliculaRepository.findAll();
 		List<PeliculaEntity> peliculaList = new ArrayList<>();
@@ -102,10 +102,10 @@ public class DirectorPeliculaService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		log.info("Termina proceso de consultar la pelicula con id = {0} del director con id = " + directorId, peliculaId);
 		if (peliculaEntity.get().getDirectores().contains(directorEntity.get()))
@@ -127,12 +127,12 @@ public class DirectorPeliculaService {
 		log.info("Inicia proceso de reemplazar las peliculas asociadas al director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
 		for (PeliculaEntity pelicula : peliculas) {
 			Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(pelicula.getId());
 			if (peliculaEntity.isEmpty())
-				throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+				throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 			if (!peliculaEntity.get().getDirectores().contains(directorEntity.get()))
 				peliculaEntity.get().getDirectores().add(directorEntity.get());
@@ -152,11 +152,11 @@ public class DirectorPeliculaService {
 		log.info("Inicia proceso de borrar una pelicula del director con id = {0}", directorId);
 		Optional<DirectorEntity> directorEntity = directorRepository.findById(directorId);
 		if (directorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra el director con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encuentra la pelicula con el id provisto.");
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		peliculaEntity.get().getDirectores().remove(directorEntity.get());
 		log.info("Finaliza proceso de borrar una pelicula del director con id = {0}", directorId);

@@ -37,12 +37,14 @@ public class ResenhaUsuarioService {
 	public ResenhaEntity replaceUsuario(Long resenhaId, Long usuarioId) throws EntityNotFoundException {
 		log.info("Inicia proceso de actualizar resenha con id = {0}", resenhaId);
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
-        if (resenhaEntity.isEmpty())
+        if (resenhaEntity.isEmpty()){
 			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
+		}
 
         Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
-        if(usuarioEntity.isEmpty())
+        if(usuarioEntity.isEmpty()){
             throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
+		}
 
 		resenhaEntity.get().setCritico(usuarioEntity.get());
 		log.info("Termina proceso de actualizar resenha con id = {0}", resenhaId);

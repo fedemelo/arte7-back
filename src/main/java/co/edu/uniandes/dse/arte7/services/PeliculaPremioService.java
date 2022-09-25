@@ -31,21 +31,23 @@ public class PeliculaPremioService {
 	@Transactional
 	public PremioEntity addPremio(Long peliculaId, Long premioId) throws EntityNotFoundException {
 		log.info("Inicia proceso de asociarle una premio a la pelicula con id = {0}", peliculaId);
+		
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+
+			
 
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		if (premioEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
-		
-		
 		if(!premioEntity.get().getPeliculas().contains(peliculaEntity.get())){
 			premioEntity.get().getPeliculas().add(peliculaEntity.get());
 		}
-	
+		
 		log.info("Termina proceso de asociarle una premio a la pelicula con id = {0}", peliculaId);
+		
 		return premioEntity.get();
 	}
 
@@ -80,39 +82,57 @@ public class PeliculaPremioService {
 
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-		log.info("Termina proceso de consultar una premio de la pelicula con id = {0}", peliculaId);
-		if (peliculaEntity.get().getPremios().contains(premioEntity.get()))
+		
+		if (premioEntity.get().getPeliculas().contains(peliculaEntity.get()))
 			return premioEntity.get();
-
+log.info("Termina proceso de consultar una premio de la pelicula con id = {0}", peliculaId);
 		throw new IllegalOperationException("La premio no se encuentra asociada a la pelicula.");
 	}
 
 	@Transactional
 	public List<PremioEntity> replacePremios(Long peliculaId, List<PremioEntity> premios) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar las peliculas asociadas al actor con id = {0}", peliculaId);
-        for (PremioEntity premi: premios) {
-			addPremio(peliculaId, premi.getId());
-        }
+
+		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
+		
+		if (peliculaEntity.isEmpty()){
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);}
+			
+		for (PremioEntity premi: premios) {
+
+		Optional<PremioEntity> premioEntity = premioRepository.findById(premi.getId());
+		
+		if (premioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
+
+		
+		if(!premioEntity.get().getPeliculas().contains(peliculaEntity.get())){
+			premioEntity.get().getPeliculas().add(peliculaEntity.get());
+		}
+			}
 		log.info("Finaliza proceso de reemplazar las peliculas asociadas al actor con id = {0}", peliculaId);
+
 		return getPremios(peliculaId);
     }
 
 
 
-
+	@Transactional
 	public void removePremio(Long peliculaId, Long premioId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar una premio de la pelicula con id = {0}", peliculaId);
 		Optional<PremioEntity> premioEntity = premioRepository.findById(premioId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
-		if (premioEntity.isEmpty())
+		if (premioEntity.isEmpty()){
 			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
-
-		if (peliculaEntity.isEmpty())
+	}
+		if (peliculaEntity.isEmpty()){
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-
-			premioEntity.get().getPeliculas().remove(peliculaEntity.get());
-
+		}
+		
+        
+		premioEntity.get().getPeliculas().remove(peliculaEntity.get());
+		
 		log.info("Termina proceso de borrar una premio de la pelicula con id = {0}", peliculaId);
 	}
 }

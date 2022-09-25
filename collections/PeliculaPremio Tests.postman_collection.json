@@ -340,7 +340,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\r\n    \"id\":{{new_id_pr2}},\r\n    \"nombre\": \"Premios de la Academia\",\r\n    \"anho\": 2010,\r\n    \"categoria\": \"Mejor película\"\r\n},\r\n{\r\n\r\n    \"id\": {{new_id_pr2}},\r\n    \"nombre\": \"Premios Oscar\",\r\n    \"anho\": 2021,\r\n    \"categoria\": \"Mejor fotografia\"\r\n\r\n}\r\n]"
+					"raw": "[{\r\n    \"id\":{{new_id_pr}},\r\n    \"nombre\": \"Premios de la Academia\",\r\n    \"anho\": 2010,\r\n    \"categoria\": \"Mejor película\"\r\n},\r\n{\r\n\r\n    \"id\": {{new_id_pr2}},\r\n    \"nombre\": \"Premios Oscar\",\r\n    \"anho\": 2021,\r\n    \"categoria\": \"Mejor fotografia\"\r\n\r\n}\r\n]"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/premios",

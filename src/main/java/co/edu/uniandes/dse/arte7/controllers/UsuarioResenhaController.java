@@ -64,13 +64,13 @@ public class UsuarioResenhaController {
 	}
 
 	/**
-	 * Busca el libro con el id asociado dentro de la usuario con id asociado.
+	 * Busca la resenha con el id asociado dentro del usuario con id asociado.
 	 *
 	 * @param usuarioId Identificador de la usuario que se esta buscando. Este
 	 *                    debe ser una cadena de dígitos.
-	 * @param ResenhaId      Identificador del libro que se esta buscando. Este debe
+	 * @param ResenhaId      Identificador de la resenha que se esta buscando. Este debe
 	 *                    ser una cadena de dígitos.
-	 * @return JSON {@link ResenhaDetailDTO} - El libro buscado
+	 * @return JSON {@link ResenhaDTO} - Resenha buscado
 	 */
 	@GetMapping(value = "/{usuarioId}/resenhas/{resenhaId}")
 	@ResponseStatus(code = HttpStatus.OK)

@@ -37,7 +37,7 @@ public class PeliculaResenhaService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getResenhas().add(resenhaEntity.get());
+		resenhaEntity.get().setPelicula(peliculaEntity.get());
 		log.info("Termina proceso de asociarle una resenha a la pelicula con id = {0}", peliculaId);
 		return resenhaEntity.get();
 	}
@@ -52,6 +52,24 @@ public class PeliculaResenhaService {
 		return peliculaEntity.get().getResenhas();
 	}
 
+	@Transactional
+	public List<ResenhaEntity> replaceResenhas(Long peliculaId, List<ResenhaEntity> list) throws EntityNotFoundException {
+		log.info("Inicia proceso de reemplazar los directores de la pelicula con id = {0}", peliculaId);
+		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
+		if (peliculaEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+
+		for (ResenhaEntity resenha : list) {
+			Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenha.getId());
+			if (resenhaEntity.isEmpty())
+				throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
+
+			if (!peliculaEntity.get().getResenhas().contains(resenhaEntity.get()))
+				peliculaEntity.get().getResenhas().add(resenhaEntity.get());
+		}
+		log.info("Termina proceso de reemplazar los directores de la pelicula con id = {0}", peliculaId);
+		return getResenhas(peliculaId);
+	}
 	@Transactional
 	public ResenhaEntity getResenha(Long peliculaId, Long resenhaId)
 			throws EntityNotFoundException, IllegalOperationException {
@@ -82,7 +100,10 @@ public class PeliculaResenhaService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getResenhas().remove(resenhaEntity.get());
+		peliculaEntity.ifPresent(pelicula -> {
+			resenhaEntity.get().setPelicula(null);
+			pelicula.getResenhas().remove(resenhaEntity.get());
+		});
 
 		log.info("Termina proceso de borrar una resenha de la pelicula con id = {0}", peliculaId);
 	}

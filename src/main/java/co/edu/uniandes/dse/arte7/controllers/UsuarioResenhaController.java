@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.uniandes.dse.arte7.dto.ResenhaDTO;
-import co.edu.uniandes.dse.arte7.dto.ResenhaDetailDTO;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
@@ -59,9 +58,9 @@ public class UsuarioResenhaController {
 	 */
 	@GetMapping(value = "/{usuarioId}/resenhas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ResenhaDetailDTO> getResenhas(@PathVariable("usuarioId") Long usuarioId) throws EntityNotFoundException {
+	public List<ResenhaDTO> getResenhas(@PathVariable("usuarioId") Long usuarioId) throws EntityNotFoundException {
 		List<ResenhaEntity> ResenhaList = usuarioResenhaService.getResenhas(usuarioId);
-		return modelMapper.map(ResenhaList, new TypeToken<List<ResenhaDetailDTO>>() {}.getType());
+		return modelMapper.map(ResenhaList, new TypeToken<List<ResenhaDTO>>() {}.getType());
 	}
 
 	/**
@@ -75,10 +74,10 @@ public class UsuarioResenhaController {
 	 */
 	@GetMapping(value = "/{usuarioId}/resenhas/{resenhaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDetailDTO getResenha(@PathVariable("usuarioId") Long usuarioId, @PathVariable("resenhaId") Long resenhaId)
+	public ResenhaDTO getResenha(@PathVariable("usuarioId") Long usuarioId, @PathVariable("resenhaId") Long resenhaId)
 			throws EntityNotFoundException, IllegalOperationException {
 		ResenhaEntity resenhaEntity = usuarioResenhaService.getResenha(usuarioId, resenhaId);
-		return modelMapper.map(resenhaEntity, ResenhaDetailDTO.class);
+		return modelMapper.map(resenhaEntity, ResenhaDTO.class);
 	}
 
 	/**
@@ -93,13 +92,13 @@ public class UsuarioResenhaController {
 	 */
 	@PutMapping(value = "/{usuarioId}/resenhas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ResenhaDetailDTO> replaceResenhas(@PathVariable("usuarioId") Long usuariosId,
-			@RequestBody List<ResenhaDetailDTO> resenhas) throws EntityNotFoundException {
+	public List<ResenhaDTO> replaceResenhas(@PathVariable("usuarioId") Long usuariosId,
+			@RequestBody List<ResenhaDTO> resenhas) throws EntityNotFoundException {
         
-		List<ResenhaEntity> ResenhasList = modelMapper.map(resenhas, new TypeToken<List<ResenhaEntity>>() {
+		List<ResenhaEntity> resenhasList = modelMapper.map(resenhas, new TypeToken<List<ResenhaEntity>>() {
 		}.getType());
-		List<ResenhaEntity> result = usuarioResenhaService.replaceResenhas(usuariosId, ResenhasList);
-		return modelMapper.map(result, new TypeToken<List<ResenhaDetailDTO>>() {
+		List<ResenhaEntity> result = usuarioResenhaService.replaceResenhas(usuariosId, resenhasList);
+		return modelMapper.map(result, new TypeToken<List<ResenhaDTO>>() {
 		}.getType());
 	}
 }

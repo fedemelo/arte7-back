@@ -12,5 +12,7 @@ public class ResenhaDTO {
     private Integer estrellas;
     private Integer numCaracteres;
     private String texto;
+    private PeliculaDTO pelicula;
+    private UsuarioDTO usuario;
     
 }

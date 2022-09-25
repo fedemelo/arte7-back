@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.uniandes.dse.arte7.dto.ResenhaDetailDTO;
+import co.edu.uniandes.dse.arte7.dto.ResenhaDTO;
 import co.edu.uniandes.dse.arte7.dto.UsuarioDTO;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
@@ -32,8 +32,8 @@ public class ResenhaUsuarioController {
 	
 	@PutMapping(value = "/{resenhaId}/usuarios")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDetailDTO replaceUsuario(@PathVariable("resenhanId") Long resenhaId, @RequestBody UsuarioDTO usuarioDTO) throws EntityNotFoundException {
+	public ResenhaDTO replaceUsuario(@PathVariable("resenhanId") Long resenhaId, @RequestBody UsuarioDTO usuarioDTO) throws EntityNotFoundException {
 		ResenhaEntity resenhaEntity = resehnaUsuarioService.replaceUsuario(resenhaId, usuarioDTO.getId());
-		return modelMapper.map(resenhaEntity, ResenhaDetailDTO.class);
+		return modelMapper.map(resenhaEntity, ResenhaDTO.class);
 	}
 }

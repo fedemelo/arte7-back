@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.uniandes.dse.arte7.services.PeliculaResenhaService;
-import co.edu.uniandes.dse.arte7.dto.ResenhaDetailDTO;
+import co.edu.uniandes.dse.arte7.dto.ResenhaDTO;
 import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
@@ -40,10 +40,10 @@ public class PeliculaResenhaController {
 	 */
 	@GetMapping(value = "/{peliculaId}/resenhas/{resenhaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDetailDTO getResenha(@PathVariable("peliculaId") Long peliculaId, @PathVariable("resenhaId") Long resenhaId)
+	public ResenhaDTO getResenha(@PathVariable("peliculaId") Long peliculaId, @PathVariable("resenhaId") Long resenhaId)
 			throws EntityNotFoundException, IllegalOperationException {
 		ResenhaEntity resenhaEntity = peliculaResenhaService.getResenha(peliculaId, resenhaId);
-		return modelMapper.map(resenhaEntity, ResenhaDetailDTO.class);
+		return modelMapper.map(resenhaEntity, ResenhaDTO.class);
 	}
 
 	/**
@@ -55,9 +55,9 @@ public class PeliculaResenhaController {
 	 */
 	@GetMapping(value = "/{peliculaId}/resenhas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ResenhaDetailDTO> getResenhas(@PathVariable("peliculaId") Long peliculaId) throws EntityNotFoundException {
+	public List<ResenhaDTO> getResenhas(@PathVariable("peliculaId") Long peliculaId) throws EntityNotFoundException {
 		List<ResenhaEntity> resenhaEntity = peliculaResenhaService.getResenhas(peliculaId);
-		return modelMapper.map(resenhaEntity, new TypeToken<List<ResenhaDetailDTO>>() {}.getType());
+		return modelMapper.map(resenhaEntity, new TypeToken<List<ResenhaDTO>>() {}.getType());
 	}
 
 	/**
@@ -69,26 +69,11 @@ public class PeliculaResenhaController {
 	 */
 	@PostMapping(value = "/{peliculaId}/resenhas/{resenhaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDetailDTO addresenha(@PathVariable("peliculaId") Long peliculaId, @PathVariable("resenhaId") Long resenhaId)throws EntityNotFoundException {
+	public ResenhaDTO addresenha(@PathVariable("peliculaId") Long peliculaId, @PathVariable("resenhaId") Long resenhaId)throws EntityNotFoundException {
 		ResenhaEntity resenhaEntity = peliculaResenhaService.addResenha(peliculaId, resenhaId);
-		return modelMapper.map(resenhaEntity, ResenhaDetailDTO.class);
+		return modelMapper.map(resenhaEntity, ResenhaDTO.class);
 	}
 
-	/**
-	
-	@PutMapping(value = "/{peliculaId}/resenhas")
-	@ResponseStatus(code = HttpStatus.OK)
-	public List<ResenhaDetailDTO> replaceResenhas(@PathVariable("peliculaId") Long peliculaId, @RequestBody List<resenhaDTO> resenhas)
-			throws EntityNotFoundException {
-		List<ResenhaEntity> entities = modelMapper.map(resenhas, new TypeToken<List<ResenhaEntity>>() {
-		}.getType());
-		List<ResenhaEntity> resenhasList = PeliculaResenhaService.addResenhas(peliculaId, entities);
-		return modelMapper.map(resenhasList, new TypeToken<List<resenhaDetailDTO>>() {
-		}.getType());
-
-	}
-
-    **/
 
 	/**
 	 * Elimina la conexión entre la reseña y la pelicula recibidos en la URL.

@@ -14,7 +14,7 @@
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"postman.setGlobalVariable(\"new_id_plat\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -58,7 +58,7 @@
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_plat2\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -162,7 +162,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_plat}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -173,7 +173,7 @@
 						"peliculas",
 						"{{new_id_p}}",
 						"plataformas",
-						"{{new_id_a}}"
+						"{{new_id_plat}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nAsocia un autor a un libro en la aplicación. \r\n\r\nSe envía el Id del autor y el del libro a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -244,7 +244,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_plat}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -255,7 +255,7 @@
 						"peliculas",
 						"{{new_id_p}}",
 						"plataformas",
-						"{{new_id_a}}"
+						"{{new_id_plat}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta un autor de un libro en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del autor y del libro a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -442,7 +442,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_plat}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -453,7 +453,7 @@
 						"peliculas",
 						"{{new_id_p}}",
 						"plataformas",
-						"{{new_id_a}}"
+						"{{new_id_plat}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra la asociación entre un libro y un autor. Se envían los ids del autor y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
@@ -481,7 +481,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_plat2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -492,7 +492,7 @@
 						"peliculas",
 						"{{new_id_p}}",
 						"plataformas",
-						"{{new_id_a2}}"
+						"{{new_id_plat2}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra la asociación entre un libro y un autor. Se envían los ids del autor y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
@@ -520,7 +520,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_plat}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -529,7 +529,7 @@
 					"path": [
 						"api",
 						"plataformas",
-						"{{new_id_a}}"
+						"{{new_id_plat}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra un plataforma. Se envía el id del plataforma creado anteriormente.\n\n**Código HTTP esperado: 204**"
@@ -557,7 +557,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_a2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_plat2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -566,7 +566,7 @@
 					"path": [
 						"api",
 						"plataformas",
-						"{{new_id_a2}}"
+						"{{new_id_plat2}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra un plataforma. Se envía el id del plataforma creado anteriormente.\n\n**Código HTTP esperado: 204**"

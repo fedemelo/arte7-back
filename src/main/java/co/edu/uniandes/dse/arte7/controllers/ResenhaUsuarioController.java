@@ -17,10 +17,8 @@ import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.services.ResenhaUsuarioService;
 
 
-
-
 @RestController
-@RequestMapping("/resehnas")
+@RequestMapping("/resenhas")
 public class ResenhaUsuarioController {
 
 	@Autowired
@@ -32,7 +30,7 @@ public class ResenhaUsuarioController {
 	
 	@PutMapping(value = "/{resenhaId}/usuarios")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ResenhaDTO replaceUsuario(@PathVariable("resenhanId") Long resenhaId, @RequestBody UsuarioDTO usuarioDTO) throws EntityNotFoundException {
+	public ResenhaDTO replaceUsuario(@PathVariable("resenhaId") Long resenhaId, @RequestBody UsuarioDTO usuarioDTO) throws EntityNotFoundException {
 		ResenhaEntity resenhaEntity = resehnaUsuarioService.replaceUsuario(resenhaId, usuarioDTO.getId());
 		return modelMapper.map(resenhaEntity, ResenhaDTO.class);
 	}

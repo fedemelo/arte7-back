@@ -46,10 +46,30 @@ public class PeliculaGeneroService {
         if (peliculaEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-        peliculaEntity.get().getGeneros().add(generoEntity.get());
+        generoEntity.get().getPeliculas().add(peliculaEntity.get());
         log.info("Se le ha asociado un género a la película con id = {0}", peliculaId);
         return generoEntity.get();
     }
+
+     /** Actualización de películas de un género */
+     @Transactional
+     public List < GeneroEntity > updateGeneros(Long peliculaId, List < GeneroEntity > generos) throws EntityNotFoundException {
+         log.info("Se reemplazarán los géneros asociados con la película con id = {0}", peliculaId);
+         Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);
+         if (peliculaEntity.isEmpty())
+             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+ 
+         for (GeneroEntity genero: generos) {
+             Optional < GeneroEntity > generoEntity = generoRepository.findById(genero.getId());
+             if (generoEntity.isEmpty())
+                 throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
+ 
+             if (!generoEntity.get().getPeliculas().contains(peliculaEntity.get()))
+                 generoEntity.get().getPeliculas().add(peliculaEntity.get());
+         }
+         log.info("Finaliza proceso de reemplazar los géneros asociadas a la película con id = {0}", peliculaId);
+         return generos;
+     }
 
     /**Obtener los géneros de una película */
     @Transactional
@@ -91,25 +111,7 @@ public class PeliculaGeneroService {
         throw new IllegalOperationException("Este género no esta asociado a la película");
     }
 
-    /** Actualización de películas de un género */
-    @Transactional
-    public List < GeneroEntity > updateGeneros(Long peliculaId, List < GeneroEntity > generos) throws EntityNotFoundException {
-        log.info("Se reemplazarán los géneros asociados con la película con id = {0}", peliculaId);
-        Optional < PeliculaEntity > peliculaEntity = peliculaRepository.findById(peliculaId);
-        if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-
-        for (GeneroEntity genero: generos) {
-            Optional < GeneroEntity > generoEntity = generoRepository.findById(genero.getId());
-            if (generoEntity.isEmpty())
-                throw new EntityNotFoundException(ErrorMessage.GENERO_NOT_FOUND);
-
-            if (!generoEntity.get().getPeliculas().contains(peliculaEntity.get()))
-                generoEntity.get().getPeliculas().add(peliculaEntity.get());
-        }
-        log.info("Finaliza proceso de reemplazar los géneros asociadas a la película con id = {0}", peliculaId);
-        return generos;
-    }
+   
 
     /** Desasociar una película de un génro dadas las IDs */
     @Transactional

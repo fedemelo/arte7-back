@@ -54,7 +54,7 @@ public class PeliculaGeneroController {
 
     @PutMapping(value = "/{peliculaId}/generos")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<GeneroDetailDTO> addGenero(@PathVariable("peliculaId") Long peliculaId, @RequestBody List<GeneroDTO> generos)
+	public List<GeneroDetailDTO> addGeneros(@PathVariable("peliculaId") Long peliculaId, @RequestBody List<GeneroDTO> generos)
 			throws EntityNotFoundException {
                 List<GeneroEntity> entities = modelMapper.map(generos, new TypeToken<List<GeneroEntity>>() {
 		}.getType());

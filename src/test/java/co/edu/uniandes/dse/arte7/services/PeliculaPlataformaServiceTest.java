@@ -48,6 +48,7 @@ public class PeliculaPlataformaServiceTest {
 
     private List<PlataformaEntity> plataformaList = new ArrayList<>();
 
+
 	/**
 	 * Configuración inicial de la prueba.
 	 */
@@ -285,20 +286,7 @@ public class PeliculaPlataformaServiceTest {
 		});
 	}
 
-	/**
-	 * Prueba desasociar un autor con un libro.
-	 *
-	 */
-	@Test
-	void testRemoveplataforma() throws EntityNotFoundException {
-        PeliculaEntity pelicula = peliculaList.get(0);
-		PlataformaEntity plataforma = pelicula.getPlataformas().get(0);
-        
-		peliculaplataformaService.removePlataforma(pelicula.getId(), plataforma.getId());
-		
-		assertFalse(peliculaplataformaService.getPlataformas(pelicula.getId()).contains(plataforma));
-	}
-	
+
 	/**
 	 * Prueba desasociar un autor que no existe con un libro.
 	 *

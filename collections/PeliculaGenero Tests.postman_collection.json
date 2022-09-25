@@ -182,7 +182,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No deberia asociar el premio ya que el premio no existe.\"] = responseCode.code === 404;\r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");\r",
 							""
 						],
 						"type": "text/javascript"
@@ -255,7 +255,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No deberia encontrar la pelicula ya que la pelicula no existe.\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");",
 							""
 						],
 						"type": "text/javascript"
@@ -491,7 +491,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No so deberia eliminar la peli ya que el premio no existe..\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");",
 							"console.log(JSON.parse(responseBody))"
 						],
 						"type": "text/javascript"
@@ -532,7 +532,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No so deberia eliminar la peli ya que el premio no existe...\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");",
 							"console.log(JSON.parse(responseBody))"
 						],
 						"type": "text/javascript"

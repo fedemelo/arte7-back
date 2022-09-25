@@ -63,11 +63,11 @@ public class PeliculaService {
             throw new IllegalOperationException("El director no es valido.");
         }
 
-
+        
         //verficiacion actores y directores.
         //Esta decision implica que en momento de la carga se debera instanciar primero actores y directores. 
-
         log.info("Se termino de cargar la pelicula.");
+        
         return peliculaRepository.save(peliculaEntity);
     }
 

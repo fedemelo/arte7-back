@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d5d61e4d-66b1-44a1-8ff9-a821c0880304",
+		"_postman_id": "6ffd6868-412f-4543-8345-1db7c9ff6a2b",
 		"name": "PremioPelicula Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23133499"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -298,6 +298,10 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"nombre\":\"Matrix\",\r\n        \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\r\n        \"duracionSec\": 12393,\r\n        \"pais\":\"Estados Unidos\",\r\n        \"fechaEstreno\": \"1999-03-12\",\r\n        \"url\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\r\n        \"visitas\": 3,\r\n        \"estrellasPromedio\": 4.3,\r\n        \"id\":{{new_id_p}}\r\n    },\r\n    {\r\n        \"nombre\":\"El discurso del rey\",\r\n        \"poster\":\"https://es.web.img3.acsta.net/medias/nmedia/18/82/26/21/19609697.jpg\",\r\n        \"duracionSec\": 34566,\r\n        \"pais\":\"Estados Unidos\",\r\n        \"fechaEstreno\": \"2011-02-11\",\r\n        \"url\":\"https://www.youtube.com/watch?v=KpssjoKZK1w\",\r\n        \"visitas\": 5,\r\n        \"estrellasPromedio\": 4.1,\r\n        \"id\":{{new_id_p2}}\r\n    }\r\n]"
+				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/premios/{{new_id_pr}}/peliculas",
 					"protocol": "http",
@@ -359,7 +363,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se pueden asociar los peliculas ya que estos no existen\"] = responseCode.code === 404;\r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"The peliculas with the given id was not found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el premio con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -368,6 +372,15 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"nombre\":\"Matrix\",\r\n        \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\r\n        \"duracionSec\": 12393,\r\n        \"pais\":\"Estados Unidos\",\r\n        \"fechaEstreno\": \"1999-03-12\",\r\n        \"url\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\r\n        \"visitas\": 3,\r\n        \"estrellasPromedio\": 4.3,\r\n        \"id\":{{new_id_p}}\r\n    },\r\n    {\r\n        \"nombre\":\"El discurso del rey\",\r\n        \"poster\":\"https://es.web.img3.acsta.net/medias/nmedia/18/82/26/21/19609697.jpg\",\r\n        \"duracionSec\": 34566,\r\n        \"pais\":\"Estados Unidos\",\r\n        \"fechaEstreno\": \"2011-02-11\",\r\n        \"url\":\"https://www.youtube.com/watch?v=KpssjoKZK1w\",\r\n        \"visitas\": 5,\r\n        \"estrellasPromedio\": 4.1,\r\n        \"id\":{{new_id_p2}}\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/premios/0/peliculas",
 					"protocol": "http",
@@ -471,7 +484,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No so deberia eliminar la peli ya que el premio no existe..\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encontró el premio buscado\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el premio con el id provisto.\");",
 							"console.log(JSON.parse(responseBody))"
 						],
 						"type": "text/javascript"

@@ -200,8 +200,10 @@ class PeliculaActorServiceTest {
 		assertThrows(IllegalOperationException.class, ()->{
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 			entityManager.persist(newPelicula);
+
 			ActorEntity actor = factory.manufacturePojo(ActorEntity.class);
 			entityManager.persist(actor);
+			
 			peliculaActorService.getActor(newPelicula.getId(), actor.getId());
 		});
 	}

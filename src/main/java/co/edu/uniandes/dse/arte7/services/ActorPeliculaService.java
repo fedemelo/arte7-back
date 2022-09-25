@@ -42,13 +42,15 @@ public class ActorPeliculaService {
         Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
         
-        if (actorEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro un actor con ese Id.");
+        if (actorEntity.isEmpty()) {
+			throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
+        }
+        
+        if (peliculaEntity.isEmpty()) {   
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+        }
 
-        if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException("No se encontro una pelicula con ese Id.");
-
-        peliculaEntity.get().getActores().add(actorEntity.get());
+		actorEntity.get().getPeliculas().add(peliculaEntity.get());
 		log.info("Termina proceso de asociarle una pelicula al actor con id = {0}", actorId);
 		return peliculaEntity.get();
     }
@@ -65,14 +67,15 @@ public class ActorPeliculaService {
 	public List<PeliculaEntity> getPeliculas(Long actorId) throws EntityNotFoundException {
 		log.info("Inicia proceso de consultar todas las peliculas del actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
-		if (actorEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro un actor con ese Id.");   
-
+		if (actorEntity.isEmpty()) {
+            throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);   
+        }
+            
 		List<PeliculaEntity> peliculas = peliculaRepository.findAll();
 		List<PeliculaEntity> peliculaList = new ArrayList<>();
 
 		for (PeliculaEntity b : peliculas) {
-			if (b.getActores().contains(actorEntity.get())) {
+			if (actorEntity.get().getPeliculas().contains(b)) {
 				peliculaList.add(b);
 			}
 		}
@@ -94,15 +97,18 @@ public class ActorPeliculaService {
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
-		if (actorEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro el actor.");
-
-		if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro la pelicula.");
+		if (actorEntity.isEmpty()) {
+            throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
+        }
+            
+		if (peliculaEntity.isEmpty()) {
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+        }
 
 		log.info("Termina proceso de consultar la pelicula con id = {0} del actor con id = " + actorId, peliculaId);
-		if (peliculaEntity.get().getActores().contains(actorEntity.get()))
-			return peliculaEntity.get();
+		if (actorEntity.get().getPeliculas().contains(peliculaEntity.get())) {
+            return peliculaEntity.get();
+        }
 
 		throw new IllegalOperationException("La pelicula no esta asociada al autor");
 	}
@@ -116,23 +122,15 @@ public class ActorPeliculaService {
 	 * @return Nueva colección de PeliculaEntity asociada a la instancia de Actor
 	 */
 	@Transactional
-	public List<PeliculaEntity> addPeliculas(Long actorId, List<PeliculaEntity> peliculas) throws EntityNotFoundException {
+	public List<PeliculaEntity> replacePeliculas(Long actorId, List<PeliculaEntity> peliculas) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar las peliculas asociadas al actor con id = {0}", actorId);
-		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
-		if (actorEntity.isEmpty())
-            throw new EntityNotFoundException("No se encontro el actor.");
-
-		for (PeliculaEntity pelicula : peliculas) {
-			Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(pelicula.getId());
-			if (peliculaEntity.isEmpty())
-                throw new EntityNotFoundException("No se encontro la pelicula.");
-
-			if (!peliculaEntity.get().getActores().contains(actorEntity.get()))
-				peliculaEntity.get().getActores().add(actorEntity.get());
-		}
+        for (PeliculaEntity pelicula: peliculas) {
+            addPelicula(actorId, pelicula.getId());
+        }
 		log.info("Finaliza proceso de reemplazar las peliculas asociadas al actor con id = {0}", actorId);
 		return peliculas;
     }
+
 
     /**
 	 * Desasocia un Pelicula existente de un Actor existente
@@ -144,14 +142,16 @@ public class ActorPeliculaService {
 	public void removePelicula(Long actorId, Long peliculaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar una pelicula del actor con id = {0}", actorId);
 		Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
-		if (actorEntity.isEmpty())
+		if (actorEntity.isEmpty()) {
             throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
-
+        }
+            
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
-		if (peliculaEntity.isEmpty())
+		if (peliculaEntity.isEmpty()) {
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-
-		peliculaEntity.get().getActores().remove(actorEntity.get());
+        }
+        
+		actorEntity.get().getPeliculas().remove(peliculaEntity.get());
 		log.info("Finaliza proceso de borrar una pelicula del actor con id = {0}", actorId);
 	}
 }

@@ -76,7 +76,7 @@ public class NominacionController {
 	 */
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public NominacionDTO create(@RequestBody NominacionDTO nominacionDTO) throws IllegalOperationException, EntityNotFoundException {
+	public NominacionDTO create(@RequestBody NominacionDTO nominacionDTO) throws IllegalOperationException {
 		NominacionEntity nominacionEntity = nominacionService.createNominacion(modelMapper.map(nominacionDTO, NominacionEntity.class));
 		return modelMapper.map(nominacionEntity, NominacionDTO.class);
 	}
@@ -93,7 +93,7 @@ public class NominacionController {
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public NominacionDTO update(@PathVariable("id") Long id, @RequestBody NominacionDTO nominacionDTO)
-			throws EntityNotFoundException, IllegalOperationException {
+			throws EntityNotFoundException {
 		NominacionEntity nominacionEntity = nominacionService.updateNominacion(id, modelMapper.map(nominacionDTO, NominacionEntity.class));
 		return modelMapper.map(nominacionEntity, NominacionDTO.class);
 	}

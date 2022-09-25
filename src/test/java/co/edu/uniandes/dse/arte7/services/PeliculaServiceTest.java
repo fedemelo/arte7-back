@@ -133,6 +133,46 @@ public class PeliculaServiceTest {
         });
     }
 
+		/**
+	 * Prueba para crear pelicula con generos null
+	 * @throws IllegalOperationException 
+	 */
+	@Test
+    void testCreatePeliculaNullGeneros() {
+        assertThrows(IllegalOperationException.class, () -> {
+                PeliculaEntity newEntity = factory.manufacturePojo(PeliculaEntity.class);
+                newEntity.setGeneros(null);
+                peliculaService.createPelicula(newEntity);
+        });
+    }
+
+		/**
+	 * Prueba para crear pelicula con nombre null
+	 * @throws IllegalOperationException 
+	 */
+	@Test
+    void testCreatePeliculaNullNombre() {
+        assertThrows(IllegalOperationException.class, () -> {
+                PeliculaEntity newEntity = factory.manufacturePojo(PeliculaEntity.class);
+                newEntity.setNombre(null);
+                peliculaService.createPelicula(newEntity);
+        });
+    }
+
+	/**
+	 * Prueba para crear pelicula con director null
+	 * @throws IllegalOperationException 
+	 */
+	@Test
+    void testCreatePeliculaNullDirector() {
+        assertThrows(IllegalOperationException.class, () -> {
+                PeliculaEntity newEntity = factory.manufacturePojo(PeliculaEntity.class);
+                newEntity.setDirectores(null);
+                peliculaService.createPelicula(newEntity);
+        });
+    }
+
+
 
 	/**
 	 * Prueba para consultar la lista de Peliculas.

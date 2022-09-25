@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
+import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -74,6 +74,7 @@ public class PeliculaGeneroServiceTest {
 
     /**
 	 * Prueba para asociar un autor a un libro.
+     * @throws co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException
 	 *
 	 */
 	@Test
@@ -122,9 +123,10 @@ public class PeliculaGeneroServiceTest {
 
     /**
 	 * Prueba para consultar la lista de autores de un libro.
+     * @throws co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException
 	 */
 	@Test
-	void testGetGeneros() throws EntityNotFoundException {
+	void testGetGeneros() throws EntityNotFoundException, co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException {
 		
         peliculaGeneroService.updateGeneros(peliculaList.get(0).getId(), generoList);
         List<GeneroEntity> generoEntities = peliculaGeneroService.getGeneros(peliculaList.get(0).getId());
@@ -147,11 +149,12 @@ public class PeliculaGeneroServiceTest {
 
     /**
 	 * Prueba para consultar un autor de un libro.
+     * @throws co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
-	void testGetGenero() throws EntityNotFoundException, IllegalOperationException {
+	void testGetGenero() throws EntityNotFoundException, IllegalOperationException, co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException {
 		GeneroEntity genero = generoList.get(0);
         PeliculaEntity peliculaEntity = peliculaList.get(0);
         peliculaGeneroService.addGenero(genero.getId(), peliculaEntity.getId()); 

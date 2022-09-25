@@ -2,6 +2,7 @@ package co.edu.uniandes.dse.arte7.services;
 
 import java.util.List;
 import java.util.Optional;
+						   
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,16 @@ public class PeliculaNominacionService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getNominaciones().add(nominacionEntity.get());
+		nominacionEntity.get().getPeliculas().add(peliculaEntity.get());
+								 
+																		
+
+  
+  
+																			
+																   
+   
+ 
 		log.info("Termina proceso de asociarle una nominacion a la pelicula con id = {0}", peliculaId);
 		return nominacionEntity.get();
 	}
@@ -69,6 +79,15 @@ public class PeliculaNominacionService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+
+																		
+															
+
+										   
+														 
+						  
+	
+   
 		log.info("Finaliza proceso de consultar todos las nominaciones de la pelicula con id = {0}", peliculaId);
 		return peliculaEntity.get().getNominaciones();
 	}
@@ -93,7 +112,7 @@ public class PeliculaNominacionService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		log.info("Termina proceso de consultar una nominacion de la pelicula con id = {0}", peliculaId);
-		if (peliculaEntity.get().getNominaciones().contains(nominacionEntity.get()))
+		if (nominacionEntity.get().getPeliculas().contains(peliculaEntity.get()))
 			return nominacionEntity.get();
 
 		throw new IllegalOperationException("La nominacion no se encuentra asociada a la pelicula.");
@@ -113,6 +132,9 @@ public class PeliculaNominacionService {
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+																									   
+									 
+	 
 
 		for (NominacionEntity nominacion : list) {
 			Optional<NominacionEntity> nominacionEntity = nominacionRepository.findById(nominacion.getId());
@@ -120,7 +142,7 @@ public class PeliculaNominacionService {
 				throw new EntityNotFoundException(ErrorMessage.NOMINACION_NOT_FOUND);
 
 			if (!peliculaEntity.get().getNominaciones().contains(nominacionEntity.get()))
-				peliculaEntity.get().getNominaciones().add(nominacionEntity.get());
+				nominacionEntity.get().getPeliculas().add(peliculaEntity.get());
 		}
 		log.info("Termina proceso de reemplazar las nominaciones de la pelicula con id = {0}", peliculaId);
 		return getNominaciones(peliculaId);
@@ -133,6 +155,13 @@ public class PeliculaNominacionService {
 	 * @param peliculaId   Identificador de la instancia de Pelicula
 	 * @param nominacionId Identificador de la instancia de Nominacion
 	 */
+	  
+ 
+				
+   
+				 
+				   
+ 
 	public void removeNominacion(Long peliculaId, Long nominacionId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar una nominacion de la pelicula con id = {0}", peliculaId);
 		Optional<NominacionEntity> nominacionEntity = nominacionRepository.findById(nominacionId);
@@ -144,7 +173,7 @@ public class PeliculaNominacionService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getNominaciones().remove(nominacionEntity.get());
+			nominacionEntity.get().getPeliculas().remove(peliculaEntity.get());
 
 		log.info("Termina proceso de borrar una nominacion de la pelicula con id = {0}", peliculaId);
 	}

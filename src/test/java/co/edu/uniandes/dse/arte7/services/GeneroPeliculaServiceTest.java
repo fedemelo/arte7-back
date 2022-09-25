@@ -114,7 +114,7 @@ public class GeneroPeliculaServiceTest {
     @Test
 	void testGetPeliculas() throws EntityNotFoundException {
 		GeneroEntity genero = generoList.get(0);
-        generoPeliculaService.updatePeliculas(genero.getId(), peliculaList);
+        generoPeliculaService.replacePeliculas(genero.getId(), peliculaList);
         List<PeliculaEntity> listado = generoPeliculaService.getPeliculas(genero.getId());
 		assertEquals(peliculaList.size(), listado.size());
 
@@ -234,7 +234,7 @@ public class GeneroPeliculaServiceTest {
 			newPelicula.setId(0L);
 			peliculas.add(newPelicula);
 			
-			generoPeliculaService.updatePeliculas(entity.getId(), peliculas);
+			generoPeliculaService.replacePeliculas(entity.getId(), peliculas);
 		});
 	}
 	
@@ -246,7 +246,7 @@ public class GeneroPeliculaServiceTest {
 	void testReplacePeliculasInvalidGenero() throws EntityNotFoundException {
 		assertThrows(EntityNotFoundException.class, ()->{
 			List<PeliculaEntity> list = peliculaList.subList(1, 3);
-			generoPeliculaService.updatePeliculas(0L, list);
+			generoPeliculaService.replacePeliculas(0L, list);
 		});
 	}
 }

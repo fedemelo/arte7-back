@@ -134,16 +134,18 @@ class DirectorPeliculaServiceTest {
 
 	/**
 	 * Prueba para asociar una pelicula a un director que no existe.
+	 * @throws IllegalOperationException
+	 * @throws EntityNotFoundException
 	 *
 	 */
 
 	@Test
-	void testAddPeliculaInvalidDirector() {
+	void testAddPeliculaInvalidDirector() throws EntityNotFoundException, IllegalOperationException {
+        PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
+        newPelicula.setActores(actorList);
+        newPelicula.setGeneros(generoList);
+        peliculaService.createPelicula(newPelicula);
 		assertThrows(EntityNotFoundException.class, () -> {
-			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-			newPelicula.setActores(actorList);
-            newPelicula.setGeneros(generoList);
-			peliculaService.createPelicula(newPelicula);
 			directorPeliculaService.addPelicula(0L, newPelicula.getId());
 		});
 	}
@@ -262,10 +264,9 @@ class DirectorPeliculaServiceTest {
             director.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
-		directorPeliculaService.addPeliculas(director.getId(), nuevaLista);
-		List<PeliculaEntity> peliculaEntities = directorPeliculaService.getPeliculas(director.getId());
+		directorPeliculaService.replacePeliculas(director.getId(), nuevaLista);
 		for (PeliculaEntity aNuevaLista : nuevaLista) {
-			assertTrue(peliculaEntities.contains(aNuevaLista));
+			assertTrue(director.getPeliculas().contains(aNuevaLista));
 		}
 	}
 	
@@ -283,10 +284,9 @@ class DirectorPeliculaServiceTest {
             director.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
-		directorPeliculaService.addPeliculas(director.getId(), nuevaLista);
-		List<PeliculaEntity> peliculaEntities = directorPeliculaService.getPeliculas(director.getId());
+		directorPeliculaService.replacePeliculas(director.getId(), nuevaLista);
 		for (PeliculaEntity aNuevaLista : nuevaLista) {
-			assertTrue(peliculaEntities.contains(aNuevaLista));
+			assertTrue(director.getPeliculas().contains(aNuevaLista));
 		}
 	}
 
@@ -305,7 +305,7 @@ class DirectorPeliculaServiceTest {
                 director.getPeliculas().add(entity);
                 nuevaLista.add(entity);
             }
-			directorPeliculaService.addPeliculas(0L, nuevaLista);
+			directorPeliculaService.replacePeliculas(0L, nuevaLista);
 		});
 	}
 
@@ -323,7 +323,7 @@ class DirectorPeliculaServiceTest {
 			entity.setActores(actorList);
 			entity.setId(0L);
 			nuevaLista.add(entity);
-			directorPeliculaService.addPeliculas(director.getId(), nuevaLista);
+			directorPeliculaService.replacePeliculas(director.getId(), nuevaLista);
 		});
 	}
 

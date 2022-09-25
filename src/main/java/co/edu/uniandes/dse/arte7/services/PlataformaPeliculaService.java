@@ -39,8 +39,7 @@ public class PlataformaPeliculaService {
 		if (plataformaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
 
-        if (plataformaEntity.isPresent())
-		    plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
+		plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
             
 		log.info("Termina proceso de asociarle una pelicula a la plataforma con id = {0}", plataformaId);
 		return peliculaEntity.get();
@@ -61,11 +60,13 @@ public class PlataformaPeliculaService {
 		Optional<PlataformaEntity> plataformaEntity = plataformaRepository.findById(plataformaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
-        if (plataformaEntity.isEmpty())
+        if (plataformaEntity.isEmpty()){
 			throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
+		}
 
-		if (peliculaEntity.isEmpty())
+		if (peliculaEntity.isEmpty()){
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+		}
 
 		log.info("Termina proceso de consultar una pelicula de la plataforma con id = {0}", peliculaId);
 		if (plataformaEntity.get().getPeliculas().contains(peliculaEntity.get()))

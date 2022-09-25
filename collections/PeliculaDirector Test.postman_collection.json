@@ -1,20 +1,20 @@
 {
 	"info": {
-		"_postman_id": "8e1cba74-5fe5-40bd-88c0-3f399f671c45",
-		"name": "PeliculaPlataforma Test",
+		"_postman_id": "dc95b86b-5c47-49eb-b603-dceea94c3f7c",
+		"name": "PeliculaDirector Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
-			"name": "Crear Plataforma",
+			"name": "Crear Director",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"postman.setGlobalVariable(\"new_id_d\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -32,10 +32,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Netflix\",\n        \"url\": \"https://www.netflix.com/co-en/\"\n    }"
+					"raw": "    {\n        \"nombre\": \"Martin Scorsese\",\n        \"fotografia\": \"https://es.web.img3.acsta.net/pictures/15/10/19/09/54/276049.jpg\",\n        \"nacionalidad\": \"Estadounidense e italiana\",\n        \"fechaNacimiento\": \"1942-11-17T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense. Con una trayectoria que abarca más de cincuenta, las películas de Scorsese abordan temáticas relacionadas con el catolicismo, la identidad italoestadounidense o la criminalidad.\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/directores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -43,22 +43,22 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"plataformas"
+						"directores"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo plataforma. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo actor. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Crear Plataforma 2",
+			"name": "Crear Director 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_d2\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 201;",
 							"console.log(data.id);"
 						],
@@ -76,10 +76,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"HBO\",\n        \"url\": \"https://www.hbomax.com/co-en/\"\n    }"
+					"raw": "    {\n        \"nombre\": \"Steven Spielberg\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/8/8f/Steven_Spielberg_1999.JPG\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1946-12-18T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense.1​ Se lo considera uno de los pioneros de la era del Nuevo Hollywood y es también uno de los directores más reconocidos y populares de la industria cinematográfica mundial.\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/directores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -87,10 +87,10 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"plataformas"
+						"directores"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo plataforma. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo actor. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
@@ -137,7 +137,7 @@
 			"response": []
 		},
 		{
-			"name": "Agregar un plataforma a una pelicula",
+			"name": "Agregar un director a una pelicula",
 			"event": [
 				{
 					"listen": "test",
@@ -162,7 +162,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -172,8 +172,8 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas",
-						"{{new_id_a}}"
+						"directores",
+						"{{new_id_d}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nAsocia un autor a un libro en la aplicación. \r\n\r\nSe envía el Id del autor y el del libro a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -181,14 +181,14 @@
 			"response": []
 		},
 		{
-			"name": "Agregar un plataforma que no existe a una pelicula",
+			"name": "Agregar un director que no existe a una pelicula",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No deberia asociar al plataforma ya que el plataforma no existe.\"] = responseCode.code === 404;\r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
+							"tests[\"No deberia asociar al actor ya que el actor no existe.\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -207,7 +207,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -217,7 +217,7 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas",
+						"directores",
 						"0"
 					]
 				},
@@ -226,7 +226,7 @@
 			"response": []
 		},
 		{
-			"name": "Obtener un plataforma de una pelicula",
+			"name": "Obtener un director de una pelicula",
 			"event": [
 				{
 					"listen": "test",
@@ -244,7 +244,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -254,8 +254,8 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas",
-						"{{new_id_a}}"
+						"directores",
+						"{{new_id_d}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta un autor de un libro en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del autor y del libro a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -263,14 +263,14 @@
 			"response": []
 		},
 		{
-			"name": "Obtener un plataforma que no existe de una pelicula",
+			"name": "Obtener un director que no existe de una pelicula",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"tests[\"No deberia obtener el autor ya que el author no existe.\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -280,7 +280,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -290,7 +290,7 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas",
+						"directores",
 						"0"
 					]
 				},
@@ -299,7 +299,7 @@
 			"response": []
 		},
 		{
-			"name": "Asociar plataformas a una pelicula",
+			"name": "Asociar directores a una pelicula",
 			"event": [
 				{
 					"listen": "test",
@@ -321,10 +321,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Netflix\",\n        \"url\": \"https://www.netflix.com/co-en/\"\n    }"
+					"raw": "[    {\n        \"nombre\": \"Martin Scorsese\",\n        \"fotografia\": \"https://es.web.img3.acsta.net/pictures/15/10/19/09/54/276049.jpg\",\n        \"nacionalidad\": \"Estadounidense e italiana\",\n        \"fechaNacimiento\": \"1942-11-17T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense. Con una trayectoria que abarca más de cincuenta, las películas de Scorsese abordan temáticas relacionadas con el catolicismo, la identidad italoestadounidense o la criminalidad.\", \n        \"id\": {{new_id_d}}\n    },\n    {\n        \"nombre\": \"Steven Spielberg\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/8/8f/Steven_Spielberg_1999.JPG\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1946-12-18T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense.1​ Se lo considera uno de los pioneros de la era del Nuevo Hollywood y es también uno de los directores más reconocidos y populares de la industria cinematográfica mundial.\",\n        \"id\": {{new_id_d2}}\n    }]"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -334,7 +334,7 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas"
+						"directores"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de autores a un libro existente.\r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -342,13 +342,13 @@
 			"response": []
 		},
 		{
-			"name": "Asociar plataformas a una pelicula que no existe",
+			"name": "Asociar directores a una pelicula que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"No se deberian asociar los plataformas ya que la pelicula no existe.\"] = responseCode.code === 404;\r",
+							"tests[\"No se deberian asociar los actores ya que la pelicula no existe.\"] = responseCode.code === 404;\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
 						],
 						"type": "text/javascript"
@@ -365,10 +365,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"Netflix\",\n        \"url\": \"https://www.netflix.com/co-en/\"\n    }"
+					"raw": "[    {\n        \"nombre\": \"Martin Scorsese\",\n        \"fotografia\": \"https://es.web.img3.acsta.net/pictures/15/10/19/09/54/276049.jpg\",\n        \"nacionalidad\": \"Estadounidense e italiana\",\n        \"fechaNacimiento\": \"1942-11-17T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense. Con una trayectoria que abarca más de cincuenta, las películas de Scorsese abordan temáticas relacionadas con el catolicismo, la identidad italoestadounidense o la criminalidad.\", \n        \"id\": {{new_id_d}}\n    },\n    {\n        \"nombre\": \"Steven Spielberg\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/8/8f/Steven_Spielberg_1999.JPG\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1946-12-18T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense.1​ Se lo considera uno de los pioneros de la era del Nuevo Hollywood y es también uno de los directores más reconocidos y populares de la industria cinematográfica mundial.\",\n        \"id\": {{new_id_d2}}\n    }]"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/0/plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/0/directores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -378,7 +378,7 @@
 						"api",
 						"peliculas",
 						"0",
-						"plataformas"
+						"directores"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de autores a un libro existente.\r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -386,7 +386,7 @@
 			"response": []
 		},
 		{
-			"name": "Obtener los plataformas de una pelicula",
+			"name": "Obtener los directores de una pelicula",
 			"event": [
 				{
 					"listen": "test",
@@ -404,7 +404,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/actores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -414,7 +414,7 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas"
+						"actores"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta un autor de un libro en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del autor y del libro a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
@@ -422,7 +422,7 @@
 			"response": []
 		},
 		{
-			"name": "Borrarle un plataforma a una pelicula",
+			"name": "Borrarle un director a una pelicula",
 			"event": [
 				{
 					"listen": "test",
@@ -442,7 +442,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -452,8 +452,8 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas",
-						"{{new_id_a}}"
+						"directores",
+						"{{new_id_d}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra la asociación entre un libro y un autor. Se envían los ids del autor y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
@@ -461,7 +461,7 @@
 			"response": []
 		},
 		{
-			"name": "Borrarle un plataforma a una pelicula 2",
+			"name": "Borrarle un director a una pelicula 2",
 			"event": [
 				{
 					"listen": "test",
@@ -481,7 +481,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/plataformas/{{new_id_a2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores/{{new_id_d2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -491,8 +491,8 @@
 						"api",
 						"peliculas",
 						"{{new_id_p}}",
-						"plataformas",
-						"{{new_id_a2}}"
+						"directores",
+						"{{new_id_d2}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra la asociación entre un libro y un autor. Se envían los ids del autor y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
@@ -500,7 +500,7 @@
 			"response": []
 		},
 		{
-			"name": "Borrar un plataforma",
+			"name": "Borrar un director",
 			"event": [
 				{
 					"listen": "test",
@@ -520,7 +520,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -528,16 +528,16 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"plataformas",
-						"{{new_id_a}}"
+						"directores",
+						"{{new_id_d}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un plataforma. Se envía el id del plataforma creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un actor. Se envía el id del actor creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un plataforma 2",
+			"name": "Borrar un director 2",
 			"event": [
 				{
 					"listen": "test",
@@ -557,7 +557,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/plataformas/{{new_id_a2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -565,11 +565,11 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"plataformas",
-						"{{new_id_a2}}"
+						"directores",
+						"{{new_id_d2}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un plataforma. Se envía el id del plataforma creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un actor. Se envía el id del actor creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},

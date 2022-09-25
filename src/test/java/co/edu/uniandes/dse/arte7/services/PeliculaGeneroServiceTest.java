@@ -85,9 +85,9 @@ public class PeliculaGeneroServiceTest {
 		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 		entityManager.persist(newPelicula);
 		
-		peliculaGeneroService.addGenero(newGenero.getId(), newPelicula.getId());
+		peliculaGeneroService.addGenero(newPelicula.getId(), newGenero.getId());
 		
-		GeneroEntity result = peliculaGeneroService.getGenero(newGenero.getId(), newPelicula.getId());
+		GeneroEntity result = peliculaGeneroService.getGenero(newPelicula.getId(), newGenero.getId());
 		
         assertEquals(newGenero.getId(), result.getId());
         assertEquals(newGenero.getNombre(), result.getNombre());
@@ -157,8 +157,8 @@ public class PeliculaGeneroServiceTest {
 	void testGetGenero() throws EntityNotFoundException, IllegalOperationException, co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException {
 		GeneroEntity genero = generoList.get(0);
         PeliculaEntity peliculaEntity = peliculaList.get(0);
-        peliculaGeneroService.addGenero(genero.getId(), peliculaEntity.getId()); 
-		GeneroEntity plataforma = peliculaGeneroService.getGenero(genero.getId(), peliculaEntity.getId());
+        peliculaGeneroService.addGenero(peliculaEntity.getId(), genero.getId()); 
+		GeneroEntity plataforma = peliculaGeneroService.getGenero(peliculaEntity.getId(), genero.getId());
 		assertNotNull(plataforma);
 
 		assertEquals(plataforma.getId(), genero.getId());

@@ -42,11 +42,13 @@ public class ActorPeliculaService {
         Optional<ActorEntity> actorEntity = actorRepository.findById(actorId);
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
         
-        if (actorEntity.isEmpty())
+        if (actorEntity.isEmpty()){
 			throw new EntityNotFoundException("No se encontro un actor con ese Id.");
+		}
 
-        if (peliculaEntity.isEmpty())
+        if (peliculaEntity.isEmpty()){
 			throw new EntityNotFoundException("No se encontro una pelicula con ese Id.");
+		}
 
         peliculaEntity.get().getActores().add(actorEntity.get());
 		log.info("Termina proceso de asociarle una pelicula al actor con id = {0}", actorId);

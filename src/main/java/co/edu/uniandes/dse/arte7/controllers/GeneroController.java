@@ -76,7 +76,7 @@ public class GeneroController {
 	 */
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public GeneroDTO create(@RequestBody GeneroDTO generoDTO) throws IllegalOperationException, EntityNotFoundException {
+	public GeneroDTO create(@RequestBody GeneroDTO generoDTO) throws EntityNotFoundException {
 		GeneroEntity generoEntity = generoService.createGenero(modelMapper.map(generoDTO, GeneroEntity.class));
 		return modelMapper.map(generoEntity, GeneroDTO.class);
 	}
@@ -93,7 +93,7 @@ public class GeneroController {
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public GeneroDTO update(@PathVariable("id") Long id, @RequestBody GeneroDTO generoDTO)
-			throws EntityNotFoundException, IllegalOperationException {
+			throws EntityNotFoundException {
 		GeneroEntity generoEntity = generoService.updateGenero(id, modelMapper.map(generoDTO, GeneroEntity.class));
 		return modelMapper.map(generoEntity, GeneroDTO.class);
 	}

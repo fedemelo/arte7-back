@@ -58,9 +58,9 @@ public class PremioController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public PremioDTO update(@PathVariable("id") Long id, @RequestBody PremioDTO PremioDTO) throws EntityNotFoundException, IllegalOperationException {
-        PremioEntity PremioEntity = premioService.updatePremio(id, modelMapper.map(PremioDTO, PremioEntity.class));
-        return modelMapper.map(PremioEntity, PremioDTO.class);
+    public PremioDTO update(@PathVariable("id") Long id, @RequestBody PremioDTO premioDTO) throws EntityNotFoundException {
+        PremioEntity premioEntity = premioService.updatePremio(id, modelMapper.map(premioDTO, PremioEntity.class));
+        return modelMapper.map(premioEntity, PremioDTO.class);
     }
 
   

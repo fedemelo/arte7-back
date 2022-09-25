@@ -33,9 +33,15 @@ public class ResenhaService {
 	@Transactional
 	public ResenhaEntity createResenha(ResenhaEntity resenhaEntity) throws IllegalOperationException {
 		log.info("Inicia proceso de creación de un resenha");
+<<<<<<< HEAD
         if (resenhaEntity.getPelicula() == null){
         	throw new IllegalOperationException("Pelicula is not valid");
 		}
+=======
+        if (resenhaEntity.getPelicula() == null)
+        	throw new IllegalOperationException("Pelicula is not valid");
+
+>>>>>>> origin/Juanchix
         Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(resenhaEntity.getPelicula().getId());
         if (peliculaEntity.isEmpty()){
             throw new IllegalOperationException("Pelicula is not valid");
@@ -109,4 +115,8 @@ public class ResenhaService {
 		resenhaRepository.deleteById(resenhaId);
 		log.info("Termina proceso de borrar la resenha con id = {0}", resenhaId);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/Juanchix

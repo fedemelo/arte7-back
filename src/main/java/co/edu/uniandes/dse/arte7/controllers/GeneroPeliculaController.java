@@ -65,7 +65,7 @@ public class GeneroPeliculaController {
                 @RequestBody List<PeliculaDetailDTO> peliculas) throws EntityNotFoundException {
             List<PeliculaEntity> peliculasList = modelMapper.map(peliculas, new TypeToken<List<PeliculaEntity>>() {
             }.getType());
-            List<PeliculaEntity> result = generoPeliculaService.updatePeliculas(generosId, peliculasList);
+            List<PeliculaEntity> result = generoPeliculaService.replacePeliculas(generosId, peliculasList);
             return modelMapper.map(result, new TypeToken<List<PeliculaDetailDTO>>() {
             }.getType());
         }

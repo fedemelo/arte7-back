@@ -28,6 +28,7 @@ import co.edu.uniandes.dse.arte7.services.ActorPeliculaService;
  *
  * @author Federico Melo Barrero
  */
+
 @RestController
 @RequestMapping("/actores")
 public class ActorPeliculaController {
@@ -45,6 +46,7 @@ public class ActorPeliculaController {
 	 * @param actorId   El ID del actor al cual se le va a asociar el autor
 	 * @return JSON {@link PeliculaDetailDTO} - El autor asociado.
 	 */
+	
 	@PostMapping(value = "/{actorId}/peliculas/{peliculaId}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public PeliculaDetailDTO addPelicula(@PathVariable("peliculaId") Long peliculaId, @PathVariable("actorId") Long actorId)

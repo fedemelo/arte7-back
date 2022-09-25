@@ -67,7 +67,9 @@ public class PremioService {
 		if (premioEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PREMIO_NOT_FOUND);
 
+			
 		List<PeliculaEntity> peliculas = premioEntity.get().getPeliculas();
+		
 		if (!peliculas.isEmpty())
 			throw new IllegalOperationException("No se puede borrar premio porque tiene películas asociadas");
 

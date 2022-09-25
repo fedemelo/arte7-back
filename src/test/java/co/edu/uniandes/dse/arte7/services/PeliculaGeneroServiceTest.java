@@ -74,6 +74,7 @@ public class PeliculaGeneroServiceTest {
 
     /**
 	 * Prueba para asociar un autor a un libro.
+     * @throws co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException
 	 *
 	 */
 	@Test
@@ -122,9 +123,10 @@ public class PeliculaGeneroServiceTest {
 
     /**
 	 * Prueba para consultar la lista de autores de un libro.
+     * @throws co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException
 	 */
 	@Test
-	void testGetGeneros() throws EntityNotFoundException {
+	void testGetGeneros() throws EntityNotFoundException, co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException {
 		
         peliculaGeneroService.updateGeneros(peliculaList.get(0).getId(), generoList);
         List<GeneroEntity> generoEntities = peliculaGeneroService.getGeneros(peliculaList.get(0).getId());
@@ -147,11 +149,12 @@ public class PeliculaGeneroServiceTest {
 
     /**
 	 * Prueba para consultar un autor de un libro.
+     * @throws co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
-	void testGetGenero() throws EntityNotFoundException, IllegalOperationException {
+	void testGetGenero() throws EntityNotFoundException, IllegalOperationException, co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException {
 		GeneroEntity genero = generoList.get(0);
         PeliculaEntity peliculaEntity = peliculaList.get(0);
         peliculaGeneroService.addGenero(genero.getId(), peliculaEntity.getId()); 

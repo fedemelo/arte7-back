@@ -76,7 +76,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"HBO MAX\",\n        \"url\": \"https://www.hbomax.com/co/es\"\n    }"
+					"raw": "    {\n        \"nombre\": \"HBO\",\n        \"url\": \"https://www.hbomax.com/co-en/\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/plataformas",
@@ -188,7 +188,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No deberia asociar al plataforma ya que el plataforma no existe.\"] = responseCode.code === 404;\r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -270,7 +270,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No deberia obtener el autor ya que el author no existe.\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -365,7 +365,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[    {\n        \"nombre\": \"Johnny Depp\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/2/21/Johnny_Depp_2020.jpg\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1963-06-09T00:00:00-05:00\",\n        \"biografia\": \"es un plataforma, productor de cine y músico estadounidense. Ha sido nominado en tres ocasiones al Óscar y recibió un Globo de Oro,​ un premio del Sindicato de Plataformas y un César.\",\n        \"id\":{{new_id_a}}\n    },\n{\n        \"nombre\": \"Leonardo DiCaprio\",\n        \"fotografia\": \"https://upload.wikimedia.org/wikipedia/commons/f/f9/Leonardo_DiCaprio.jpeg\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1974-11-11T00:00:00-05:00\",\n        \"biografia\": \"es un plataforma, productor de cine y ambientalista estadounidense. Ha recibido numerosos premios entre los que destacan un Óscar al mejor plataforma.\",\n        \"id\": {{new_id_a2}}\n\n    }]"
+					"raw": "    {\n        \"nombre\": \"Netflix\",\n        \"url\": \"https://www.netflix.com/co-en/\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/0/plataformas",

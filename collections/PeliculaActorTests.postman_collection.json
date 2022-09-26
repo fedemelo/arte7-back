@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "37bcbeb1-d5ec-4ce6-8dd3-2aa5b61230f1",
-		"name": "PeliculaActor Test",
+		"name": "PeliculaActorTests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23160553"
 	},

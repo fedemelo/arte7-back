@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "3f80b8b9-a00b-4ca2-acd8-f8cb729a3400",
+		"_postman_id": "dfbb33fc-816d-4dcd-b98c-07fe1cf6ae70",
 		"name": "Resenha Tests",
 		"description": "Colección de pruebas sobre el recurso Nominacion",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23040038"
+		"_exporter_id": "23039878"
 	},
 	"item": [
 		{
@@ -33,7 +33,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"username\": \"Gonzalo Quezada\"  }"
+					"raw": "    {\n        \"username\": \"Gonzalo Quezada SDFGHXFGHDFGH\"  }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",

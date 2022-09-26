@@ -81,27 +81,32 @@ public class PeliculaResenhaService {
 		if (resenhaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-		log.info("Termina proceso de consultar una resenha de la pelicula con id = {0}", peliculaId);
+		if (peliculaEntity.isEmpty()) {
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+        }        
+		
 		if (resenhaEntity.get().getPelicula().equals(peliculaEntity.get()))
 			return resenhaEntity.get();
 
+        log.info("Termina proceso de consultar una resenha de la pelicula con id = {0}", peliculaId);
 		throw new IllegalOperationException("La resenha no se encuentra asociada a la pelicula.");
 	}
 
+    @Transactional
 	public void removeResenha(Long peliculaId, Long resenhaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar una resenha de la pelicula con id = {0}", peliculaId);
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 
-		if (resenhaEntity.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
+		if (resenhaEntity.isEmpty()) {
+            throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
+        }
 
-		if (peliculaEntity.isEmpty())
-			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+		if (peliculaEntity.isEmpty()) {
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+        }
 
-			resenhaEntity.get().setPelicula(null);
+		resenhaEntity.get().setPelicula(null);
 
 		log.info("Termina proceso de borrar una resenha de la pelicula con id = {0}", peliculaId);
 	}

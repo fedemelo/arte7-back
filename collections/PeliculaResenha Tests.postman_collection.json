@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "19279366-a382-4754-b075-b0a41abee0c8",
-		"name": "PeliculaResenha Tests",
+		"_postman_id": "5116ad6b-15cb-4d11-a793-77ddb0ac7ec8",
+		"name": "PeliculaResenhaTests",
 		"description": "Colección de pruebas sobre el recurso EditorialBooks",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23040038"
+		"_exporter_id": "23039878"
 	},
 	"item": [
 		{
@@ -120,7 +120,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \"username\":\"Hernesto perez\" \r\n}"
+					"raw": "{\r\n \"username\": \"asdertyuiol\" \r\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",
@@ -163,7 +163,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \"username\":\"Camilo antonio\" \r\n}"
+					"raw": "{\r\n \"username\": \"fdsgfdgf\" \r\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/usuarios",

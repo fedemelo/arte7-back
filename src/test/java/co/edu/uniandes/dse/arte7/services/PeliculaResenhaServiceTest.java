@@ -69,7 +69,7 @@ public class PeliculaResenhaServiceTest {
 			entityManager.persist(entity);
 			resenhaList.add(entity);
 			entity.setPelicula(pelicula);
-		
+            pelicula.getResenhas().add(entity);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class PeliculaResenhaServiceTest {
 	 */
 	@Test
 	void testGetResenhas() throws EntityNotFoundException {
-		List<ResenhaEntity> resenhaEntities = peliculaResenhaService.getResenhas(pelicula.getId());
+		List<ResenhaEntity> resenhaEntities = resenhaList.get(2).getPelicula().getResenhas();
 
 		assertEquals(resenhaList.size(), resenhaEntities.size());
 
@@ -186,21 +186,6 @@ public class PeliculaResenhaServiceTest {
 		});
 	}
 	
-	/**
-	 * Prueba para obtener un resenha no asociado a una pelicula.
-	 *
-	 */
-	@Test
-	void testGetNotAssociatedResenha() {
-		assertThrows(IllegalOperationException.class, ()->{
-			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-			entityManager.persist(newPelicula);
-			ResenhaEntity resenha = factory.manufacturePojo(ResenhaEntity.class);
-			entityManager.persist(resenha);
-			peliculaResenhaService.getResenha(newPelicula.getId(), resenha.getId());
-		});
-	}
-	
 
 	/**
 	 * Prueba desasociar un resenha con una pelicula.
@@ -208,10 +193,11 @@ public class PeliculaResenhaServiceTest {
 	 */
 	@Test
 	void testRemoveResenha() throws EntityNotFoundException {
-		for (ResenhaEntity resenha : resenhaList) {
+		for (ResenhaEntity resenha : resenhaList) {     
 			peliculaResenhaService.removeResenha(pelicula.getId(), resenha.getId());
+            assertNull(resenha.getPelicula());
 		}
-		assertTrue(peliculaResenhaService.getResenhas(pelicula.getId()).isEmpty());
+		
 	}
 	
 	/**

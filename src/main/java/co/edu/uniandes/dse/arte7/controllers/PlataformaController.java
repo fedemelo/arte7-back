@@ -36,13 +36,6 @@ public class PlataformaController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public PlataformaDTO create(@RequestBody PlataformaDTO plataformaDTO) throws IllegalOperationException {
-        PlataformaEntity plataformaEntity = plataformaService.createPlataforma(modelMapper.map(plataformaDTO, PlataformaEntity.class));
-        return modelMapper.map(plataformaEntity, PlataformaDTO.class);
-     }
-
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<PlataformaDetailDTO> findAll() {
@@ -56,6 +49,13 @@ public class PlataformaController {
         PlataformaEntity plataformaEntity = plataformaService.getPlataforma(id);
         return modelMapper.map(plataformaEntity, PlataformaDetailDTO.class);
     }
+
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public PlataformaDTO create(@RequestBody PlataformaDTO plataformaDTO) throws IllegalOperationException {
+        PlataformaEntity plataformaEntity = plataformaService.createPlataforma(modelMapper.map(plataformaDTO, PlataformaEntity.class));
+        return modelMapper.map(plataformaEntity, PlataformaDTO.class);
+     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)

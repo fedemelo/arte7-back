@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
+
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
+import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -113,7 +114,7 @@ public class GeneroPeliculaServiceTest {
     @Test
 	void testGetPeliculas() throws EntityNotFoundException {
 		GeneroEntity genero = generoList.get(0);
-        generoPeliculaService.updatePeliculas(genero.getId(), peliculaList);
+        generoPeliculaService.replacePeliculas(genero.getId(), peliculaList);
         List<PeliculaEntity> listado = generoPeliculaService.getPeliculas(genero.getId());
 		assertEquals(peliculaList.size(), listado.size());
 
@@ -233,7 +234,7 @@ public class GeneroPeliculaServiceTest {
 			newPelicula.setId(0L);
 			peliculas.add(newPelicula);
 			
-			generoPeliculaService.updatePeliculas(entity.getId(), peliculas);
+			generoPeliculaService.replacePeliculas(entity.getId(), peliculas);
 		});
 	}
 	
@@ -245,7 +246,7 @@ public class GeneroPeliculaServiceTest {
 	void testReplacePeliculasInvalidGenero() throws EntityNotFoundException {
 		assertThrows(EntityNotFoundException.class, ()->{
 			List<PeliculaEntity> list = peliculaList.subList(1, 3);
-			generoPeliculaService.updatePeliculas(0L, list);
+			generoPeliculaService.replacePeliculas(0L, list);
 		});
 	}
 }

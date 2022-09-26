@@ -36,18 +36,11 @@ public class PlataformaController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public PlataformaDTO create(@RequestBody PlataformaDTO plataformaDTO) throws IllegalOperationException, EntityNotFoundException {
-        PlataformaEntity plataformaEntity = plataformaService.createPlataforma(modelMapper.map(plataformaDTO, PlataformaEntity.class));
-        return modelMapper.map(plataformaEntity, PlataformaDTO.class);
-     }
-
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<PlataformaDetailDTO> findAll() {
-        List<PlataformaEntity> Plataformas = plataformaService.getPlataformas();
-        return modelMapper.map(Plataformas, new TypeToken<List<PlataformaDetailDTO>>() {}.getType());
+        List<PlataformaEntity> plataformas = plataformaService.getPlataformas();
+        return modelMapper.map(plataformas, new TypeToken<List<PlataformaDetailDTO>>() {}.getType());
     }
 
     @GetMapping(value = "/{id}")
@@ -57,10 +50,17 @@ public class PlataformaController {
         return modelMapper.map(plataformaEntity, PlataformaDetailDTO.class);
     }
 
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public PlataformaDTO create(@RequestBody PlataformaDTO plataformaDTO) throws IllegalOperationException {
+        PlataformaEntity plataformaEntity = plataformaService.createPlataforma(modelMapper.map(plataformaDTO, PlataformaEntity.class));
+        return modelMapper.map(plataformaEntity, PlataformaDTO.class);
+     }
+
     @PutMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public PlataformaDTO update(@PathVariable("id") Long id, @RequestBody PlataformaDTO PlataformaDTO) throws EntityNotFoundException, IllegalOperationException {
-        PlataformaEntity plataformaEntity = plataformaService.updatePlataforma(id, modelMapper.map(PlataformaDTO, PlataformaEntity.class));
+    public PlataformaDTO update(@PathVariable("id") Long id, @RequestBody PlataformaDTO plataformaDTO) throws EntityNotFoundException {
+        PlataformaEntity plataformaEntity = plataformaService.updatePlataforma(id, modelMapper.map(plataformaDTO, PlataformaEntity.class));
         return modelMapper.map(plataformaEntity, PlataformaDTO.class);
     }
 

@@ -1,5 +1,6 @@
 package co.edu.uniandes.dse.arte7.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +50,7 @@ public class PeliculaDirectorService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
-		peliculaEntity.get().getDirectores().add(directorEntity.get());
+		directorEntity.get().getPeliculas().add(peliculaEntity.get());
 		log.info("Termina proceso de asociarle un director a la pelicula con id = {0}", peliculaId);
 		return directorEntity.get();
 	}
@@ -64,12 +65,20 @@ public class PeliculaDirectorService {
 	 */
 	@Transactional
 	public List<DirectorEntity> getDirectores(Long peliculaId) throws EntityNotFoundException {
-		log.info("Inicia proceso de consultar todos los directores de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-		log.info("Finaliza proceso de consultar todos los directores de la pelicula con id = {0}", peliculaId);
-		return peliculaEntity.get().getDirectores();
+
+		List<DirectorEntity> directores = directorRepository.findAll();
+		List<DirectorEntity> directorList = new ArrayList<>();
+
+		for (DirectorEntity d : directores) {
+			if (d.getPeliculas().contains(peliculaEntity.get())) {
+				directorList.add(d);
+			}
+		}
+		log.info("Termina proceso de consultar todos los libros del autor con id = {0}", peliculaId);
+		return directorList;
 	}
 
 	/**
@@ -92,7 +101,7 @@ public class PeliculaDirectorService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		log.info("Termina proceso de consultar un director de la pelicula con id = {0}", peliculaId);
-		if (peliculaEntity.get().getDirectores().contains(directorEntity.get()))
+		if (directorEntity.get().getPeliculas().contains(peliculaEntity.get()))
 			return directorEntity.get();
 
 		throw new IllegalOperationException("El director no esta asociado a la pelicula.");
@@ -118,8 +127,8 @@ public class PeliculaDirectorService {
 			if (directorEntity.isEmpty())
 				throw new EntityNotFoundException(ErrorMessage.DIRECTOR_NOT_FOUND);
 
-			if (!peliculaEntity.get().getDirectores().contains(directorEntity.get()))
-				peliculaEntity.get().getDirectores().add(directorEntity.get());
+			if (!directorEntity.get().getPeliculas().contains(peliculaEntity.get()))
+				directorEntity.get().getPeliculas().add(peliculaEntity.get());
 		}
 		log.info("Termina proceso de reemplazar los directores de la pelicula con id = {0}", peliculaId);
 		return getDirectores(peliculaId);
@@ -143,7 +152,7 @@ public class PeliculaDirectorService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getDirectores().remove(directorEntity.get());
+		directorEntity.get().getPeliculas().remove(peliculaEntity.get());
 
 		log.info("Termina proceso de borrar un director de la pelicula con id = {0}", peliculaId);
 	}

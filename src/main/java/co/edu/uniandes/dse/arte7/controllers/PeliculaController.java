@@ -95,7 +95,7 @@ public class PeliculaController {
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public PeliculaDTO update(@PathVariable("id") Long id, @RequestBody PeliculaDTO peliculaDTO)
-			throws EntityNotFoundException, IllegalOperationException {
+			throws EntityNotFoundException {
 		PeliculaEntity peliculaEntity = peliculaService.updatePelicula(id, modelMapper.map(peliculaDTO, PeliculaEntity.class));
 		return modelMapper.map(peliculaEntity, PeliculaDTO.class);
 	}

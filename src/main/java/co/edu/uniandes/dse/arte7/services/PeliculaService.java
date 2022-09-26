@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
 import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
+import co.edu.uniandes.dse.arte7.entities.GeneroEntity;
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
+import co.edu.uniandes.dse.arte7.entities.ResenhaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.ErrorMessage;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
@@ -53,7 +55,7 @@ public class PeliculaService {
             throw new IllegalOperationException("El genero no es valido.");
         }
 
-        if (peliculaEntity.getNombre() == null){
+        if (peliculaEntity.getNombre() == null || peliculaEntity.getNombre().length() == 0 || peliculaEntity.getNombre().equals(" ")){
             throw new IllegalOperationException("El nombre no es valido.");
         }
 
@@ -61,11 +63,11 @@ public class PeliculaService {
             throw new IllegalOperationException("El director no es valido.");
         }
 
-
+        
         //verficiacion actores y directores.
         //Esta decision implica que en momento de la carga se debera instanciar primero actores y directores. 
-
         log.info("Se termino de cargar la pelicula.");
+        
         return peliculaRepository.save(peliculaEntity);
     }
 
@@ -119,6 +121,16 @@ public class PeliculaService {
 
         if (!plataformas.isEmpty())
             throw new IllegalOperationException("No se borro la pelicula porque aun tiene plataformas asociadas.");
+
+        List<GeneroEntity> generos = peliculaEntity.get().getGeneros();
+
+        if (!generos.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene generos asociados.");
+
+        List<ResenhaEntity> resenhas = peliculaEntity.get().getResenhas();
+
+        if (!resenhas.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene resenhas asociadas.");
         
         log.info("Se borro la pelicula con id={0}", peliculaId);
 

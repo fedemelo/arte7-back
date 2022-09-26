@@ -1,0 +1,788 @@
+{
+	"info": {
+		"_postman_id": "108a62ff-3f25-4f17-aeba-086e38f66250",
+		"name": "DirectorPeliculaTests",
+		"description": "Colección de pruebas sobre el recurso DirectorPelicula",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23039878"
+	},
+	"item": [
+		{
+			"name": "Crear pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 201;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"The Matrix\",\r\n    \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\r\n    \"duracionSec\": 12393,\r\n    \"pais\":\"Estados Unidos\",\r\n    \"fechaEstreno\": \"1999-03-12\",\r\n    \"urlTrailer\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\r\n    \"vistas\": 3,\r\n    \"estrellasPromedio\": 4.3\r\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva pelicula. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear pelicula 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 201;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\":\"El discurso del rey\",\r\n    \"poster\":\"https://es.web.img3.acsta.net/medias/nmedia/18/82/26/21/19609697.jpg\",\r\n    \"duracionSec\": 34566,\r\n    \"pais\":\"Estados Unidos\",\r\n    \"fechaEstreno\": \"2011-02-11\",\r\n    \"url\":\"https://www.youtube.com/watch?v=KpssjoKZK1w\",\r\n    \"visitas\": 5,\r\n    \"estrellasPromedio\": 4.1\r\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva pelicula. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_d\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 201;",
+							"console.log(data.id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"nombre\": \"Martin Scorsese\",\n        \"fotografia\": \"https://es.web.img3.acsta.net/pictures/15/10/19/09/54/276049.jpg\",\n        \"nacionalidad\": \"Estadounidense e italiana\",\n        \"fechaNacimiento\": \"1942-11-17T00:00:00-05:00\",\n        \"biografia\": \"es un director, guionista y productor de cine estadounidense. Con una trayectoria que abarca más de cincuenta, las películas de Scorsese abordan temáticas relacionadas con el catolicismo, la identidad italoestadounidense o la criminalidad.\"\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo director. El Id es inicializado por la BD y se debe ver en la respuesta. \r\n\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una pelicula a un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"{{new_id_p}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nAsocia una pelicula a un director en la aplicación. \r\n\r\nSe envía el Id del pelicula y el del director a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una pelicula que no existe a un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No deberia asociar al director ya que la pelicula no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nAsocia una pelicula que no existe a un director en la aplicación. \r\n\r\nSe envía el Id del pelicula y el del director a asociar en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /peliculas/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una pelicula de un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"{{new_id_p}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta una pelicula de un director en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del pelicula y del libro a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una pelicula que no existe de un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No deberia obtener el pelicula ya que el pelicula no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta una pelicula que no existe de un director en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una pelicula inexistente de un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No deberia obtener el pelicula ya que el pelicula no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta una pelicula que no esta asociado a un director en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje El recurso /peliculas/0 no existe.\".\r\n\r\n**Código http esperado: 412**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar peliculas a un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"nombre\":\"Matrix\",\n        \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\n        \"duracionSec\": 12393,\n        \"pais\":\"Estados Unidos\",\n        \"fechaEstreno\": \"1999-03-12\",\n        \"url\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\n        \"visitas\": 3,\n        \"estrellasPromedio\": 4.3,\n        \"id\":{{new_id_p}}\n    },\n    {\n        \"nombre\":\"El discurso del rey\",\n        \"poster\":\"https://es.web.img3.acsta.net/medias/nmedia/18/82/26/21/19609697.jpg\",\n        \"duracionSec\": 34566,\n        \"pais\":\"Estados Unidos\",\n        \"fechaEstreno\": \"2011-02-11\",\n        \"url\":\"https://www.youtube.com/watch?v=KpssjoKZK1w\",\n        \"visitas\": 5,\n        \"estrellasPromedio\": 4.1,\n        \"id\":{{new_id_p2}}\n    }\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de peliculas a un director existente.\r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar peliculas a un director que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No se deberian asociar los peliculas ya que el director no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"nombre\":\"Matrix\",\n        \"poster\":\"https://pics.filmaffinity.com/Matrix-155050517-large.jpg\",\n        \"duracionSec\": 12393,\n        \"pais\":\"Estados Unidos\",\n        \"fechaEstreno\": \"1999-03-12\",\n        \"url\":\"https://www.youtube.com/watch?v=OM0tSTEQCQA\",\n        \"visitas\": 3,\n        \"estrellasPromedio\": 4.3,\n        \"id\":{{new_id_p}}\n    },\n    {\n        \"nombre\":\"El discurso del rey\",\n        \"poster\":\"https://es.web.img3.acsta.net/medias/nmedia/18/82/26/21/19609697.jpg\",\n        \"duracionSec\": 34566,\n        \"pais\":\"Estados Unidos\",\n        \"fechaEstreno\": \"2011-02-11\",\n        \"url\":\"https://www.youtube.com/watch?v=KpssjoKZK1w\",\n        \"visitas\": 5,\n        \"estrellasPromedio\": 4.1,\n        \"id\":{{new_id_p2}}\n    }\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/0/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"0",
+						"peliculas"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de peliculas de un director que no existe. \r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /directores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener los peliculas de un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"no genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"peliculas count - director\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta los peliculas de un director en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id del libro y el del pelicula a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una pelicula  a un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"{{new_id_p}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un director y una pelicula. Se envían los ids del pelicula y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una pelicula 2 a un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/{{new_id_p2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"{{new_id_p2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un director y una pelicula. Se envían los ids del pelicula y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrale una pelicula  a un director que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No so deberia eliminar el pelicula ya que el director no existe..\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el director con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/0/peliculas/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"0",
+						"peliculas",
+						"{{new_id_p}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre un director que no existe y una pelicula en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una pelicula que no existe a un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"No so deberia eliminar el pelicula ya que este no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la pelicula con el id provisto.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}/peliculas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}",
+						"peliculas",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra la asociación entre a un director y una pelicula que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /directores/0/peliculas no existe.\".\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle un director a una pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/directores/{{new_id_d}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_p}}",
+						"directores",
+						"{{new_id_d}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la asociación entre un libro y un autor. Se envían los ids del autor y del libro creados anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una pelicula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_p}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra una pelicula. Se envía el id del pelicula creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una pelicula 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"peliculas",
+						"{{new_id_p2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra una pelicula. Se envía el id del pelicula creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un director",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"api",
+						"directores",
+						"{{new_id_d}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un director. Se envía el id del libro creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

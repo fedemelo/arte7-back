@@ -1,12 +1,13 @@
 package co.edu.uniandes.dse.arte7.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.ActorEntity;
@@ -48,7 +49,7 @@ public class PeliculaActorService {
 		if (peliculaEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getActores().add(actorEntity.get());
+		actorEntity.get().getPeliculas().add(peliculaEntity.get());
 		log.info("Termina proceso de asociarle un actor a la pelicula con id = {0}", peliculaId);
 		return actorEntity.get();
 	}
@@ -67,9 +68,18 @@ public class PeliculaActorService {
 		log.info("Inicia proceso de consultar todos los actores de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
-            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
-		log.info("Finaliza proceso de consultar todos los actores de la pelicula con id = {0}", peliculaId);
-		return peliculaEntity.get().getActores();
+			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+
+		List<ActorEntity> actores = actorRepository.findAll();
+		List<ActorEntity> actorList = new ArrayList<>();
+
+		for (ActorEntity a : actores) {
+			if (a.getPeliculas().contains(peliculaEntity.get())) {
+				actorList.add(a);
+			}
+		}
+		log.info("Termina proceso de consultar todos los libros del autor con id = {0}", peliculaId);
+		return actorList;
 	}
 
     /**
@@ -91,8 +101,9 @@ public class PeliculaActorService {
 
 		if (peliculaEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+
 		log.info("Termina proceso de consultar un actor de la pelicula con id = {0}", peliculaId);
-		if (peliculaEntity.get().getActores().contains(actorEntity.get()))
+		if (actorEntity.get().getPeliculas().contains(peliculaEntity.get()))
 			return actorEntity.get();
 
 		throw new IllegalOperationException("El actor no esta asociado con la pelicula");
@@ -118,11 +129,11 @@ public class PeliculaActorService {
 			if (actorEntity.isEmpty())
                 throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
 
-			if (!peliculaEntity.get().getActores().contains(actorEntity.get()))
-				peliculaEntity.get().getActores().add(actorEntity.get());
+			if (!actorEntity.get().getPeliculas().contains(peliculaEntity.get()))
+				actorEntity.get().getPeliculas().add(peliculaEntity.get());
 		}
 		log.info("Termina proceso de reemplazar los actores de la pelicula con id = {0}", peliculaId);
-		return getActores(peliculaId);
+		return list;
 	}
 
     @Transactional
@@ -144,11 +155,9 @@ public class PeliculaActorService {
 		if (peliculaEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getActores().remove(actorEntity.get());
+		actorEntity.get().getPeliculas().remove(peliculaEntity.get());
 
 		log.info("Termina proceso de borrar un actor de la pelicula con id = {0}", peliculaId);
 	}
-
-
-
+	
 }

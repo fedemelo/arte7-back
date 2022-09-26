@@ -130,17 +130,20 @@ class ActorPeliculaServiceTest {
 
 	/**
 	 * Prueba para asociar una pelicula a un actor que no existe.
+	 * @throws IllegalOperationException
+	 * @throws EntityNotFoundException
 	 *
 	 */
 
 	@Test
-	void testAddPeliculaInvalidActor() {
+	void testAddPeliculaInvalidActor() throws EntityNotFoundException, IllegalOperationException {
+        PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
+		newPelicula.setActores(actorList);
+        newPelicula.setGeneros(generoList);
+        peliculaService.createPelicula(newPelicula);
+        
 		assertThrows(EntityNotFoundException.class, () -> {
-			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-			newPelicula.setActores(actorList);
-            newPelicula.setGeneros(generoList);
-			peliculaService.createPelicula(newPelicula);
-			actorPeliculaService.addPelicula(0L, newPelicula.getId());
+            actorPeliculaService.addPelicula(0L, newPelicula.getId());
 		});
 	}
 
@@ -233,13 +236,12 @@ class ActorPeliculaServiceTest {
 	 */
 	@Test
 	void testGetPeliculaNotAssociatedActor() {
+        ActorEntity actorEntity = factory.manufacturePojo(ActorEntity.class);
+        entityManager.persist(actorEntity);
+
+        PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
+        entityManager.persist(peliculaEntity);
 		assertThrows(IllegalOperationException.class, () -> {
-			ActorEntity actorEntity = factory.manufacturePojo(ActorEntity.class);
-			entityManager.persist(actorEntity);
-
-			PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
-			entityManager.persist(peliculaEntity);
-
 			actorPeliculaService.getPelicula(actorEntity.getId(), peliculaEntity.getId());
 		});
 	}
@@ -258,10 +260,9 @@ class ActorPeliculaServiceTest {
             actor.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
-		actorPeliculaService.addPeliculas(actor.getId(), nuevaLista);
-		List<PeliculaEntity> peliculaEntities = actorPeliculaService.getPeliculas(actor.getId());
+		actorPeliculaService.replacePeliculas(actor.getId(), nuevaLista);
 		for (PeliculaEntity aNuevaLista : nuevaLista) {
-			assertTrue(peliculaEntities.contains(aNuevaLista));
+			assertTrue(actor.getPeliculas().contains(aNuevaLista));
 		}
 	}
 	
@@ -279,10 +280,9 @@ class ActorPeliculaServiceTest {
             actor.getPeliculas().add(entity);
 			nuevaLista.add(entity);
 		}
-		actorPeliculaService.addPeliculas(actor.getId(), nuevaLista);
-		List<PeliculaEntity> peliculaEntities = actorPeliculaService.getPeliculas(actor.getId());
+		actorPeliculaService.replacePeliculas(actor.getId(), nuevaLista);
 		for (PeliculaEntity aNuevaLista : nuevaLista) {
-			assertTrue(peliculaEntities.contains(aNuevaLista));
+            assertTrue(actor.getPeliculas().contains(aNuevaLista));
 		}
 	}
 
@@ -301,7 +301,7 @@ class ActorPeliculaServiceTest {
                 actor.getPeliculas().add(entity);
                 nuevaLista.add(entity);
             }
-			actorPeliculaService.addPeliculas(0L, nuevaLista);
+			actorPeliculaService.replacePeliculas(0L, nuevaLista);
 		});
 	}
 
@@ -319,7 +319,7 @@ class ActorPeliculaServiceTest {
 			entity.setActores(actorList);
 			entity.setId(0L);
 			nuevaLista.add(entity);
-			actorPeliculaService.addPeliculas(actor.getId(), nuevaLista);
+			actorPeliculaService.replacePeliculas(actor.getId(), nuevaLista);
 		});
 	}
 

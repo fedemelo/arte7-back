@@ -59,8 +59,8 @@ public class UsuarioResenhaController {
 	@GetMapping(value = "/{usuarioId}/resenhas")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<ResenhaDTO> getResenhas(@PathVariable("usuarioId") Long usuarioId) throws EntityNotFoundException {
-		List<ResenhaEntity> ResenhaList = usuarioResenhaService.getResenhas(usuarioId);
-		return modelMapper.map(ResenhaList, new TypeToken<List<ResenhaDTO>>() {}.getType());
+		List<ResenhaEntity> resenhaList = usuarioResenhaService.getResenhas(usuarioId);
+		return modelMapper.map(resenhaList, new TypeToken<List<ResenhaDTO>>() {}.getType());
 	}
 
 	/**

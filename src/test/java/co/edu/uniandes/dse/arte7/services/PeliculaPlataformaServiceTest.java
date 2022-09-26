@@ -16,239 +16,197 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import co.edu.uniandes.dse.arte7.entities.ActorEntity;
-import co.edu.uniandes.dse.arte7.entities.DirectorEntity;
-import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.entities.PlataformaEntity;
+import co.edu.uniandes.dse.arte7.entities.PeliculaEntity;
 import co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException;
 import co.edu.uniandes.dse.arte7.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-//Finalizado
+
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional
 @Import(PeliculaPlataformaService.class)
 public class PeliculaPlataformaServiceTest {
-
-    @Autowired
-    private PeliculaPlataformaService peliculaplataformaService;
-
-    @Autowired
+	
+	@Autowired
+	private PeliculaPlataformaService peliculaPlataformaService;
+	
+	@Autowired
 	private TestEntityManager entityManager;
 
-    private PodamFactory factory = new PodamFactoryImpl();
+	private PodamFactory factory = new PodamFactoryImpl();
 
-	private List<PeliculaEntity> peliculaList = new ArrayList<>();
+	private PeliculaEntity pelicula = new PeliculaEntity();
+	private List<PlataformaEntity> plataformaList = new ArrayList<>();
 
-	private List<DirectorEntity> directorList = new ArrayList<>();
-
-	private List<ActorEntity> actorList = new ArrayList<>();
-
-    private List<PlataformaEntity> plataformaList = new ArrayList<>();
-
-	/**
-	 * Configuración inicial de la prueba.
-	 */
+	
 	@BeforeEach
 	void setUp() {
 		clearData();
 		insertData();
 	}
-
+	
 	/**
 	 * Limpia las tablas que están implicadas en la prueba.
 	 */
 	private void clearData() {
-        entityManager.getEntityManager().createQuery("delete from PlataformaEntity").executeUpdate();
-		entityManager.getEntityManager().createQuery("delete from DirectorEntity").executeUpdate();
+		entityManager.getEntityManager().createQuery("delete from PlataformaEntity").executeUpdate();
 		entityManager.getEntityManager().createQuery("delete from PeliculaEntity").executeUpdate();
-		entityManager.getEntityManager().createQuery("delete from ActorEntity").executeUpdate();
 	}
 
 	/**
 	 * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
 	 */
 	private void insertData() {
-    
-		for (int i = 0; i < 3; i++) {
-			ActorEntity actorEntity = factory.manufacturePojo(ActorEntity.class);
-			entityManager.persist(actorEntity);
-			
-			actorList.add(actorEntity);
-		}
+
+		pelicula = factory.manufacturePojo(PeliculaEntity.class);
+		entityManager.persist(pelicula);
 
 		for (int i = 0; i < 3; i++) {
-			DirectorEntity directorEntity = factory.manufacturePojo(DirectorEntity.class);
-			entityManager.persist(directorEntity);
-			directorList.add(directorEntity);
+			PlataformaEntity entity = factory.manufacturePojo(PlataformaEntity.class);
+			entityManager.persist(entity);
+			entity.getPeliculas().add(pelicula);
+			plataformaList.add(entity);
+			pelicula.getPlataformas().add(entity);	
 		}
-
-		for (int i = 0; i < 3; i++) {
-			PeliculaEntity peliculaEntity = factory.manufacturePojo(PeliculaEntity.class);
-			entityManager.persist(peliculaEntity);
-			peliculaList.add(peliculaEntity);
-		}
-
-        for (int i = 0; i < 3; i++) {
-			PlataformaEntity plataformaEntity = factory.manufacturePojo(PlataformaEntity.class);
-			entityManager.persist(plataformaEntity);
-			plataformaList.add(plataformaEntity);
-		}
-
-
-		PeliculaEntity peliculaEntity = peliculaList.get(0);
-		peliculaEntity.setActores(actorList);
-        peliculaEntity.setDirectores(directorList);
-        peliculaEntity.setPlataformas(plataformaList);
-		entityManager.persist(peliculaEntity);
-
-        PlataformaEntity plataformaEntity = plataformaList.get(0);
-		plataformaEntity.setPeliculas(peliculaList);
-        entityManager.persist(plataformaEntity);
-
-
 	}
 
-    /**
-	 * Prueba para asociar un autor a un libro.
+	/**
+	 * Prueba para asociar un Plataforma a una pelicula.
 	 *
 	 */
 	@Test
 	void testAddPlataforma() throws EntityNotFoundException, IllegalOperationException {
-		PlataformaEntity newPlataforma = factory.manufacturePojo(PlataformaEntity.class);
-		entityManager.persist(newPlataforma);
-		
 		PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 		entityManager.persist(newPelicula);
 		
-		peliculaplataformaService.addPlataforma(newPelicula.getId(), newPlataforma.getId());
+		PlataformaEntity plataforma = factory.manufacturePojo(PlataformaEntity.class);
+		entityManager.persist(plataforma);
 		
-		PlataformaEntity result = peliculaplataformaService.getPlataforma(newPelicula.getId(), newPlataforma.getId());
+		peliculaPlataformaService.addPlataforma(newPelicula.getId(), plataforma.getId());
 		
-        assertEquals(newPlataforma.getId(), result.getId());
-        assertEquals(newPlataforma.getNombre(), result.getNombre());
-		
-	}
+		PlataformaEntity lastPlataforma = peliculaPlataformaService.getPlataforma(newPelicula.getId(), plataforma.getId());
+		assertEquals(plataforma.getId(), lastPlataforma.getId());
+		assertEquals(plataforma.getNombre(), lastPlataforma.getNombre());
+		assertEquals(plataforma.getUrl(), lastPlataforma.getUrl());
 
-    /**
-	 * Prueba para asociar un autor que no existe a un libro.
+	}
+	
+	/**
+	 * Prueba para asociar un Plataforma que no existe a una pelicula.
 	 *
 	 */
 	@Test
 	void testAddInvalidPlataforma() {
 		assertThrows(EntityNotFoundException.class, ()->{
-			PeliculaEntity newPelicula = peliculaList.get(1);
+			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
 			entityManager.persist(newPelicula);
-			peliculaplataformaService.addPlataforma(newPelicula.getId(), 0L);
+			peliculaPlataformaService.addPlataforma(newPelicula.getId(), 0L);
 		});
 	}
 	
 	/**
-	 * Prueba para asociar un autor que no existe a un libro.
+	 * Prueba para asociar un Plataforma a una pelicula que no existe.
 	 *
 	 */
 	@Test
-	void testAddInvalidPelicula() {
+	void testAddPlataformaInvalidPelicula() throws EntityNotFoundException, IllegalOperationException {
 		assertThrows(EntityNotFoundException.class, ()->{
-			PlataformaEntity newPlataforma = plataformaList.get(1);
-			entityManager.persist(newPlataforma);
-			peliculaplataformaService.addPlataforma(0l, newPlataforma.getId());
+			PlataformaEntity plataforma = factory.manufacturePojo(PlataformaEntity.class);
+			entityManager.persist(plataforma);
+			peliculaPlataformaService.addPlataforma(0L, plataforma.getId());
 		});
 	}
 
-
-    /**
-	 * Prueba para consultar la lista de autores de un libro.
+	/**
+	 * Prueba para consultar la lista de Plataforma de una pelicula.
 	 */
 	@Test
 	void testGetPlataformas() throws EntityNotFoundException {
-		List<PlataformaEntity> plataformaEntities = peliculaplataformaService.getPlataformas(peliculaList.get(0).getId());
+		List<PlataformaEntity> plataformaEntities = peliculaPlataformaService.getPlataformas(pelicula.getId());
 
 		assertEquals(plataformaList.size(), plataformaEntities.size());
 
-		for (PlataformaEntity plataforma : plataformaEntities) {
-			assertTrue(plataformaEntities.contains(plataforma));
+		for (int i = 0; i < plataformaList.size(); i++) {
+			assertTrue(plataformaEntities.contains(plataformaList.get(0)));
 		}
 	}
 	
 	/**
-	 * Prueba para consultar la lista de autores de un libro que no existe.
+	 * Prueba para consultar la lista de Plataformas de una pelicula que no existe.
 	 */
 	@Test
 	void testGetPlataformasInvalidPelicula(){
 		assertThrows(EntityNotFoundException.class, ()->{
-			peliculaplataformaService.getPlataformas(0L);
+			peliculaPlataformaService.getPlataformas(0L);
 		});
 	}
 
-    /**
-	 * Prueba para consultar un autor de un libro.
+	/**
+	 * Prueba para consultar un Plataforma de una pelicula.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
 	void testGetPlataforma() throws EntityNotFoundException, IllegalOperationException {
 		PlataformaEntity plataformaEntity = plataformaList.get(0);
-        PeliculaEntity peliculaEntity = peliculaList.get(0);
-		PlataformaEntity plataforma = peliculaplataformaService.getPlataforma(peliculaEntity.getId(), plataformaEntity.getId());
+		PlataformaEntity plataforma = peliculaPlataformaService.getPlataforma(pelicula.getId(), plataformaEntity.getId());
 		assertNotNull(plataforma);
 
-		assertEquals(plataforma.getId(), plataformaEntity.getId());
-		assertEquals(plataforma.getNombre(), plataformaEntity.getNombre());
-
+		assertEquals(plataformaEntity.getId(), plataforma.getId());
+		assertEquals(plataformaEntity.getUrl(), plataforma.getUrl());
+		assertEquals(plataformaEntity.getNombre(), plataforma.getNombre());
 	}
 	
 	/**
-	 * Prueba para consultar un autor que no existe de un libro.
+	 * Prueba para consultar un plataforma que no existe de una pelicula.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
 	void testGetInvalidPlataforma()  {
 		assertThrows(EntityNotFoundException.class, ()->{
-			peliculaplataformaService.getPlataforma(peliculaList.get(1).getId(), 0L);
+			peliculaPlataformaService.getPlataforma(pelicula.getId(), 0L);
 		});
 	}
 	
 	/**
-	 * Prueba para consultar un autor de un libro que no existe.
+	 * Prueba para consultar un plataforma de una pelicula que no existe.
 	 *
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
-	void testGetplataformaInvalidBook() {
+	void testGetPlataformaInvalidPelicula() {
 		assertThrows(EntityNotFoundException.class, ()->{
-			peliculaplataformaService.getPlataforma(0L, plataformaList.get(1).getId());
+			PlataformaEntity plataformaEntity = plataformaList.get(0);
+			peliculaPlataformaService.getPlataforma(0L, plataformaEntity.getId());
 		});
 	}
-
-    
+	
 	/**
-	 * Prueba para obtener un autor no asociado a un libro.
+	 * Prueba para obtener un plataforma no asociado a una pelicula.
 	 *
 	 */
 	@Test
 	void testGetNotAssociatedPlataforma() {
 		assertThrows(IllegalOperationException.class, ()->{
 			PeliculaEntity newPelicula = factory.manufacturePojo(PeliculaEntity.class);
-
 			entityManager.persist(newPelicula);
 			PlataformaEntity plataforma = factory.manufacturePojo(PlataformaEntity.class);
 			entityManager.persist(plataforma);
-			peliculaplataformaService.getPlataforma(newPelicula.getId(), plataforma.getId());
+			peliculaPlataformaService.getPlataforma(newPelicula.getId(), plataforma.getId());
 		});
 	}
 
 	/**
-	 * Prueba para actualizar los autores de un libro.
+	 * Prueba para actualizar los plataformas de una pelicula.
 	 *
 	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testReplaceplataformas() throws EntityNotFoundException {
-        PeliculaEntity pelicula = peliculaList.get(1);
+	void testReplacePlataformas() throws EntityNotFoundException {
 		List<PlataformaEntity> nuevaLista = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			PlataformaEntity entity = factory.manufacturePojo(PlataformaEntity.class);
@@ -256,69 +214,122 @@ public class PeliculaPlataformaServiceTest {
 			pelicula.getPlataformas().add(entity);
 			nuevaLista.add(entity);
 		}
-		peliculaplataformaService.replacePlataformas(pelicula.getId(), nuevaLista);
+		peliculaPlataformaService.replacePlataformas(pelicula.getId(), nuevaLista);
 		
-		List<PlataformaEntity> plataformaEntities = peliculaplataformaService.getPlataformas(pelicula.getId());
+		List<PlataformaEntity> plataformaEntities = peliculaPlataformaService.getPlataformas(pelicula.getId());
 		for (PlataformaEntity aNuevaLista : nuevaLista) {
 			assertTrue(plataformaEntities.contains(aNuevaLista));
 		}
 	}
 	
-	
-
-	
 	/**
-	 * Prueba para actualizar un autor de un libro que no existe.
+	 * Prueba para actualizar los plataformas de una pelicula.
 	 *
 	 * @throws EntityNotFoundException
 	 */
 	@Test
-	void testReplaceplataformasInvalidpelicula(){
+	void testReplaceplataformas2() throws EntityNotFoundException {
+		List<PlataformaEntity> nuevaLista = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			PlataformaEntity entity = factory.manufacturePojo(PlataformaEntity.class);
+			entityManager.persist(entity);
+			nuevaLista.add(entity);
+		}
+		peliculaPlataformaService.replacePlataformas(pelicula.getId(), nuevaLista);
+		
+		List<PlataformaEntity> plataformaEntities = peliculaPlataformaService.getPlataformas(pelicula.getId());
+		for (PlataformaEntity aNuevaLista : nuevaLista) {
+			assertFalse(plataformaEntities.contains(aNuevaLista));
+		}
+	}
+	
+	
+	/**
+	 * Prueba para actualizar los plataforma de una pelicula que no existe.
+	 *
+	 * @throws EntityNotFoundException
+	 */
+	@Test
+	void testReplacePlataformasInvalidPelicula(){
 		assertThrows(EntityNotFoundException.class, ()->{
 			List<PlataformaEntity> nuevaLista = new ArrayList<>();
 			for (int i = 0; i < 3; i++) {
 				PlataformaEntity entity = factory.manufacturePojo(PlataformaEntity.class);
+				entity.getPeliculas().add(pelicula);		
 				entityManager.persist(entity);
 				nuevaLista.add(entity);
 			}
-			peliculaplataformaService.replacePlataformas(0L, nuevaLista);
+			peliculaPlataformaService.replacePlataformas(0L, nuevaLista);
+		});
+	}
+	
+	/**
+	 * Prueba para actualizar los plataformas que no existen de una pelicula.
+	 *
+	 * @throws EntityNotFoundException
+	 */
+	@Test
+	void testReplaceInvalidPlataformas() {
+		assertThrows(EntityNotFoundException.class, ()->{
+			List<PlataformaEntity> nuevaLista = new ArrayList<>();
+			PlataformaEntity entity = factory.manufacturePojo(PlataformaEntity.class);
+			entity.setId(0L);
+			nuevaLista.add(entity);
+			peliculaPlataformaService.replacePlataformas(pelicula.getId(), nuevaLista);
+		});
+	}
+	
+	/**
+	 * Prueba para actualizar un plataforma de una pelicula que no existe.
+	 *
+	 * @throws EntityNotFoundException
+	 */
+	@Test
+	void testReplacePlataformasInvalidPlataforma(){
+		assertThrows(EntityNotFoundException.class, ()->{
+			List<PlataformaEntity> nuevaLista = new ArrayList<>();
+			for (int i = 0; i < 3; i++) {
+				PlataformaEntity entity = factory.manufacturePojo(PlataformaEntity.class);
+				entity.getPeliculas().add(pelicula);		
+				entityManager.persist(entity);
+				nuevaLista.add(entity);
+			}
+			peliculaPlataformaService.replacePlataformas(0L, nuevaLista);
 		});
 	}
 
 	/**
-	 * Prueba desasociar un autor con un libro.
+	 * Prueba desasociar un plataforma con una pelicula.
 	 *
 	 */
 	@Test
-	void testRemoveplataforma() throws EntityNotFoundException {
-        PeliculaEntity pelicula = peliculaList.get(0);
-		PlataformaEntity plataforma = pelicula.getPlataformas().get(0);
-        
-		peliculaplataformaService.removePlataforma(pelicula.getId(), plataforma.getId());
-		
-		assertFalse(peliculaplataformaService.getPlataformas(pelicula.getId()).contains(plataforma));
+	void testRemovePlataforma() throws EntityNotFoundException {
+		for (PlataformaEntity plataforma : plataformaList) {
+			peliculaPlataformaService.removePlataforma(pelicula.getId(), plataforma.getId());
+		}
+		assertFalse(peliculaPlataformaService.getPlataformas(pelicula.getId()).isEmpty());
 	}
 	
 	/**
-	 * Prueba desasociar un autor que no existe con un libro.
+	 * Prueba desasociar un plataforma que no existe con una pelicula.
 	 *
 	 */
 	@Test
-	void testRemoveInvalidplataforma(){
-        PeliculaEntity pelicula = peliculaList.get(0);
+	void testRemoveInvalidPlataforma(){
 		assertThrows(EntityNotFoundException.class, ()->{
-			peliculaplataformaService.removePlataforma(pelicula.getId(), 0L);
+			peliculaPlataformaService.removePlataforma(pelicula.getId(), 0L);
 		});
 	}
 	
 	/**
-	 * Prueba desasociar un autor con un libro que no existe.
+	 * Prueba desasociar un plataforma con una pelicula que no existe.
 	 *
 	 */
 	@Test
-	void testRemoveplataformaInvalidPelicula(){
+	void testRemovePlataformaInvalidPelicula(){
 		assertThrows(EntityNotFoundException.class, ()->{
-			peliculaplataformaService.removePlataforma(0L, plataformaList.get(0).getId());
+			peliculaPlataformaService.removePlataforma(0L, plataformaList.get(0).getId());
 		});
 	}
+
 }

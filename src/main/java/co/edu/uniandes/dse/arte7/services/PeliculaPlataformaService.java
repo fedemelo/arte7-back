@@ -38,7 +38,7 @@ public class PeliculaPlataformaService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getPlataformas().add(plataformaEntity.get());
+		plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
 		log.info("Termina proceso de asociarle una plataforma a la pelicula con id = {0}", peliculaId);
 		return plataformaEntity.get();
 	}
@@ -65,7 +65,7 @@ public class PeliculaPlataformaService {
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		log.info("Termina proceso de consultar una plataforma de la pelicula con id = {0}", peliculaId);
-		if (peliculaEntity.get().getPlataformas().contains(plataformaEntity.get()))
+		if (plataformaEntity.get().getPeliculas().contains(peliculaEntity.get()))
 			return plataformaEntity.get();
 
 		throw new IllegalOperationException("La plataforma no esta asociada a la pelicula.");
@@ -83,13 +83,25 @@ public class PeliculaPlataformaService {
 			if (plataformaEntity.isEmpty())
 				throw new EntityNotFoundException(ErrorMessage.PLATAFORMA_NOT_FOUND);
 
-			if (!peliculaEntity.get().getPlataformas().contains(plataformaEntity.get()))
-				peliculaEntity.get().getPlataformas().add(plataformaEntity.get());
+			if (!plataformaEntity.get().getPeliculas().contains(peliculaEntity.get()))
+				plataformaEntity.get().getPeliculas().add(peliculaEntity.get());
 		}
 		log.info("Termina proceso de reemplazar las plataformas de la pelicula con id = {0}", peliculaId);
 		return getPlataformas(peliculaId);
 	}
 
+
+
+	
+
+
+
+
+
+
+
+
+	
     @Transactional
     public void removePlataforma(Long peliculaId, Long plataformaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar una plataforma de una pelicula con id = {0}", peliculaId);
@@ -102,7 +114,7 @@ public class PeliculaPlataformaService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.get().getPlataformas().remove(plataformaEntity.get());
+		plataformaEntity.get().getPeliculas().remove(peliculaEntity.get());
 
 		log.info("Termina proceso de borrar una plataforma de una pelicula con id = {0}", peliculaId);
 	}

@@ -31,7 +31,6 @@ public class PeliculaPremioService {
 	@Transactional
 	public PremioEntity addPremio(Long peliculaId, Long premioId) throws EntityNotFoundException {
 		log.info("Inicia proceso de asociarle una premio a la pelicula con id = {0}", peliculaId);
-		
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);

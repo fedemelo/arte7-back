@@ -154,7 +154,7 @@ public class PeliculaGeneroServiceTest {
 	 * @throws throws EntityNotFoundException, IllegalOperationException
 	 */
 	@Test
-	void testGetGenero() throws EntityNotFoundException, IllegalOperationException, co.edu.uniandes.dse.arte7.exceptions.EntityNotFoundException {
+	void testGetGenero() throws EntityNotFoundException, IllegalOperationException {
 		GeneroEntity genero = generoList.get(0);
         PeliculaEntity peliculaEntity = peliculaList.get(0);
         peliculaGeneroService.addGenero(peliculaEntity.getId(), genero.getId()); 

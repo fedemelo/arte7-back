@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "70f689b8-d670-4793-bbf9-caa89986b035",
+		"_postman_id": "f59c9e1a-6590-4dad-8975-2d41138d989e",
 		"name": "PlataformaPelicula Tests",
 		"description": "Colección de pruebas sobre el recurso ActorPelicula",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23039954"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -341,14 +341,14 @@
 			"response": []
 		},
 		{
-			"name": "Asociar peliculas a una plataforma ineistente",
+			"name": "Asociar peliculas a una plataforma inexistente",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"tests[\"No se deberian asociar los peliculas ya que la aplataforma no existe.\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra una plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -506,7 +506,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No so deberia eliminar el pelicula ya que la plataforma no existe..\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra una plataforma con el id provisto.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra la plataforma con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}

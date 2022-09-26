@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1ac0f165-cc55-4565-ae99-eea570717e74",
+		"_postman_id": "f371ca9a-5ad8-4292-b5c3-2b2cda7cda99",
 		"name": "GeneroPelicula Tests",
 		"description": "Colección de pruebas sobre el recurso ActorPelicula",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23039954"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -346,7 +346,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No se deberian asociar las peliculas ya que el genero no existe.\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra un genero con el id provisto\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -504,7 +504,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No so deberia eliminar el pelicula ya que el geneo no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra un genero con el id provisto\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el genero con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}

@@ -26,6 +26,7 @@ public class ResenhaUsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+	
     /**
 	 * Reemplazar el usuario de una resenha.
 	 *
@@ -69,13 +70,13 @@ public class ResenhaUsuarioService {
 		Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenhaId);
 
 		if (usuarioEntity.isEmpty())
-            throw new EntityNotFoundException(ErrorMessage.ACTOR_NOT_FOUND);
+            throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 
 		if (resenhaEntity.isEmpty())
             throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
 		log.info("Termina proceso de consultar un usuario de la resenha con id = {0}", resenhaId);
-		if (usuarioEntity.get().getResenhas().contains(resenhaEntity.get()))
+		if (resenhaEntity.get().getCritico().equals(usuarioEntity.get()))
 			return usuarioEntity.get();
 
 		throw new IllegalOperationException("El usuario no esta asociado con la resenha");

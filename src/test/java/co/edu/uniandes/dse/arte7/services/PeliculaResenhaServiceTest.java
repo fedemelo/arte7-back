@@ -68,7 +68,8 @@ public class PeliculaResenhaServiceTest {
 			ResenhaEntity entity = factory.manufacturePojo(ResenhaEntity.class);
 			entityManager.persist(entity);
 			resenhaList.add(entity);
-			pelicula.getResenhas().add(entity);	
+			entity.setPelicula(pelicula);
+		
 		}
 	}
 

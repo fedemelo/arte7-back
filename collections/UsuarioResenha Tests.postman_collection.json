@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "3052ad6f-92b4-4296-90ce-d4e15b3c98fe",
+		"_postman_id": "02dfcb1a-3c2f-4c1e-a398-835552665e07",
 		"name": "UsuarioResenha Tests",
 		"description": "Colección de pruebas sobre el recurso EditorialBooks",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23408799"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -526,7 +526,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+							"tests[\"No genera error en  el delete\"] = responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
@@ -563,7 +563,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+							"tests[\"No genera error en  el delete\"] = responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}

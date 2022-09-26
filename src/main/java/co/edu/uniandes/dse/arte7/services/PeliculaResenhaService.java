@@ -53,24 +53,23 @@ public class PeliculaResenhaService {
 	}
 
 	@Transactional
-	public List<ResenhaEntity> replaceResenhas(Long peliculaId, List<ResenhaEntity> list) throws EntityNotFoundException {
+	public List<ResenhaEntity> replaceResenhas(Long peliculaId, List<ResenhaEntity> resenhas) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar los directores de la pelicula con id = {0}", peliculaId);
 		Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		for (ResenhaEntity resenha : list) {
+		for (ResenhaEntity resenha : resenhas) {
 			Optional<ResenhaEntity> resenhaEntity = resenhaRepository.findById(resenha.getId());
 			if (resenhaEntity.isEmpty())
 				throw new EntityNotFoundException(ErrorMessage.RESENHA_NOT_FOUND);
 
+			if (!resenhaEntity.get().getPelicula().equals(peliculaEntity.get()))
+				resenhaEntity.get().setPelicula(peliculaEntity.get());
 		}
 
-		peliculaEntity.get().setResenhas(list);
-
-		
-		log.info("Termina proceso de reemplazar los directores de la pelicula con id = {0}", peliculaId);
-		return getResenhas(peliculaId);
+		log.info("Termina proceso de reemplazar las resenhas de la pelicula con id = {0}", peliculaId);
+		return resenhas;
 	}
 	@Transactional
 	public ResenhaEntity getResenha(Long peliculaId, Long resenhaId)
@@ -85,7 +84,7 @@ public class PeliculaResenhaService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 		log.info("Termina proceso de consultar una resenha de la pelicula con id = {0}", peliculaId);
-		if (peliculaEntity.get().getResenhas().contains(resenhaEntity.get()))
+		if (resenhaEntity.get().getPelicula().equals(peliculaEntity.get()))
 			return resenhaEntity.get();
 
 		throw new IllegalOperationException("La resenha no se encuentra asociada a la pelicula.");
@@ -102,10 +101,7 @@ public class PeliculaResenhaService {
 		if (peliculaEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
 
-		peliculaEntity.ifPresent(pelicula -> {
 			resenhaEntity.get().setPelicula(null);
-			pelicula.getResenhas().remove(resenhaEntity.get());
-		});
 
 		log.info("Termina proceso de borrar una resenha de la pelicula con id = {0}", peliculaId);
 	}

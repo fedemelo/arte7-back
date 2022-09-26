@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "8252611b-5b61-46f5-8f8d-9dc649746b6c",
+		"_postman_id": "19279366-a382-4754-b075-b0a41abee0c8",
 		"name": "PeliculaResenha Tests",
 		"description": "Colección de pruebas sobre el recurso EditorialBooks",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23408799"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -522,7 +522,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n    {\n   \"estrellas\": 2,\n   \"numCaracteres\":7,\n   \"pelicula\": { \"id\": {{new_id_p2}} },\n   \"critico\" : {\"id\": {{new_id_u2}}},\n  \"texto\":\"aaaaaaa\" \n    },\n    {\n   \"estrellas\": 3,\n   \"numCaracteres\":9,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n   \"critico\" : {\"id\": {{new_id_u2}}},\n  \"texto\":\"bbbbbbbba\" \n    }\n]"
+					"raw": "[\n    {\n   \"estrellas\": 2,\n   \"numCaracteres\":7,\n   \"pelicula\": { \"id\": {{new_id_p2}} },\n   \"critico\" : {\"id\": {{new_id_u2}}},\n    \"texto\":\"aaaaaaa\",\n    \"id\":  {{new_id_r}}\n    },\n    {\n   \"estrellas\": 3,\n   \"numCaracteres\":9,\n   \"pelicula\": { \"id\": {{new_id_p}} },\n   \"critico\" : {\"id\": {{new_id_u2}}},\n    \"texto\":\"bbbbbbbba\",\n    \"id\":  {{new_id_r2}} \n    }\n]"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p}}/resenhas",
@@ -636,7 +636,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/books/{{new_id_r2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_r2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -644,7 +644,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"books",
+						"resenhas",
 						"{{new_id_r2}}"
 					]
 				},
@@ -710,7 +710,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/editorials/{{new_id_p2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/peliculas/{{new_id_p2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -718,7 +718,7 @@
 					"port": "{{puerto}}",
 					"path": [
 						"api",
-						"editorials",
+						"peliculas",
 						"{{new_id_p2}}"
 					]
 				},

@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "0a296dc1-3ede-4acd-a2c5-d6974ecc022a",
+		"_postman_id": "fecb195f-c88c-4188-b7a5-3571525bff94",
 		"name": "ResenhaUsuario Tests",
 		"description": "Colección de pruebas sobre el recurso ResenhaUsuario",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23408799"
+		"_exporter_id": "23040038"
 	},
 	"item": [
 		{
@@ -204,7 +204,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_r5}}/usuario/{{new_id_u2}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_r5}}/usuarios/{{new_id_u2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -214,7 +214,7 @@
 						"api",
 						"resenhas",
 						"{{new_id_r5}}",
-						"usuario",
+						"usuarios",
 						"{{new_id_u2}}"
 					]
 				},
@@ -230,7 +230,7 @@
 					"script": {
 						"exec": [
 							"tests[\"No actualiza con usuario que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Not Found\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se encuentra el usuario con el id provisto.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -245,7 +245,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_r5}}/usuario/0",
+					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_r5}}/usuarios/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -255,7 +255,7 @@
 						"api",
 						"resenhas",
 						"{{new_id_r5}}",
-						"usuario",
+						"usuarios",
 						"0"
 					]
 				},
@@ -284,7 +284,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_r}}",
+					"raw": "http://{{ip}}:{{puerto}}/api/resenhas/{{new_id_r5}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -293,7 +293,7 @@
 					"path": [
 						"api",
 						"resenhas",
-						"{{new_id_r}}"
+						"{{new_id_r5}}"
 					]
 				},
 				"description": "**Release: Paso-5**\n\nBorra un resenha. Se envía el id del resenha creado anteriormente.\n\n**Código HTTP esperado: 204**"

@@ -28,6 +28,14 @@ public class NominacionPeliculaService {
     @Autowired
     private PeliculaRepository peliculaRepository;
 
+	/**
+	 * Asocia una Pelicula existente a una nominacion
+	 * 
+	 * @param nominacionId identificador de la instancia de nominacion
+	 * @param peliculaId identificador de la instancia de pelicula
+	 * @return Instancia de PeliculaEntity que fue asociada a una nominacion
+	 * @throws EntityNotFoundException
+	 */
     @Transactional
 	public PeliculaEntity addPelicula(Long nominacionId, Long peliculaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de asociarle una película a la nominación con id = {0}", nominacionId);
@@ -44,6 +52,14 @@ public class NominacionPeliculaService {
 		return peliculaEntity.get();
 	}
 
+	/**
+	 * Asocia las instancias de Pelicula a una instancia de Nominacion
+	 * 
+	 * @param nominacionId Identificador de la instancia de nominacion
+	 * @param peliculas Identificador de la instancia de la pelicula
+	 * @return Nueva colección de PeliculaEntity asociada a la instancia de Actor
+	 * @throws EntityNotFoundException
+	 */
 	@Transactional
 	public List<PeliculaEntity> addPeliculas(Long nominacionId, List<PeliculaEntity> peliculas) throws EntityNotFoundException {
 		log.info("Inicia proceso de reemplazar las peliculas asociadas al nominacion con id = {0}", nominacionId);
@@ -63,6 +79,13 @@ public class NominacionPeliculaService {
 		return peliculas;
 	}
 
+	/**
+	 * Obtiene las peliculas asociadas a una instancia de nominacion
+	 * 
+	 * @param nominacionId Identificador de la instancia nominacion
+	 * @return Conjunto de Peliculas asociadas a nominacionEntity
+	 * @throws EntityNotFoundException
+	 */
     @Transactional
 	public List<PeliculaEntity> getPeliculas(Long nominacionId) throws EntityNotFoundException {
 		log.info("Inicia proceso de consultar todas las películas de nominacion con id = {0}", nominacionId);
@@ -73,6 +96,15 @@ public class NominacionPeliculaService {
 		return nominacionEntity.get().getPeliculas();
 	}
 
+	/**
+	 * Obtiene una instancia de pelicula asociada a una instancia de nominacion
+	 * 
+	 * @param nominacionId Identificador de la instancia nominacion
+	 * @param peliculaId Identificador de la instancia de la pelicula
+	 * @return PeliculaEntity asociada a la nominacion
+	 * @throws EntityNotFoundException
+	 * @throws IllegalOperationException
+	 */
     @Transactional
 	public PeliculaEntity getPelicula(Long nominacionId, Long peliculaId)
 			throws EntityNotFoundException, IllegalOperationException {
@@ -93,6 +125,14 @@ public class NominacionPeliculaService {
 		throw new IllegalOperationException("La película no está asociada a la nominación");
 	}
 
+	/**
+	 * Reemplaza las peliculas asociadas a una instancia de nominacion
+	 * 
+	 * @param nominacionId Identificador de la instancia nominacion
+	 * @param list Lista de nuevas peliculas que reeemplazarán a las ya existentes
+	 * @return Conjunto de peliculas que reeemplazaron a las ya existentes
+	 * @throws EntityNotFoundException
+	 */
     @Transactional
     public List<PeliculaEntity> replacePeliculas(Long nominacionId, List<PeliculaEntity> list) 
             throws EntityNotFoundException {
@@ -113,6 +153,13 @@ public class NominacionPeliculaService {
 		return getPeliculas(nominacionId);
 	}
 
+	/**
+	 * Remueve una instancia de pelicula asociada a una instancia de nominacion
+	 * 
+	 * @param nominacionId Identificador de la instancia nominacion
+	 * @param peliculaId Identificador de la instancia pelicula
+	 * @throws EntityNotFoundException
+	 */
     @Transactional
     public void removePelicula(Long nominacionId, Long peliculaId) throws EntityNotFoundException {
 		log.info("Inicia proceso de borrar una pelicula del nominacion con id = {0}", nominacionId);

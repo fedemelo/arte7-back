@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a993d0b1-7d60-4d74-8cc1-52dc78c29129",
+		"_postman_id": "ac586bf5-32fd-4d93-bf64-58db944f2146",
 		"name": "Actor Tests",
 		"description": "Colección de pruebas sobre el recurso Actor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -103,7 +103,7 @@
 					"script": {
 						"exec": [
 							"var data= JSON.parse(responseBody);",
-							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
+							"tests[\"No genera error en el Get All\"] = responseCode.code === 200;",
 							"tests[\"actores count\"] = data.length > 0;"
 						],
 						"type": "text/javascript"
@@ -223,7 +223,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
+					"raw": "   {\n        \"nombre\": \"Keanu Reeves\",\n        \"fotografia\": \"https://m.media-amazon.com/images/M/MV5BNGJmMWEzOGQtMWZkNS00MGNiLTk5NGEtYzg1YzAyZTgzZTZmXkEyXkFqcGdeQXVyMTE1MTYxNDAw._V1_.jpg\",\n        \"nacionalidad\": \"Canadiense\",\n        \"fechaNacimiento\": \"1964-02-09T00:00:00-05:00\",\n        \"biografia\": \"es un actor y músico canadiense. Ha ganado varios premios, y tiene una estrella en el paseo de la fama de Hollywood.\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/actores/{{new_id_a}}",
@@ -266,7 +266,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
+					"raw": "   {\n        \"nombre\": \"Keanu Reeves\",\n        \"fotografia\": \"https://m.media-amazon.com/images/M/MV5BNGJmMWEzOGQtMWZkNS00MGNiLTk5NGEtYzg1YzAyZTgzZTZmXkEyXkFqcGdeQXVyMTE1MTYxNDAw._V1_.jpg\",\n        \"nacionalidad\": \"Canadiense\",\n        \"fechaNacimiento\": \"1964-02-09T00:00:00-05:00\",\n        \"biografia\": \"es un actor y músico canadiense. Ha ganado varios premios, y tiene una estrella en el paseo de la fama de Hollywood.\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/actores/0",

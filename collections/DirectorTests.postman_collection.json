@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "50dd4309-64dc-4b17-8f15-36314cbb9fdf",
+		"_postman_id": "4412eff1-ffdf-4944-8baf-b063c6d9bf7d",
 		"name": "Director Tests",
 		"description": "Colección de pruebas sobre el recurso Director",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -223,7 +223,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
+					"raw": "    {\n        \"nombre\": \"David Fincher\",\n        \"fotografia\": \"https://images.mubicdn.net/images/cast_member/1469/cache-103636-1599486038/image-w856.jpg?size=800x\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1962-08-28T00:00:00-05:00\",\n        \"biografia\": \"es un director y productor estadounidense de cine, televisión y vídeos musicales. Fue nominado para el Óscar a mejor director por El curioso caso de Benjamin Button (2008), La red social (2010) y por Mank (2020).\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/directores/{{new_id_d}}",
@@ -266,7 +266,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
+					"raw": "    {\n        \"nombre\": \"David Fincher\",\n        \"fotografia\": \"https://images.mubicdn.net/images/cast_member/1469/cache-103636-1599486038/image-w856.jpg?size=800x\",\n        \"nacionalidad\": \"Estadounidense\",\n        \"fechaNacimiento\": \"1962-08-28T00:00:00-05:00\",\n        \"biografia\": \"es un director y productor estadounidense de cine, televisión y vídeos musicales. Fue nominado para el Óscar a mejor director por El curioso caso de Benjamin Button (2008), La red social (2010) y por Mank (2020).\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/api/directores/0",

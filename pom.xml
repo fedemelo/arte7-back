@@ -9,11 +9,11 @@
 		<version>2.5.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>co.edu.uniandes.dse</groupId>
-	<artifactId>ISIS2603_202220_S3_E1_Arte7_Back</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>ISIS2603_202220_S3_E1_Arte7_Back</name>
-	<description>Course Project for ISIS2603</description>
+	<groupId>me.fedemelo</groupId>
+	<artifactId>arte7-back</artifactId>
+	<version>1.0.0</version>
+	<name>Arte7 Backend</name>
+	<description>Spring Boot REST API exposing resources for movies, actors, directors, genres, awards, nominations, platforms, and reviews.</description>
 	<properties>
 		<java.version>11</java.version>
 		<jacoco.version>0.8.3</jacoco.version>

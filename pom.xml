@@ -17,6 +17,8 @@
 	<properties>
 		<java.version>11</java.version>
 		<jacoco.version>0.8.3</jacoco.version>
+		<sonar.organization>fedemelo</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.language>java</sonar.language>

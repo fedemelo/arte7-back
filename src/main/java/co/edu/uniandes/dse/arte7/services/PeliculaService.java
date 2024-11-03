@@ -137,4 +137,43 @@ public class PeliculaService {
         peliculaRepository.deleteById(peliculaId);
     }
 
+
+    public void removePelicula(Long peliculaId)throws EntityNotFoundException, IllegalOperationException{
+        log.info("Inicia proceso de borrado de la pelicula con id={0}", peliculaId);
+        
+        Optional<PeliculaEntity> peliculaEntity = peliculaRepository.findById(peliculaId);
+        if (peliculaEntity.isEmpty()){
+            throw new EntityNotFoundException(ErrorMessage.PELICULA_NOT_FOUND);
+        }
+
+        List<ActorEntity> actores = peliculaEntity.get().getActores();
+
+        if (!actores.isEmpty())
+                throw new IllegalOperationException("No se borro la pelicula porque aun tiene actores asociados.");
+
+        List<DirectorEntity> directores = peliculaEntity.get().getDirectores();
+
+        if (!directores.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene directores asociados.");
+        
+        List<PlataformaEntity> plataformas = peliculaEntity.get().getPlataformas();
+
+        if (!plataformas.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene plataformas asociadas.");
+
+        List<GeneroEntity> generos = peliculaEntity.get().getGeneros();
+
+        if (!generos.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene generos asociados.");
+
+        List<ResenhaEntity> resenhas = peliculaEntity.get().getResenhas();
+
+        if (!resenhas.isEmpty())
+            throw new IllegalOperationException("No se borro la pelicula porque aun tiene resenhas asociadas.");
+        
+        log.info("Se borro la pelicula con id={0}", peliculaId);
+
+        peliculaRepository.deleteById(peliculaId);
+    }
+
 }
